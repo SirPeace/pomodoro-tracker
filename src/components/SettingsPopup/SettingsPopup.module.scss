@@ -1,0 +1,43 @@
+.SettingsPopup {
+  header {
+    display: flex;
+    justify-content: flex-end;
+
+    .closeIcon {
+      cursor: pointer;
+      transition: 0.3s;
+
+      &:hover {
+        color: #dc143c;
+      }
+
+      &:active {
+        color: rgba($color: #dc143c, $alpha: 0.1);
+      }
+    }
+  }
+
+  form.body {
+    padding: 20px;
+
+    .TextField {
+      width: 100%;
+
+      label {
+        font-size: 20px;
+      }
+
+      label + div {
+        padding: 5px 0;
+      }
+    }
+
+    .submitButton {
+      width: 100%;
+      padding: 10px 0;
+    }
+  }
+
+  padding: 20px;
+  width: 50vw;
+}

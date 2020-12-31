@@ -1,0 +1,10 @@
+2) Rewrite animation based on $duration and $running
+
+Why is there state setting delay in this order on start?
+Checkpoint => Timeout => Interval
+
+1) Checkpoint is in a sync code - first
+2) Timeout is in an async code with no delay (or not?) - second
+3) Interval is in an async code with animation delay - third
+
+Need to separate resume and start actions to solve button spam problem

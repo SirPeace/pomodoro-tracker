@@ -1,0 +1,75 @@
+import { getTimeFromMs } from "../../libs/functions";
+import {
+  UPDATE_DURATION,
+  SET_STATUS,
+  SET_TIMER_STOP_TIMEOUT,
+  SET_ANIMATION_ID,
+  SET_TIMER_UPDATE_INTERVAL,
+  SET_TIME,
+  UPDATE_RUNNING_DATA,
+} from "../actions/actionTypes";
+
+const defaultDuration = 120 * 1000;
+
+/**
+ * @property {string} status "running"|"paused"|"static"|"finished"
+ * @property {object} time - Left time: {hours, minutes, seconds}
+ * @property {number} duration (in milliseconds) - How long should timer run
+ * @property {object} running - How much time did timer run: {checkpoint, passed} (in milliseconds)
+ * @property {Interval} timerUpdateInterval - Interval, that updates the time
+ * @property {Timeout} timerStopTimeout - Timeout in which timer stops
+ * @property {number} animationID - ID for the running requestAnimationFrame
+ */
+const initialState = {
+  status: "static",
+  duration: defaultDuration,
+  time: getTimeFromMs(defaultDuration),
+
+  running: {
+    checkpoint: 0, // timestamp for timer start/resume
+    passed: 0,
+  },
+
+  timerUpdateInterval: null,
+  timerStopTimeout: null,
+};
+
+const handlers = {
+  [UPDATE_DURATION]: (state, { payload }) => ({
+    ...state,
+    duration: payload,
+  }),
+  [SET_STATUS]: (state, { payload }) => ({
+    ...state,
+    status: payload,
+  }),
+  [SET_TIME]: (state, { payload }) => ({
+    ...state,
+    time: payload,
+  }),
+  [SET_TIMER_UPDATE_INTERVAL]: (state, { payload }) => ({
+    ...state,
+    timerUpdateInterval: payload,
+  }),
+  [SET_TIMER_STOP_TIMEOUT]: (state, { payload }) => ({
+    ...state,
+    timerStopTimeout: payload,
+  }),
+  [SET_ANIMATION_ID]: (state, { payload }) => ({
+    ...state,
+    animationID: payload,
+  }),
+  [UPDATE_RUNNING_DATA]: (state, { payload }) => ({
+    ...state,
+    running: {
+      ...state.running,
+      ...payload,
+    },
+  }),
+  DEFAULT: state => state,
+};
+
+export function timerReducer(state = initialState, action) {
+  const handler = handlers[action.type] || handlers.DEFAULT;
+  return handler(state, action);
+}

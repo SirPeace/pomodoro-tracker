@@ -1,0 +1,82 @@
+@import "../../hoc/Layout/Layout.module.scss";
+
+$static: rgb(192, 192, 192);
+$success: lightgreen;
+
+.Timer {
+  .progress {
+    position: relative;
+
+    .counter {
+      font-family: "Open Sans";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      font-size: 5em;
+      // letter-spacing: 1px;
+      color: rgb(85, 85, 85);
+      transform: translate(-50%, -50%);
+    }
+
+    svg {
+      width: 320px;
+      height: 320px;
+
+      circle {
+        stroke: rgba(192, 192, 192, 0.473);
+        fill: transparent;
+        stroke-width: 20px;
+
+        &.progress {
+          transform-origin: center;
+          transform: rotate(-90deg) rotateX(180deg);
+          stroke: $primary;
+
+          &.finished {
+            stroke: $success;
+          }
+        }
+      }
+    }
+  }
+
+  .buttons {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-around;
+
+    .button {
+      width: 80px;
+      height: 80px;
+      border-radius: 100%;
+      font-weight: bold;
+
+      &.start {
+        background-color: $primary;
+        color: #fff;
+
+        &:hover {
+          background-color: rgba($primary, 0.8);
+        }
+      }
+
+      &.pause {
+        background-color: grey;
+        color: #fff;
+
+        &:hover {
+          background-color: rgba(grey, 0.8);
+        }
+      }
+
+      &.stop {
+        background-color: crimson;
+        color: #fff;
+
+        &:hover {
+          background-color: rgba(crimson, 0.8);
+        }
+      }
+    }
+  }
+}
