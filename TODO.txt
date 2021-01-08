@@ -2,5 +2,5 @@
 + Create timer configuration functionality
 + Correct Layout and Pages layout
 + Create changing work/rest sessions
-  - Make it loop
+  + Make it loop
 + Create state progress functionality
