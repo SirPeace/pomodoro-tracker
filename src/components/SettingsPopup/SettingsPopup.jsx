@@ -12,11 +12,7 @@ import React from "react";
 import { connect } from "react-redux";
 import classes from "./SettingsPopup.module.scss";
 import { setPopup } from "../../store/actions/layout";
-import {
-  setLongBreakDuration,
-  setSmallBreakDuration,
-  setWorkSessionDuration,
-} from "../../store/actions/settings";
+import { setConfiguration } from "../../store/actions/sessions";
 
 const theme = createMuiTheme({
   palette: {
@@ -27,24 +23,26 @@ const theme = createMuiTheme({
 function SettingsPopup({
   id,
 
-  smallBreakDuration,
+  shortBreakDuration,
   longBreakDuration,
   workSessionDuration,
+  workSessionsCountBeforeLongBreak,
 
   closePopup,
-  setWorkSessionDuration,
-  setSmallBreakDuration,
-  setLongBreakDuration,
+  setConfiguration,
 }) {
   const [formControls, setFormControls] = React.useState({
     work_session: {
       value: workSessionDuration,
     },
-    small_break: {
-      value: smallBreakDuration,
+    short_break: {
+      value: shortBreakDuration,
     },
     long_break: {
       value: longBreakDuration,
+    },
+    work_sessions_before_long_break: {
+      value: workSessionsCountBeforeLongBreak,
     },
   });
 
@@ -52,9 +50,13 @@ function SettingsPopup({
     event.preventDefault();
 
     // TODO: Save settings to the state
-    setWorkSessionDuration(formControls.work_session.value);
-    setSmallBreakDuration(formControls.small_break.value);
-    setLongBreakDuration(formControls.long_break.value);
+    setConfiguration({
+      workSessionDuration: formControls.work_session.value,
+      shortBreakDuration: formControls.short_break.value,
+      longBreakDuration: formControls.long_break.value,
+      workSessionsCountBeforeLongBreak:
+        formControls.work_sessions_before_long_break.value,
+    });
 
     closePopup();
   };
@@ -91,9 +93,7 @@ function SettingsPopup({
                   shrink: true,
                 }}
                 value={formControls.work_session.value}
-                onChange={e =>
-                  changeFormControl("work_session", e.target.value)
-                }
+                onChange={e => changeFormControl(e.target.name, e.target.value)}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">Minutes</InputAdornment>
@@ -103,15 +103,15 @@ function SettingsPopup({
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                name="small_break"
+                name="short_break"
                 className={classes.TextField}
-                label="Small break"
+                label="Short break"
                 type="number"
                 InputLabelProps={{
                   shrink: true,
                 }}
-                value={formControls.small_break.value}
-                onChange={e => changeFormControl("small_break", e.target.value)}
+                value={formControls.short_break.value}
+                onChange={e => changeFormControl(e.target.name, e.target.value)}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">Minutes</InputAdornment>
@@ -129,10 +129,28 @@ function SettingsPopup({
                   shrink: true,
                 }}
                 value={formControls.long_break.value}
-                onChange={e => changeFormControl("long_break", e.target.value)}
+                onChange={e => changeFormControl(e.target.name, e.target.value)}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">Minutes</InputAdornment>
+                  ),
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                name="work_sessions_before_long_break"
+                className={classes.TextField}
+                label="Work sessions count before long break"
+                type="number"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                value={formControls.work_sessions_before_long_break.value}
+                onChange={e => changeFormControl(e.target.name, e.target.value)}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">Count</InputAdornment>
                   ),
                 }}
               />
@@ -158,22 +176,16 @@ function SettingsPopup({
 }
 
 const mapStateToProps = state => ({
-  smallBreakDuration: state.settings.smallBreakDuration,
-  longBreakDuration: state.settings.longBreakDuration,
-  workSessionDuration: state.settings.workSessionDuration,
+  shortBreakDuration: state.sessions.configuration.shortBreakDuration,
+  longBreakDuration: state.sessions.configuration.longBreakDuration,
+  workSessionDuration: state.sessions.configuration.workSessionDuration,
+  workSessionsCountBeforeLongBreak:
+    state.sessions.configuration.workSessionsCountBeforeLongBreak,
 });
 
 const mapDispatchToProps = dispatch => ({
   closePopup: () => dispatch(setPopup(false)),
-  setWorkSessionDuration: duration => {
-    dispatch(setWorkSessionDuration(duration));
-  },
-  setSmallBreakDuration: duration => {
-    dispatch(setSmallBreakDuration(duration));
-  },
-  setLongBreakDuration: duration => {
-    dispatch(setLongBreakDuration(duration));
-  },
+  setConfiguration: configuration => dispatch(setConfiguration(configuration)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SettingsPopup);

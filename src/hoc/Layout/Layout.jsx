@@ -4,8 +4,6 @@ import {
   AppBar,
   Toolbar,
   IconButton,
-  Typography,
-  Container,
   Tooltip,
   Backdrop,
 } from "@material-ui/core";
@@ -34,9 +32,21 @@ function Layout(props) {
     }
   };
 
+  const workID =
+    ((props.sessionLoop - 1) * props.sessionsCount) / 2 +
+    props.sessionOrder / 2 +
+    1;
+
+  let sessionProgress = `Work session (#${workID})`;
+  if (props.session === "short_break") sessionProgress = "Short break";
+  else if (props.session === "long_break") sessionProgress = "Long break";
+
   return (
     <div className={classes.Layout}>
-      <AppBar position="static" className={classes.AppBar}>
+      <AppBar
+        position="static"
+        className={`${classes.AppBar} ${classes[props.session]}`}
+      >
         <Toolbar>
           <IconButton
             edge="start"
@@ -46,10 +56,11 @@ function Layout(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            Pomodoro Timer
-          </Typography>
-
+          <div className={classes.title}>
+            <h1 className={classes.appTitle}>Pomodoro Timer</h1>
+            <span className={classes.separator}>&nbsp;|&nbsp;</span>
+            <span className={classes.sessionProgress}>{sessionProgress}</span>
+          </div>
           <Tooltip title="Toggle theme" arrow>
             <IconButton
               edge="start"
@@ -74,7 +85,7 @@ function Layout(props) {
         </Toolbar>
       </AppBar>
 
-      <Container maxWidth="sm" className={classes.body}>
+      <div className={classes.body}>
         <Backdrop
           open={!!props.popup}
           className={backdropClass}
@@ -84,7 +95,7 @@ function Layout(props) {
         </Backdrop>
 
         {props.children}
-      </Container>
+      </div>
     </div>
   );
 }
@@ -92,6 +103,12 @@ function Layout(props) {
 const mapStateToProps = state => ({
   theme: state.layout.theme,
   popup: state.layout.popup,
+
+  // sessions
+  session: state.sessions.order[state.sessions.current],
+  sessionOrder: state.sessions.current,
+  sessionsCount: state.sessions.order.length,
+  sessionLoop: state.sessions.loop,
 });
 
 const mapDispatchToProps = dispatch => ({

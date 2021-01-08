@@ -1,27 +1,22 @@
-import { getTimeFromMs } from "../../libs/functions";
+import { getTimeString, toMs } from "../../libs/functions";
 import {
-  UPDATE_DURATION,
+  SET_DURATION,
   SET_STATUS,
   SET_TIMER_UPDATE_INTERVAL,
   SET_TIMER_STOP_TIMEOUT,
   UPDATE_RUNNING_DATA,
   SET_TIME,
 } from "./actionTypes";
+import { pushSessionOrder } from "./sessions";
 
-/**
- * @param {string} time
- */
-export const setTime = time => ({
+export const setTime = (value, unit = "time") => ({
   type: SET_TIME,
-  payload: time,
+  payload: getTimeString(value, unit),
 });
 
-/**
- * @param {number} duration (in milliseconds)
- */
-export const udpateDuration = duration => ({
-  type: UPDATE_DURATION,
-  payload: duration,
+export const setDuration = (value, unit) => ({
+  type: SET_DURATION,
+  payload: toMs(value, unit),
 });
 
 export const setTimerUpdateInterval = interval => ({
@@ -68,11 +63,6 @@ export const setRunningTime = () => (dispatch, getState) => {
     running: { checkpoint, passed },
   } = getState().timer;
 
-  // console.log(
-  //   "Time passed: ",
-  //   checkpoint > 0 ? performance.now() - checkpoint + passed : 0
-  // );
-
   dispatch(
     updateRunningData({
       passed: checkpoint > 0 ? performance.now() - checkpoint + passed : 0,
@@ -111,7 +101,7 @@ export const resetTimer = () => (dispatch, getState) => {
   dispatch(setTimerStopTimeout(null));
   dispatch(setTimerUpdateInterval(null));
   dispatch(updateRunningData({ passed: 0, checkpoint: 0 }));
-  dispatch(setTime(getTimeFromMs(duration)));
+  dispatch(setTime(getTimeString(duration)));
 };
 
 export const startTimer = () => (dispatch, getState) => {
@@ -182,6 +172,8 @@ export const stopTimer = (forced = true) => dispatch => {
   if (forced) {
     dispatch(setStatus("static"));
   } else {
+    dispatch(pushSessionOrder());
+
     dispatch(setStatus("finished"));
   }
 };

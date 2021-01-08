@@ -1,9 +1,11 @@
-@import "../../hoc/Layout/Layout.module.scss";
+@import "../../colors.scss";
 
-$static: rgb(192, 192, 192);
-$success: lightgreen;
+$timerSize: 320px;
 
 .Timer {
+  width: $timerSize;
+  margin-top: 20px;
+
   .progress {
     position: relative;
 
@@ -13,14 +15,13 @@ $success: lightgreen;
       top: 50%;
       left: 50%;
       font-size: 5em;
-      // letter-spacing: 1px;
       color: rgb(85, 85, 85);
       transform: translate(-50%, -50%);
     }
 
     svg {
-      width: 320px;
-      height: 320px;
+      width: $timerSize;
+      height: $timerSize;
 
       circle {
         stroke: rgba(192, 192, 192, 0.473);
@@ -33,14 +34,14 @@ $success: lightgreen;
           stroke: $primary;
 
           &.finished {
-            stroke: $success;
+            stroke: $timerWorkCompleted;
           }
         }
       }
     }
   }
 
-  .buttons {
+  .controls {
     margin-top: 50px;
     display: flex;
     justify-content: space-around;

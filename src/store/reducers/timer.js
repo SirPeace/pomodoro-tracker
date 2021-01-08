@@ -1,6 +1,5 @@
-import { getTimeFromMs } from "../../libs/functions";
 import {
-  UPDATE_DURATION,
+  SET_DURATION,
   SET_STATUS,
   SET_TIMER_STOP_TIMEOUT,
   SET_ANIMATION_ID,
@@ -9,11 +8,9 @@ import {
   UPDATE_RUNNING_DATA,
 } from "../actions/actionTypes";
 
-const defaultDuration = 120 * 1000;
-
 /**
  * @property {string} status "running"|"paused"|"static"|"finished"
- * @property {object} time - Left time: {hours, minutes, seconds}
+ * @property {object} time - Left time: "mm:ss"
  * @property {number} duration (in milliseconds) - How long should timer run
  * @property {object} running - How much time did timer run: {checkpoint, passed} (in milliseconds)
  * @property {Interval} timerUpdateInterval - Interval, that updates the time
@@ -22,8 +19,8 @@ const defaultDuration = 120 * 1000;
  */
 const initialState = {
   status: "static",
-  duration: defaultDuration,
-  time: getTimeFromMs(defaultDuration),
+  time: "00:00",
+  duration: 0,
 
   running: {
     checkpoint: 0, // timestamp for timer start/resume
@@ -35,7 +32,7 @@ const initialState = {
 };
 
 const handlers = {
-  [UPDATE_DURATION]: (state, { payload }) => ({
+  [SET_DURATION]: (state, { payload }) => ({
     ...state,
     duration: payload,
   }),
