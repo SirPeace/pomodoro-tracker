@@ -1,8 +1,9 @@
-import { SET_POPUP, SET_THEME } from "../actions/actionTypes";
+import { SET_DRAWER, SET_POPUP, SET_THEME } from "../actions/actionTypes";
 
 const initialState = {
   theme: "light",
   popup: false,
+  drawer: false,
 };
 
 const handlers = {
@@ -13,6 +14,10 @@ const handlers = {
   [SET_POPUP]: (state, { payload }) => ({
     ...state,
     popup: payload,
+  }),
+  [SET_DRAWER]: (state, { payload }) => ({
+    ...state,
+    drawer: payload,
   }),
   DEFAULT: state => state,
 };

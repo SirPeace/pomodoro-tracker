@@ -1,6 +1,7 @@
 // layout
 export const SET_THEME = "SET_THEME";
 export const SET_POPUP = "SET_POPUP";
+export const SET_DRAWER = "SET_DRAWER";
 
 // timer
 export const SET_DURATION = "SET_DURATION";
@@ -23,3 +24,7 @@ export const SET_WORK_SESSIONS_COUNT_BEFORE_LONG_BREAK =
 export const SET_CONFIGURATION = "SET_CONFIGURATION";
 export const SET_CURRENT_SESSION = "SET_CURRENT_SESSION";
 export const SET_SESSION_LOOP = "SET_SESSION_LOOP";
+
+// tasks
+export const ADD_TASK = "ADD_TASK";
+export const DELETE_TASK = "DELETE_TASK";

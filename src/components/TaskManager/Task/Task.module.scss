@@ -1,0 +1,23 @@
+.Task {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  transition: background 0.2s;
+  &:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  span {
+    font-size: 16px;
+  }
+
+  .deleteIcon {
+    font-size: 20px;
+    transition: color 0.2s;
+    &:hover {
+      color: crimson;
+      cursor: pointer;
+    }
+  }
+}
