@@ -4,3 +4,11 @@
 + Create changing work/rest sessions
   + Make it loop
 + Create state progress functionality
+
+-------------------
+
+Goal & streak system like in Duolingo
+Make configuration component in the right Drawer
+Change all component colors to match with current session color
+Add a loading screen and smooth fade-in for slow internet
+Add a To-Do list Drawer simillar to Google Tasks and Microsoft To-Do
