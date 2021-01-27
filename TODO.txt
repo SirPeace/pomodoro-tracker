@@ -9,7 +9,7 @@
   - Make them look more appealing
   - Add description and tags functionality for each task
   - Keep a list of completed tasks
-~ Rewrite all styling in JSS
++ Rewrite all styling in JSS
 ~ Make same color schema in all components
 
 -------------------
