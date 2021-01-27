@@ -9,9 +9,18 @@
   - Make them look more appealing
   - Add description and tags functionality for each task
   - Keep a list of completed tasks
+~ Rewrite all styling in JSS
+~ Make same color schema in all components
 
 -------------------
 
+Validate configuration input (don't allow to enter negative numbers)
+Don't allow to reset or stop the tracker before holding the button
+Change timer buttons look and bind their color due to the session
+Make PWA functionality:
+  - Sound push notifications
+  - Work without internet (register service worker)
+  - Mobile downloadable version
 Goal & streak system like in Duolingo
 Make configuration component in the right Drawer
 Change all component colors to match with current session color
