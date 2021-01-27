@@ -7,7 +7,7 @@ import Brightness7 from "@material-ui/icons/Brightness7";
 import Brightness3 from "@material-ui/icons/Brightness3";
 import { connect } from "react-redux";
 import { setDrawer, setPopup, setTheme } from "../../store/actions/layout";
-import classes from "./ApplicationBar.module.scss";
+import { useStyles } from "./styles";
 
 function ApplicationBar({
   sessionLoop,
@@ -23,6 +23,7 @@ function ApplicationBar({
   setDrawer,
 }) {
   const workID = ((sessionLoop - 1) * sessionsCount) / 2 + sessionOrder / 2 + 1;
+  const classes = useStyles();
 
   let sessionProgress = `Work session (#${workID})`;
   if (session === "short_break") sessionProgress = "Short break";

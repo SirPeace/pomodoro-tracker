@@ -1,14 +1,26 @@
 import React from "react";
-import classes from "./TaskManager.module.scss";
 import { connect } from "react-redux";
 import TaskForm from "./TaskForm/TaskForm";
 import { addTask, deleteTask } from "../../store/actions/tasks";
 import Task from "./Task/Task";
+import { makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles(theme => ({
+  TaskManager: {
+    padding: 20,
+  },
+
+  h2: {
+    margin: 0,
+  },
+}));
 
 function TaskManager({ tasks, addTask, deleteTask }) {
+  const classes = useStyles();
+
   return (
     <div className={classes.TaskManager}>
-      <h2>Tasks Manager</h2>
+      <h2 className={classes.h2}>Tasks</h2>
 
       <TaskForm addTask={addTask} />
 

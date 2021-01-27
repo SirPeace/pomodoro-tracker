@@ -10,7 +10,7 @@ import {
   stopTimer,
 } from "../../store/actions/timer";
 import { resetSessionOrder } from "../../store/actions/sessions";
-import classes from "./Timer.module.scss";
+import { useStyles } from "./styles";
 
 function Timer({
   // timer
@@ -33,8 +33,8 @@ function Timer({
 
   resetSessionOrder,
 }) {
+  const classes = useStyles();
   const [isBtnLocked, setIsBtnLocked] = React.useState(false);
-  let circleClass = "";
 
   const radius = 150;
   const circumference = 2 * Math.PI * radius;
@@ -104,13 +104,7 @@ function Timer({
     resetSessionOrder();
   };
 
-  if (status === "finished") {
-    circleClass = classes.finished;
-  } else {
-    circleClass = "";
-  }
-
-  // Sessions switching
+  // Change timer's time and duration according to the current session
   React.useEffect(() => {
     let duration = "";
 
@@ -122,14 +116,25 @@ function Timer({
     setDuration(configuration[duration], "m");
   }, [circumference, session, configuration, setTime, setDuration]);
 
+  // Change elements color according to the current session
+  let sessionProgressClass = "";
+  let sessionButtonClass = "";
+  if (session === "short_break") {
+    sessionProgressClass = classes.circle__progress_short_break;
+    sessionButtonClass = classes.controls__startButton_short_break;
+  } else if (session === "long_break") {
+    sessionProgressClass = classes.circle__progress_long_break;
+    sessionButtonClass = classes.controls__startButton_long_break;
+  }
+
   return (
     <div className={classes.Timer}>
       <div className={classes.progress}>
         <span className={classes.counter}>{time}</span>
         <svg>
-          <circle cx="50%" cy="50%" r={radius} className={classes.rails} />
+          <circle cx="50%" cy="50%" r={radius} />
           <circle
-            className={`${classes.progress} ${circleClass}`}
+            className={`${classes.circle__progress} ${sessionProgressClass}`}
             cx="50%"
             cy="50%"
             r={radius}
@@ -144,7 +149,7 @@ function Timer({
           <>
             <Button
               variant="contained"
-              className={`${classes.button} ${classes.pause}`}
+              className={`${classes.controls__button} ${classes.controls__pauseButton}`}
               onClick={handleTimerPause}
               disabled={isBtnLocked}
             >
@@ -152,7 +157,7 @@ function Timer({
             </Button>
             <Button
               variant="contained"
-              className={`${classes.button} ${classes.stop}`}
+              className={`${classes.controls__button} ${classes.controls__stopButton}`}
               onClick={handleTimerStop}
             >
               Stop
@@ -162,7 +167,7 @@ function Timer({
           <>
             <Button
               variant="contained"
-              className={`${classes.button} ${classes.start}`}
+              className={`${classes.controls__button} ${classes.controls__startButton} ${sessionButtonClass}`}
               onClick={handleTimerResume}
               disabled={isBtnLocked}
             >
@@ -170,7 +175,7 @@ function Timer({
             </Button>
             <Button
               variant="contained"
-              className={`${classes.button} ${classes.stop}`}
+              className={`${classes.controls__button} ${classes.controls__stopButton}`}
               onClick={handleTimerStop}
             >
               Stop
@@ -180,14 +185,14 @@ function Timer({
           <>
             <Button
               variant="contained"
-              className={`${classes.button} ${classes.start}`}
+              className={`${classes.controls__button} ${classes.controls__startButton} ${sessionButtonClass}`}
               onClick={handleTimerStart}
             >
               Start
             </Button>
             <Button
               variant="contained"
-              className={`${classes.button} ${classes.pause}`}
+              className={`${classes.controls__button} ${classes.controls__pauseButton}`}
               onClick={handleTimerReset}
             >
               Reset
@@ -196,7 +201,7 @@ function Timer({
         ) : (
           <Button
             variant="contained"
-            className={`${classes.button} ${classes.start}`}
+            className={`${classes.controls__button} ${classes.controls__startButton} ${sessionButtonClass}`}
             onClick={handleTimerStart}
           >
             Start

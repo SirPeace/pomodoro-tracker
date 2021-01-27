@@ -1,10 +1,11 @@
 import React from "react";
 import Timer from "../../components/Timer/Timer";
-import SessionsProgress from "../../components/SessionsProgress/SessionsProgress";
-import classes from "./TimerPage.module.scss";
 import { connect } from "react-redux";
+import { useStyles } from "./styles";
 
 function TimerPage({ session, status }) {
+  const classes = useStyles();
+
   let sessionTitle = "Focus...";
   if (status !== "running" || session.endsWith("break")) {
     sessionTitle = "It's time to work!";
@@ -14,9 +15,7 @@ function TimerPage({ session, status }) {
 
   return (
     <div className={classes.TimerPage}>
-      <SessionsProgress />
-
-      <h2>{sessionTitle}</h2>
+      <h2 className={classes.h2}>{sessionTitle}</h2>
 
       <Timer />
     </div>

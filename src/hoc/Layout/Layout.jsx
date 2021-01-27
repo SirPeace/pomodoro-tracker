@@ -1,5 +1,4 @@
 import React from "react";
-import classes from "./Layout.module.scss";
 import { Backdrop, Drawer } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
@@ -9,10 +8,26 @@ import ApplicationBar from "../../components/ApplicationBar/ApplicationBar";
 import TaskManager from "../../components/TaskManager/TaskManager";
 
 const useStyles = makeStyles(theme => ({
+  Layout: {
+    backgroundColor: "#fdfdfd",
+    display: "flex",
+    flexDirection: "column",
+    height: "100vh",
+  },
+
+  body: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "flex-start",
+    flexGrow: 1,
+    height: "100%",
+  },
+
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
     color: "#fff",
   },
+
   paperDrawer: {
     minWidth: 280,
     top: 65, // TODO: Make this value depend on AppBar height
@@ -20,7 +35,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function Layout({ drawer, setDrawer, popup, setPopup, children }) {
-  const styles = useStyles();
+  const classes = useStyles();
 
   const handleBackdropClick = event => {
     if (!event.target.closest("#settings-popup")) {
@@ -33,7 +48,7 @@ function Layout({ drawer, setDrawer, popup, setPopup, children }) {
       <ApplicationBar />
       <Backdrop
         open={!!popup}
-        className={styles.backdrop}
+        className={classes.backdrop}
         onClick={e => handleBackdropClick(e)}
       >
         <SettingsPopup id="settings-popup" />
@@ -44,7 +59,7 @@ function Layout({ drawer, setDrawer, popup, setPopup, children }) {
           open={!!drawer}
           anchor="right"
           variant="persistent"
-          classes={{ paper: styles.paperDrawer }}
+          classes={{ paper: classes.paperDrawer }}
         >
           <TaskManager />
         </Drawer>
