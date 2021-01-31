@@ -9,6 +9,23 @@ import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import rootReducer from "./store/reducers/rootReducer";
 
+const registerServiceWorker = () => {
+  if (!("serviceWorker" in navigator)) {
+    console.log("Service worker is not supported");
+    return;
+  }
+
+  navigator.serviceWorker
+    .register("/service-worker.js")
+    .then(registration =>
+      console.log("Service Worker registered! Scope is: ", registration.scope)
+    )
+    .catch(error =>
+      console.error("Service Worker registration error: ", error.message)
+    );
+};
+
+// Redux devtools register
 const composeEnhancers =
   typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
@@ -36,3 +53,4 @@ ReactDOM.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+registerServiceWorker();

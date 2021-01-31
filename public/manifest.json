@@ -4,19 +4,19 @@
   "description": "An efficient and convinient, but also simple work/rest tracker that uses well-known Pomodoro technic",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "src": "icons/favicon-64.png",
+      "sizes": "64x64",
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "icons/favicon-192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "icons/favicon-310.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "310x310"
     }
   ],
   "start_url": ".",
