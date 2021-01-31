@@ -1,6 +1,6 @@
 {
   "short_name": "Pomodoro Tracker",
-  "name": "Create React App Sample",
+  "name": "Pomodoro Tracker",
   "description": "An efficient and convinient, but also simple work/rest tracker that uses well-known Pomodoro technic",
   "icons": [
     {
@@ -19,8 +19,9 @@
       "sizes": "310x310"
     }
   ],
-  "start_url": ".",
-  "display": "fullscreen",
+  "start_url": "/",
+  "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+  "orientation": "portrait"
 }
