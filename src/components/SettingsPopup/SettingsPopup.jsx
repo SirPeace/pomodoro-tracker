@@ -1,20 +1,23 @@
-import {
-  Paper,
-  TextField,
-  InputAdornment,
-  Grid,
-  Button,
-} from "@material-ui/core";
+import { Paper, Grid, Button } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import React from "react";
 import { connect } from "react-redux";
 import { useStyles } from "./styles";
 import { setPopup } from "../../store/actions/layout";
 import { setConfiguration } from "../../store/actions/sessions";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import FormControl from "./FormControl/FormControl";
+
+// function validateInput(value) {
+//   if (value.match(/\D/)) return false;
+//   if (+value < 0) value = 0;
+
+//   return +value;
+// }
 
 function SettingsPopup({
-  id,
-
   shortBreakDuration,
   longBreakDuration,
   workSessionDuration,
@@ -23,50 +26,66 @@ function SettingsPopup({
   closePopup,
   setConfiguration,
 }) {
-  const [formControls, setFormControls] = React.useState({
-    work_session: {
-      value: workSessionDuration,
-    },
-    short_break: {
-      value: shortBreakDuration,
-    },
-    long_break: {
-      value: longBreakDuration,
-    },
-    work_sessions_before_long_break: {
-      value: workSessionsCountBeforeLongBreak,
-    },
-  });
-
   const classes = useStyles();
 
-  const handleFormSubmit = event => {
+  const schema = yup.object().shape({
+    work_session: yup
+      .number()
+      .transform((v, ov) => (ov === "" ? undefined : v))
+      .integer("Must be an integer")
+      .positive("Must be a positive number")
+      .moreThan(19, "Must be equal or more than 20")
+      .lessThan(121, "Must be equal or less than 120")
+      .required("Must be filled"),
+
+    short_break: yup
+      .number()
+      .transform((v, ov) => (ov === "" ? undefined : v))
+      .integer("Must be an integer")
+      .positive("Must be a positive number")
+      .moreThan(4, "Must be equal or more than 5")
+      .lessThan(31, "Must be equal or less than 30")
+      .required("Must be filled"),
+
+    long_break: yup
+      .number()
+      .transform((v, ov) => (ov === "" ? undefined : v))
+      .integer("Must be an integer")
+      .positive("Must be a positive number")
+      .moreThan(9, "Must be equal or more than 10")
+      .lessThan(61, "Must be equal or less than 60")
+      .required("Must be filled"),
+
+    work_sessions_before_long_break: yup
+      .number()
+      .transform((v, ov) => (ov === "" ? undefined : v))
+      .integer("Must be an integer")
+      .positive("Must be a positive number")
+      .moreThan(1, "Must be equal or more than 2")
+      .lessThan(11, "Must be equal or less than 10")
+      .required("Must be filled"),
+  });
+
+  const { register, handleSubmit, errors } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const handleFormSubmit = (data, event) => {
     event.preventDefault();
 
     // TODO: Save settings to the state
     setConfiguration({
-      workSessionDuration: formControls.work_session.value,
-      shortBreakDuration: formControls.short_break.value,
-      longBreakDuration: formControls.long_break.value,
-      workSessionsCountBeforeLongBreak:
-        formControls.work_sessions_before_long_break.value,
+      workSessionDuration: data.work_session,
+      shortBreakDuration: data.short_break,
+      longBreakDuration: data.long_break,
+      workSessionsCountBeforeLongBreak: data.work_sessions_before_long_break,
     });
 
     closePopup();
   };
 
-  const changeFormControl = (name, value) => {
-    setFormControls({
-      ...formControls,
-      [name]: {
-        ...formControls.name,
-        value,
-      },
-    });
-  };
-
   return (
-    <Paper elevation="1" className={classes.SettingsPopup} id={id}>
+    <Paper elevation="1" className={classes.SettingsPopup} id="settings-popup">
       <header className={classes.header}>
         <CloseIcon
           className={classes.closeIcon}
@@ -74,94 +93,54 @@ function SettingsPopup({
         />
       </header>
 
-      <form className={classes.body}>
+      <form className={classes.body} onSubmit={handleSubmit(handleFormSubmit)}>
         <Grid container spacing={5}>
           <Grid item xs={12}>
-            <TextField
+            <FormControl
               name="work_session"
-              className={classes.TextField}
-              label="Work session"
+              label="Work Session"
               type="number"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              value={formControls.work_session.value}
-              onChange={e => changeFormControl(e.target.name, e.target.value)}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">Minutes</InputAdornment>
-                ),
-                className: classes.TextField__input,
-              }}
-              InputLabelProps={{
-                className: classes.TextField__label,
-              }}
+              defaultValue={workSessionDuration}
+              inputRef={register}
+              error={errors.work_session}
+              helperText={errors.work_session?.message}
+              units="Minutes"
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField
+            <FormControl
               name="short_break"
-              className={classes.TextField}
               label="Short break"
               type="number"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              value={formControls.short_break.value}
-              onChange={e => changeFormControl(e.target.name, e.target.value)}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">Minutes</InputAdornment>
-                ),
-                className: classes.TextField__input,
-              }}
-              InputLabelProps={{
-                className: classes.TextField__label,
-              }}
+              defaultValue={shortBreakDuration}
+              inputRef={register}
+              error={errors.short_break}
+              helperText={errors.short_break?.message}
+              units="Minutes"
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField
+            <FormControl
               name="long_break"
-              className={classes.TextField}
               label="Long break"
               type="number"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              value={formControls.long_break.value}
-              onChange={e => changeFormControl(e.target.name, e.target.value)}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">Minutes</InputAdornment>
-                ),
-                className: classes.TextField__input,
-              }}
-              InputLabelProps={{
-                className: classes.TextField__label,
-              }}
+              defaultValue={longBreakDuration}
+              inputRef={register}
+              error={errors.long_break}
+              helperText={errors.long_break?.message}
+              units="Minutes"
             />
           </Grid>
           <Grid item xs={12}>
-            <TextField
+            <FormControl
               name="work_sessions_before_long_break"
-              className={classes.TextField}
               label="Work sessions before long break"
               type="number"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              value={formControls.work_sessions_before_long_break.value}
-              onChange={e => changeFormControl(e.target.name, e.target.value)}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">Count</InputAdornment>
-                ),
-                className: classes.TextField__input,
-              }}
-              InputLabelProps={{
-                className: classes.TextField__label,
-              }}
+              defaultValue={workSessionsCountBeforeLongBreak}
+              inputRef={register}
+              error={errors.work_sessions_before_long_break}
+              helperText={errors.work_sessions_before_long_break?.message}
+              units="Count"
             />
           </Grid>
           <Grid item xs={12}>
@@ -170,7 +149,6 @@ function SettingsPopup({
               variant="contained"
               color="primary"
               className={classes.submitButton}
-              onClick={event => handleFormSubmit(event)}
             >
               Save changes
             </Button>

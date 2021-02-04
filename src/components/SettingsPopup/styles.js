@@ -33,18 +33,6 @@ export const useStyles = makeStyles(theme => ({
     padding: 20,
   },
 
-  TextField: {
-    width: "100%",
-  },
-
-  TextField__input: {
-    padding: 5,
-  },
-
-  TextField__label: {
-    fontSize: 20,
-  },
-
   submitButton: {
     width: "100%",
     padding: "10px 0",
