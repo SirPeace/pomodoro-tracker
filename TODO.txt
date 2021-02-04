@@ -11,12 +11,15 @@
   - Keep a list of completed tasks
 + Rewrite all styling in JSS
 ~ Make same color schema in all components
++ Validate configuration input with react-hook-form library
++ Make a separate from the SettingsPopup FormControl component
+~ Make timer button component with feel like in Pomofocus
+~ Don't allow to reset or stop the tracker before holding the button
+- Implement reset technic in the configuration
 
 -------------------
 
-Validate configuration input (don't allow to enter negative numbers)
-Don't allow to reset or stop the tracker before holding the button
-Change timer buttons look and bind their color due to the session
+Remove circle progress on reset and finish(with some animation)
 Make PWA functionality:
   - Sound push notifications
   - Work without internet (register service worker)
@@ -27,3 +30,4 @@ Change all component colors to match with current session color
 Add a loading screen and smooth fade-in for slow internet
 Motivational phrases and quotes in the screen corner
 Applause for each work session in pretty modal window
+Add configuration presets
