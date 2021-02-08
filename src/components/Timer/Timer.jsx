@@ -1,6 +1,5 @@
-import React from "react";
-import { Button } from "@material-ui/core";
-import { connect } from "react-redux";
+import React from "react"
+import { connect } from "react-redux"
 import {
   pauseTimer,
   resumeTimer,
@@ -8,12 +7,16 @@ import {
   setTime,
   startTimer,
   stopTimer,
-} from "../../store/actions/timer";
-import { resetSessionOrder } from "../../store/actions/sessions";
-import { useStyles } from "./styles";
+} from "../../store/actions/timer"
+import { resetSessionOrder } from "../../store/actions/sessions"
+import { useStyles } from "./styles"
+import { useStyles as useBtnStyles } from "./TimerControls/styles"
+import TimerControls from "./TimerControls/TimerControls"
+
+export const TimerContext = React.createContext()
 
 function Timer({
-  // timer
+  // --- timer ---
   time,
   status,
   duration,
@@ -25,106 +28,106 @@ function Timer({
   stopTimer,
   setTime,
   setDuration,
+  // --- timer ---
 
-  // sessions
+  // --- sessions ---
   session,
   currentSessionId,
   configuration,
 
   resetSessionOrder,
+  // --- sessions ---
 }) {
-  const classes = useStyles();
-  const [isBtnLocked, setIsBtnLocked] = React.useState(false);
+  const classes = useStyles()
+  const btnClasses = useBtnStyles()
 
-  const radius = 150;
-  const circumference = 2 * Math.PI * radius;
+  const radius = 150
+  const circumference = 2 * Math.PI * radius
 
-  const [offset, setOffset] = React.useState(circumference);
-  const offsetRef = circumference;
+  const [offset, setOffset] = React.useState(circumference)
+
+  const [isBtnLocked, setIsBtnLocked] = React.useState(false)
 
   const playAnimation = () => {
-    let start = performance.now();
+    let start = performance.now()
 
     requestAnimationFrame(function animate(time) {
-      //* Counted correctly apart from a slight measurement error
-      window.animationProgress = (time - start + timePassed) / duration;
+      window.animationProgress = (time - start + timePassed) / duration
 
-      if (window.animationProgress >= 0.998) window.animationProgress = 1;
+      if (window.animationProgress >= 0.998) window.animationProgress = 1
 
-      setOffset(offsetRef + offsetRef * window.animationProgress);
+      setOffset(circumference + circumference * window.animationProgress)
 
       if (window.animationProgress < 1) {
-        window.animationID = requestAnimationFrame(animate);
+        window.animationID = requestAnimationFrame(animate)
       }
-    });
-  };
+    })
+  }
 
   const handleTimerStart = () => {
-    if (isBtnLocked) return;
+    if (isBtnLocked) return
     else {
-      setIsBtnLocked(true);
-      window.setTimeout(setIsBtnLocked.bind(null, false), 1000);
+      setIsBtnLocked(true)
+      window.setTimeout(setIsBtnLocked.bind(null, false), 1000)
     }
 
-    setOffset(circumference);
-
-    startTimer();
-    playAnimation();
-  };
+    setOffset(circumference)
+    startTimer()
+    playAnimation()
+  }
 
   const handleTimerResume = () => {
-    if (isBtnLocked) return;
+    if (isBtnLocked) return
     else {
-      setIsBtnLocked(true);
-      window.setTimeout(setIsBtnLocked.bind(null, false), 1000);
+      setIsBtnLocked(true)
+      window.setTimeout(setIsBtnLocked.bind(null, false), 1000)
     }
 
-    resumeTimer();
-    playAnimation();
-  };
+    resumeTimer()
+    playAnimation()
+  }
 
   const handleTimerPause = () => {
-    if (isBtnLocked) return;
+    if (isBtnLocked) return
     else {
-      setIsBtnLocked(true);
-      window.setTimeout(setIsBtnLocked.bind(null, false), 1000);
+      setIsBtnLocked(true)
+      window.setTimeout(setIsBtnLocked.bind(null, false), 1000)
     }
 
-    pauseTimer();
-  };
+    pauseTimer()
+  }
 
   const handleTimerStop = () => {
-    stopTimer();
-
-    setOffset(circumference);
-  };
+    stopTimer()
+    setOffset(circumference)
+  }
 
   const handleTimerReset = () => {
-    handleTimerStop();
-    resetSessionOrder();
-  };
+    handleTimerStop()
+    resetSessionOrder()
+  }
 
   // Change timer's time and duration according to the current session
   React.useEffect(() => {
-    let duration = "";
+    let duration = ""
 
-    if (session === "work_session") duration = "workSessionDuration";
-    else if (session === "short_break") duration = "shortBreakDuration";
-    else duration = "longBreakDuration";
+    if (session === "work_session") duration = "workSessionDuration"
+    else if (session === "short_break") duration = "shortBreakDuration"
+    else duration = "longBreakDuration"
 
-    setTime(configuration[duration], "m");
-    setDuration(configuration[duration], "m");
-  }, [circumference, session, configuration, setTime, setDuration]);
+    setTime(configuration[duration], "m")
+    setDuration(configuration[duration], "m")
+  }, [circumference, session, configuration, setTime, setDuration])
 
   // Change elements color according to the current session
-  let sessionProgressClass = "";
-  let sessionButtonClass = "";
+  let sessionProgressClass = ""
+  let sessionButtonClass = ""
   if (session === "short_break") {
-    sessionProgressClass = classes.circle__progress_short_break;
-    sessionButtonClass = classes.controls__startButton_short_break;
+    sessionProgressClass = classes.circle__progress_short_break
+    sessionButtonClass = btnClasses.startButton_short_break
   } else if (session === "long_break") {
-    sessionProgressClass = classes.circle__progress_long_break;
-    sessionButtonClass = classes.controls__startButton_long_break;
+    sessionProgressClass = classes.circle__progress_long_break
+    sessionButtonClass = btnClasses.startButton_long_break
   }
 
   return (
@@ -143,78 +146,28 @@ function Timer({
           />
         </svg>
       </div>
-
-      <div className={classes.controls}>
-        {status === "running" ? (
-          <>
-            <Button
-              variant="contained"
-              className={`${classes.controls__button} ${classes.controls__pauseButton}`}
-              onClick={handleTimerPause}
-              disabled={isBtnLocked}
-            >
-              Pause
-            </Button>
-            <Button
-              variant="contained"
-              className={`${classes.controls__button} ${classes.controls__stopButton}`}
-              onClick={handleTimerStop}
-            >
-              Stop
-            </Button>
-          </>
-        ) : status === "paused" ? (
-          <>
-            <Button
-              variant="contained"
-              className={`${classes.controls__button} ${classes.controls__startButton} ${sessionButtonClass}`}
-              onClick={handleTimerResume}
-              disabled={isBtnLocked}
-            >
-              Resume
-            </Button>
-            <Button
-              variant="contained"
-              className={`${classes.controls__button} ${classes.controls__stopButton}`}
-              onClick={handleTimerStop}
-            >
-              Stop
-            </Button>
-          </>
-        ) : currentSessionId > 0 ? (
-          <>
-            <Button
-              variant="contained"
-              className={`${classes.controls__button} ${classes.controls__startButton} ${sessionButtonClass}`}
-              onClick={handleTimerStart}
-            >
-              Start
-            </Button>
-            <Button
-              variant="contained"
-              className={`${classes.controls__button} ${classes.controls__pauseButton}`}
-              onClick={handleTimerReset}
-            >
-              Reset
-            </Button>
-          </>
-        ) : (
-          <Button
-            variant="contained"
-            className={`${classes.controls__button} ${classes.controls__startButton} ${sessionButtonClass}`}
-            onClick={handleTimerStart}
-          >
-            Start
-          </Button>
-        )}
-      </div>
+      <TimerContext.Provider
+        value={{
+          resetTimer: handleTimerReset,
+          stopTimer: handleTimerStop,
+          pauseTimer: handleTimerPause,
+          resumeTimer: handleTimerResume,
+          startTimer: handleTimerStart,
+          timerStatus: status,
+          sessionID: currentSessionId,
+          session,
+          sessionClass: sessionButtonClass,
+          btnLock: isBtnLocked,
+        }}
+      >
+        <TimerControls />
+      </TimerContext.Provider>
     </div>
-  );
+  )
 }
 
 const mapStateToProps = state => ({
   // timer
-  animationID: state.timer.animationID,
   duration: state.timer.duration,
   time: state.timer.time,
   status: state.timer.status,
@@ -224,7 +177,7 @@ const mapStateToProps = state => ({
   session: state.sessions.order[state.sessions.current],
   currentSessionId: state.sessions.current,
   configuration: state.sessions.configuration,
-});
+})
 
 const mapDispatchToProps = dispatch => ({
   // timer
@@ -237,6 +190,6 @@ const mapDispatchToProps = dispatch => ({
 
   // sessions
   resetSessionOrder: () => dispatch(resetSessionOrder()),
-});
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(Timer);
+export default connect(mapStateToProps, mapDispatchToProps)(Timer)
