@@ -66,7 +66,6 @@ function SettingsPopup({
   const handleFormSubmit = (data, event) => {
     event.preventDefault()
 
-    // TODO: Save settings to the state
     setConfiguration({
       workSessionDuration: data.work_session,
       shortBreakDuration: data.short_break,
