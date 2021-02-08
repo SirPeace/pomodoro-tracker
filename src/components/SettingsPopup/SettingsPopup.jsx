@@ -1,21 +1,14 @@
-import { Paper, Grid, Button } from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
-import React from "react";
-import { connect } from "react-redux";
-import { useStyles } from "./styles";
-import { setPopup } from "../../store/actions/layout";
-import { setConfiguration } from "../../store/actions/sessions";
-import { useForm } from "react-hook-form";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import FormControl from "./FormControl/FormControl";
-
-// function validateInput(value) {
-//   if (value.match(/\D/)) return false;
-//   if (+value < 0) value = 0;
-
-//   return +value;
-// }
+import { Paper, Grid, Button } from "@material-ui/core"
+import CloseIcon from "@material-ui/icons/Close"
+import React from "react"
+import { connect } from "react-redux"
+import { useStyles } from "./styles"
+import { setPopup } from "../../store/actions/layout"
+import { setConfiguration } from "../../store/actions/sessions"
+import { useForm } from "react-hook-form"
+import * as yup from "yup"
+import { yupResolver } from "@hookform/resolvers/yup"
+import FormControl from "./FormControl/FormControl"
 
 function SettingsPopup({
   shortBreakDuration,
@@ -26,7 +19,7 @@ function SettingsPopup({
   closePopup,
   setConfiguration,
 }) {
-  const classes = useStyles();
+  const classes = useStyles()
 
   const schema = yup.object().shape({
     work_session: yup
@@ -64,14 +57,14 @@ function SettingsPopup({
       .moreThan(1, "Must be equal or more than 2")
       .lessThan(11, "Must be equal or less than 10")
       .required("Must be filled"),
-  });
+  })
 
   const { register, handleSubmit, errors } = useForm({
     resolver: yupResolver(schema),
-  });
+  })
 
   const handleFormSubmit = (data, event) => {
-    event.preventDefault();
+    event.preventDefault()
 
     // TODO: Save settings to the state
     setConfiguration({
@@ -79,10 +72,10 @@ function SettingsPopup({
       shortBreakDuration: data.short_break,
       longBreakDuration: data.long_break,
       workSessionsCountBeforeLongBreak: data.work_sessions_before_long_break,
-    });
+    })
 
-    closePopup();
-  };
+    closePopup()
+  }
 
   return (
     <Paper elevation="1" className={classes.SettingsPopup} id="settings-popup">
@@ -156,7 +149,7 @@ function SettingsPopup({
         </Grid>
       </form>
     </Paper>
-  );
+  )
 }
 
 const mapStateToProps = state => ({
@@ -165,11 +158,11 @@ const mapStateToProps = state => ({
   workSessionDuration: state.sessions.configuration.workSessionDuration,
   workSessionsCountBeforeLongBreak:
     state.sessions.configuration.workSessionsCountBeforeLongBreak,
-});
+})
 
 const mapDispatchToProps = dispatch => ({
   closePopup: () => dispatch(setPopup(false)),
   setConfiguration: configuration => dispatch(setConfiguration(configuration)),
-});
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(SettingsPopup);
+export default connect(mapStateToProps, mapDispatchToProps)(SettingsPopup)
