@@ -6,16 +6,16 @@ import {
   SET_TIMER_UPDATE_INTERVAL,
   SET_TIME,
   UPDATE_RUNNING_DATA,
-} from "../actions/actionTypes";
+} from "../actions/actionTypes"
 
 /**
- * @property {string} status "running"|"paused"|"static"|"finished"
+ * @property {string} status "static"|"running"|"paused"|"finished"
  * @property {object} time - Left time: "mm:ss"
  * @property {number} duration (in milliseconds) - How long should timer run
  * @property {object} running - How much time did timer run: {checkpoint, passed} (in milliseconds)
  * @property {Interval} timerUpdateInterval - Interval, that updates the time
  * @property {Timeout} timerStopTimeout - Timeout in which timer stops
- * @property {number} animationID - ID for the running requestAnimationFrame
+ * // @property {number} animationID - ID for the running requestAnimationFrame
  */
 const initialState = {
   status: "static",
@@ -29,7 +29,7 @@ const initialState = {
 
   timerUpdateInterval: null,
   timerStopTimeout: null,
-};
+}
 
 const handlers = {
   [SET_DURATION]: (state, { payload }) => ({
@@ -64,9 +64,9 @@ const handlers = {
     },
   }),
   DEFAULT: state => state,
-};
+}
 
 export function timerReducer(state = initialState, action) {
-  const handler = handlers[action.type] || handlers.DEFAULT;
-  return handler(state, action);
+  const handler = handlers[action.type] || handlers.DEFAULT
+  return handler(state, action)
 }

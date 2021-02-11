@@ -1,14 +1,12 @@
 import React from "react"
 import Button from "@material-ui/core/Button"
 import { useStyles } from "../styles"
-import { TimerContext } from "../../Timer"
+import { connect } from "react-redux"
+import { resetTimer, startTimer } from "../../../../store/actions/timer"
+import { resetSessionOrder } from "../../../../store/actions/sessions"
 
-export default function ControlsWithReset() {
+function ControlsWithReset({ sessionClass, startTimer, resetTimer }) {
   const classes = useStyles()
-
-  const { startTimer, resetTimer, sessionClass } = React.useContext(
-    TimerContext
-  )
 
   return (
     <>
@@ -30,3 +28,13 @@ export default function ControlsWithReset() {
     </>
   )
 }
+
+const mapDispatchToProps = dispatch => ({
+  startTimer: () => dispatch(startTimer()),
+  resetTimer: () => {
+    dispatch(resetSessionOrder())
+    dispatch(resetTimer())
+  },
+})
+
+export default connect(null, mapDispatchToProps)(ControlsWithReset)

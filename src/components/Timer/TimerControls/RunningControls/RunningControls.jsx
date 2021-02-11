@@ -1,11 +1,11 @@
 import React from "react"
 import Button from "@material-ui/core/Button"
 import { useStyles } from "../styles"
-import { TimerContext } from "../../Timer"
+import { pauseTimer, stopTimer } from "../../../../store/actions/timer"
+import { connect } from "react-redux"
 
-export default function RunningControls() {
+function RunningControls({ btnLock, pauseTimer, stopTimer }) {
   const classes = useStyles()
-  const { btnLock, pauseTimer, stopTimer } = React.useContext(TimerContext)
 
   return (
     <>
@@ -28,3 +28,10 @@ export default function RunningControls() {
     </>
   )
 }
+
+const mapDispatchToProps = dispatch => ({
+  stopTimer: () => dispatch(stopTimer()),
+  pauseTimer: () => dispatch(pauseTimer()),
+})
+
+export default connect(null, mapDispatchToProps)(RunningControls)

@@ -1,13 +1,11 @@
 import React from "react"
 import Button from "@material-ui/core/Button"
 import { useStyles } from "../styles"
-import { TimerContext } from "../../Timer"
+import { connect } from "react-redux"
+import { resumeTimer, stopTimer } from "../../../../store/actions/timer"
 
-export default function PausedControls() {
+function PausedControls({ sessionClass, btnLock, resumeTimer, stopTimer }) {
   const classes = useStyles()
-  const { resumeTimer, stopTimer, btnLock, sessionClass } = React.useContext(
-    TimerContext
-  )
 
   return (
     <>
@@ -19,6 +17,7 @@ export default function PausedControls() {
       >
         Resume
       </Button>
+
       <Button
         variant="contained"
         className={`${classes.button} ${classes.stopButton}`}
@@ -29,3 +28,10 @@ export default function PausedControls() {
     </>
   )
 }
+
+const mapDispatchToProps = dispatch => ({
+  resumeTimer: () => dispatch(resumeTimer()),
+  stopTimer: () => dispatch(stopTimer()),
+})
+
+export default connect(null, mapDispatchToProps)(PausedControls)

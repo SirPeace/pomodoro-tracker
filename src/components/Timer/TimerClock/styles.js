@@ -1,13 +1,7 @@
 import { makeStyles } from "@material-ui/core"
-
-const timerSize = 320
+import { timerSize } from "../Timer"
 
 export const useStyles = makeStyles(theme => ({
-  Timer: {
-    width: timerSize,
-    marginTop: 20,
-  },
-
   progress: {
     position: "relative",
   },

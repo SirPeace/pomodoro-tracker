@@ -4,30 +4,38 @@ import PausedControls from "./PausedControls/PausedControls"
 import ControlsWithReset from "./ControlsWithReset/ControlsWithReset"
 import { useStyles } from "./styles"
 import { Button } from "@material-ui/core"
-import { TimerContext } from "../Timer"
+import { connect } from "react-redux"
+import { startTimer } from "../../../store/actions/timer"
 
-export default function TimerControls() {
+function TimerControls({ startTimer, timerStatus, sessionID, session }) {
   const classes = useStyles()
-  const { startTimer, timerStatus, sessionID, session } = React.useContext(
-    TimerContext
-  )
+
+  const [btnLock, setBtnLock] = React.useState(false)
 
   // Change elements color according to the current session
   let sessionButtonClass = ""
   if (session === "short_break") {
-    sessionButtonClass = classes.controls__startButton_short_break
+    sessionButtonClass = classes.startButton_short_break
   } else if (session === "long_break") {
-    sessionButtonClass = classes.controls__startButton_long_break
+    sessionButtonClass = classes.startButton_long_break
   }
+
+  // Set lock on "START" and "PAUSE" buttons after click to prevent state abuse
+  React.useEffect(() => {
+    if (timerStatus === "running" || timerStatus === "paused") {
+      setBtnLock(true)
+      setTimeout(setBtnLock.bind(null, false), 1000)
+    }
+  }, [timerStatus])
 
   return (
     <div className={classes.controls}>
       {timerStatus === "running" ? (
-        <RunningControls />
+        <RunningControls btnLock={btnLock} />
       ) : timerStatus === "paused" ? (
-        <PausedControls />
+        <PausedControls sessionClass={sessionButtonClass} btnLock={btnLock} />
       ) : sessionID > 0 ? (
-        <ControlsWithReset />
+        <ControlsWithReset sessionClass={sessionButtonClass} />
       ) : (
         <Button
           variant="contained"
@@ -40,3 +48,15 @@ export default function TimerControls() {
     </div>
   )
 }
+
+const mapStateToProps = state => ({
+  timerStatus: state.timer.status,
+  sessionID: state.sessions.current,
+  session: state.sessions.order[state.sessions.current],
+})
+
+const mapDispatchToProps = dispatch => ({
+  startTimer: () => dispatch(startTimer()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(TimerControls)
