@@ -1,7 +1,7 @@
-import React from "react";
-import TextField from "@material-ui/core/TextField";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import { makeStyles } from "@material-ui/core";
+import React from "react"
+import TextField from "@material-ui/core/TextField"
+import InputAdornment from "@material-ui/core/InputAdornment"
+import { makeStyles } from "@material-ui/core"
 
 const useStyles = makeStyles(() => ({
   TextField: {
@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
   TextField__label: {
     fontSize: 20,
   },
-}));
+}))
 
 export default function FormControl({
   units,
@@ -27,7 +27,7 @@ export default function FormControl({
   label,
   type,
 }) {
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
     <TextField
@@ -53,5 +53,5 @@ export default function FormControl({
       error={error}
       helperText={helperText}
     />
-  );
+  )
 }

@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core"
 
 export const useStyles = makeStyles(theme => ({
   TimerPage: {
@@ -13,8 +13,8 @@ export const useStyles = makeStyles(theme => ({
 
   h2: {
     fontFamily: "Open Sans",
-    color: "#555555",
+    color: "#444",
     fontSize: 32,
     fontWeight: 600,
   },
-}));
+}))

@@ -1,19 +1,22 @@
-import { makeStyles, TextField } from "@material-ui/core";
-import React from "react";
+import { makeStyles, TextField } from "@material-ui/core"
+import React from "react"
 
 const useStyles = makeStyles(theme => ({
-  marginTop: 10,
-  marginBottom: 20,
-}));
+  TaskForm: {
+    marginTop: 5,
+    marginBottom: 10,
+  },
+}))
 
 export default function TaskForm({ addTask }) {
-  const classes = useStyles();
-  const [task, setTask] = React.useState("");
+  const classes = useStyles()
+  const [task, setTask] = React.useState("")
 
   const handleSubmit = event => {
-    event.preventDefault();
-    addTask(task);
-  };
+    event.preventDefault()
+    addTask(task)
+    setTask("")
+  }
 
   return (
     <form className={classes.TaskForm} onSubmit={handleSubmit}>
@@ -24,5 +27,5 @@ export default function TaskForm({ addTask }) {
         onChange={e => setTask(e.target.value)}
       />
     </form>
-  );
+  )
 }
