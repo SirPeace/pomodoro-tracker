@@ -1,13 +1,18 @@
-import React from "react";
-import { AppBar, Toolbar, IconButton, Tooltip } from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
-import SettingsIcon from "@material-ui/icons/Settings";
-import CheckIcon from "@material-ui/icons/Check";
-import Brightness7 from "@material-ui/icons/Brightness7";
-import Brightness3 from "@material-ui/icons/Brightness3";
-import { connect } from "react-redux";
-import { setDrawer, setPopup, setTheme } from "../../store/actions/layout";
-import { useStyles } from "./styles";
+import React from "react"
+import { AppBar, Toolbar, IconButton, Tooltip } from "@material-ui/core"
+import MenuIcon from "@material-ui/icons/Menu"
+import SettingsIcon from "@material-ui/icons/Settings"
+import CheckIcon from "@material-ui/icons/Check"
+import Brightness7 from "@material-ui/icons/Brightness7"
+import Brightness3 from "@material-ui/icons/Brightness3"
+import { connect } from "react-redux"
+import {
+  setPersistantDrawer,
+  setPopup,
+  setTemporaryDrawer,
+  setTheme,
+} from "../../store/actions/layout"
+import { useStyles } from "./styles"
 
 function ApplicationBar({
   sessionLoop,
@@ -16,23 +21,30 @@ function ApplicationBar({
   session,
 
   theme,
-  drawer,
+  pers_drawer,
+  temp_drawer,
 
   setTheme,
   setPopup,
-  setDrawer,
+  setTempDrawer,
+  setPersDrawer,
 }) {
-  const workID = ((sessionLoop - 1) * sessionsCount) / 2 + sessionOrder / 2 + 1;
-  const classes = useStyles();
+  const workID = ((sessionLoop - 1) * sessionsCount) / 2 + sessionOrder / 2 + 1
+  const classes = useStyles()
 
-  let sessionProgress = `Work session (#${workID})`;
-  if (session === "short_break") sessionProgress = "Short break";
-  else if (session === "long_break") sessionProgress = "Long break";
+  let sessionProgress = `Work session (#${workID})`
+  if (session === "short_break") sessionProgress = "Short break"
+  else if (session === "long_break") sessionProgress = "Long break"
 
-  const toggleDrawer = name => {
-    if (drawer === name) setDrawer(false);
-    else setDrawer(name);
-  };
+  const toggleDrawer = (type, name) => {
+    if (type === "p") {
+      if (pers_drawer === name) setPersDrawer(undefined)
+      else setPersDrawer(name)
+    } else if (type === "t") {
+      if (temp_drawer === name) setTempDrawer(undefined)
+      else setTempDrawer(name)
+    }
+  }
 
   return (
     <AppBar
@@ -45,6 +57,7 @@ function ApplicationBar({
           className={classes.menuButton}
           color="inherit"
           aria-label="menu"
+          onClick={() => toggleDrawer("t", "root")}
         >
           <MenuIcon />
         </IconButton>
@@ -84,32 +97,34 @@ function ApplicationBar({
             edge="start"
             color="inherit"
             aria-label="to-do"
-            onClick={() => toggleDrawer("tasks")}
+            onClick={() => toggleDrawer("p", "tasks")}
           >
             <CheckIcon />
           </IconButton>
         </Tooltip>
       </Toolbar>
     </AppBar>
-  );
+  )
 }
 
 const mapStateToProps = state => ({
   // layout
   theme: state.layout.theme,
-  drawer: state.layout.drawer,
+  pers_drawer: state.layout.persistant_drawer,
+  temp_drawer: state.layout.temporary_drawer,
 
   // sessions
   session: state.sessions.order[state.sessions.current],
   sessionOrder: state.sessions.current,
   sessionsCount: state.sessions.order.length,
   sessionLoop: state.sessions.loop,
-});
+})
 
 const mapDispatchToProps = dispatch => ({
   setTheme: theme => dispatch(setTheme(theme)),
   setPopup: name => dispatch(setPopup(name)),
-  setDrawer: name => dispatch(setDrawer(name)),
-});
+  setPersDrawer: name => dispatch(setPersistantDrawer(name)),
+  setTempDrawer: name => dispatch(setTemporaryDrawer(name)),
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(ApplicationBar);
+export default connect(mapStateToProps, mapDispatchToProps)(ApplicationBar)
