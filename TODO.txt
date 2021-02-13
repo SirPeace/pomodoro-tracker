@@ -24,6 +24,7 @@
 
 -------------------
 
+Cover your application with Jest tests
 Remove circle progress on reset and finish(with some animation)
 Goal & streak system like in Duolingo
 Make configuration component in the right Drawer
