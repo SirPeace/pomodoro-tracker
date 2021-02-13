@@ -10,9 +10,14 @@
   - Add description and tags functionality for each task
   - Keep a list of completed tasks
 + Rewrite all styling in JSS
-~ Make same color schema in all components
+~ Make the same color schema in all components
 + Validate configuration input with react-hook-form library
 + Make a separate from the SettingsPopup FormControl component
++ Refactor Timer component
+~ Make PWA functionality:
+  - Sound push notifications
+  + Work without internet (register service worker)
+  + Mobile downloadable version
 ~ Make timer button component with feel like in Pomofocus
 ~ Don't allow to reset or stop the tracker before holding the button
 - Implement reset technic in the configuration
@@ -20,10 +25,6 @@
 -------------------
 
 Remove circle progress on reset and finish(with some animation)
-Make PWA functionality:
-  - Sound push notifications
-  - Work without internet (register service worker)
-  - Mobile downloadable version
 Goal & streak system like in Duolingo
 Make configuration component in the right Drawer
 Change all component colors to match with current session color
