@@ -15,7 +15,6 @@ import {
  * @property {object} running - How much time did timer run: {checkpoint, passed} (in milliseconds)
  * @property {Interval} timerUpdateInterval - Interval, that updates the time
  * @property {Timeout} timerStopTimeout - Timeout in which timer stops
- * // @property {number} animationID - ID for the running requestAnimationFrame
  */
 const initialState = {
   status: "static",
