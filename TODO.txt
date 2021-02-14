@@ -18,7 +18,7 @@
   - Sound push notifications
   + Work without internet (register service worker)
   + Mobile downloadable version
-~ Make timer button component with feel like in Pomofocus [#1] 
++ Make timer button component with feel like in Pomofocus [#1] 
 ~ Don't allow to reset or stop the tracker before holding the button
 - Implement reset technic in the configuration
 
