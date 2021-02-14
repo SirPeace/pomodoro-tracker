@@ -1,13 +1,7 @@
 import { colors, makeStyles } from "@material-ui/core"
 
 export const useStyles = makeStyles(theme => ({
-  controls: {
-    marginTop: 50,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-around",
-    alignItems: "center",
-  },
+  shell: {},
 
   button: {
     width: 200,
