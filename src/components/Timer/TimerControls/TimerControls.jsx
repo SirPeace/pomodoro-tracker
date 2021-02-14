@@ -2,48 +2,36 @@ import React from "react"
 import RunningControls from "./RunningControls/RunningControls"
 import PausedControls from "./PausedControls/PausedControls"
 import ControlsWithReset from "./ControlsWithReset/ControlsWithReset"
-import { useStyles } from "./styles"
-import { Button } from "@material-ui/core"
 import { connect } from "react-redux"
 import { startTimer } from "../../../store/actions/timer"
+import TimerButton from "./TimerButton/TimerButton"
+import { makeStyles } from "@material-ui/core"
 
-function TimerControls({ startTimer, timerStatus, sessionID, session }) {
+const useStyles = makeStyles(() => ({
+  controls: {
+    marginTop: 50,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-around",
+    alignItems: "center",
+  },
+}))
+
+function TimerControls({ startTimer, timerStatus, sessionID }) {
   const classes = useStyles()
-
-  const [btnLock, setBtnLock] = React.useState(false)
-
-  // Change elements color according to the current session
-  let sessionButtonClass = ""
-  if (session === "short_break") {
-    sessionButtonClass = classes.startButton_short_break
-  } else if (session === "long_break") {
-    sessionButtonClass = classes.startButton_long_break
-  }
-
-  // Set lock on "START" and "PAUSE" buttons after click to prevent state abuse
-  React.useEffect(() => {
-    if (timerStatus === "running" || timerStatus === "paused") {
-      setBtnLock(true)
-      setTimeout(setBtnLock.bind(null, false), 1000)
-    }
-  }, [timerStatus])
 
   return (
     <div className={classes.controls}>
       {timerStatus === "running" ? (
-        <RunningControls btnLock={btnLock} />
+        <RunningControls />
       ) : timerStatus === "paused" ? (
-        <PausedControls sessionClass={sessionButtonClass} btnLock={btnLock} />
+        <PausedControls />
       ) : sessionID > 0 ? (
-        <ControlsWithReset sessionClass={sessionButtonClass} />
+        <ControlsWithReset />
       ) : (
-        <Button
-          variant="contained"
-          className={`${classes.button} ${classes.startButton} ${sessionButtonClass}`}
-          onClick={startTimer}
-        >
+        <TimerButton onClick={startTimer} type="start">
           Start
-        </Button>
+        </TimerButton>
       )}
     </div>
   )
@@ -52,7 +40,6 @@ function TimerControls({ startTimer, timerStatus, sessionID, session }) {
 const mapStateToProps = state => ({
   timerStatus: state.timer.status,
   sessionID: state.sessions.current,
-  session: state.sessions.order[state.sessions.current],
 })
 
 const mapDispatchToProps = dispatch => ({

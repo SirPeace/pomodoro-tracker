@@ -1,30 +1,19 @@
 import React from "react"
-import Button from "@material-ui/core/Button"
-import { useStyles } from "../styles"
 import { connect } from "react-redux"
 import { startTimer } from "../../../../store/actions/timer"
 import { setPopup } from "../../../../store/actions/layout"
+import TimerButton from "../TimerButton/TimerButton"
 
-function ControlsWithReset({ sessionClass, startTimer, setResetTimerPopup }) {
-  const classes = useStyles()
-
+function ControlsWithReset({ startTimer, setResetTimerPopup }) {
   return (
     <>
-      <Button
-        variant="contained"
-        className={`${classes.button} ${classes.startButton} ${sessionClass}`}
-        onClick={startTimer}
-      >
+      <TimerButton type="start" onClick={startTimer}>
         Start
-      </Button>
+      </TimerButton>
 
-      <Button
-        variant="contained"
-        className={`${classes.button} ${classes.pauseButton} ${sessionClass}`}
-        onClick={setResetTimerPopup}
-      >
+      <TimerButton type="pause" onClick={setResetTimerPopup}>
         Reset
-      </Button>
+      </TimerButton>
     </>
   )
 }

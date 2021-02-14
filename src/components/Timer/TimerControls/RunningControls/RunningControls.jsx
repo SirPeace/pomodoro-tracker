@@ -1,30 +1,18 @@
 import React from "react"
-import Button from "@material-ui/core/Button"
-import { useStyles } from "../styles"
 import { pauseTimer, stopTimer } from "../../../../store/actions/timer"
 import { connect } from "react-redux"
+import TimerButton from "../TimerButton/TimerButton"
 
-function RunningControls({ btnLock, pauseTimer, stopTimer }) {
-  const classes = useStyles()
-
+function RunningControls({ pauseTimer, stopTimer }) {
   return (
     <>
-      <Button
-        variant="contained"
-        className={`${classes.button} ${classes.pauseButton}`}
-        onClick={pauseTimer}
-        disabled={btnLock}
-      >
+      <TimerButton type="pause" onClick={pauseTimer} locked>
         Pause
-      </Button>
+      </TimerButton>
 
-      <Button
-        variant="contained"
-        className={`${classes.button} ${classes.stopButton}`}
-        onClick={stopTimer}
-      >
+      <TimerButton type="stop" onClick={stopTimer}>
         Stop
-      </Button>
+      </TimerButton>
     </>
   )
 }
