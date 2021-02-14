@@ -57,18 +57,6 @@ export const useStyles = makeStyles(theme => ({
     },
   },
 
-  // pauseButton_holded: {
-  //   "&:before": {
-  //     content: '""',
-  //     position: "absolute",
-  //     top: -3,
-  //     bottom: "100%",
-  //     left: 0,
-  //     right: 0,
-  //     backgroundColor: colors.red[700],
-  //   },
-  // },
-
   stopButton: {
     backgroundColor: colors.red[700],
     color: "#fff",
