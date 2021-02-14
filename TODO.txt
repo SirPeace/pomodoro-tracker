@@ -18,12 +18,13 @@
   - Sound push notifications
   + Work without internet (register service worker)
   + Mobile downloadable version
-~ Make timer button component with feel like in Pomofocus
+~ Make timer button component with feel like in Pomofocus [#1] 
 ~ Don't allow to reset or stop the tracker before holding the button
 - Implement reset technic in the configuration
 
 -------------------
 
+Strange stroke difference between animation, stopTimeout and clock when pause & resume timer
 Cover your application with Jest tests
 Remove circle progress on reset and finish(with some animation)
 Goal & streak system like in Duolingo
