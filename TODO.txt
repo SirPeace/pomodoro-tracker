@@ -15,21 +15,20 @@
 + Make a separate from the SettingsPopup FormControl component
 + Refactor Timer component
 ~ Make PWA functionality:
-  - Sound push notifications
+  - Sound notifications
   + Work without internet (register service worker)
   + Mobile downloadable version
 + Make timer button component with feel like in Pomofocus [#1] 
-~ Don't allow to reset or stop the tracker before holding the button
-- Implement reset technic in the configuration
++ Implement popup confirmation for reset
 
 -------------------
 
 Strange stroke difference between animation, stopTimeout and clock when pause & resume timer
 Cover your application with Jest tests
+Rewrite code on TypeScript
 Remove circle progress on reset and finish(with some animation)
 Goal & streak system like in Duolingo
 Make configuration component in the right Drawer
-Change all component colors to match with current session color
 Add a loading screen and smooth fade-in for slow internet
 Motivational phrases and quotes in the screen corner
 Applause for each work session in pretty modal window
