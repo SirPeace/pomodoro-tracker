@@ -1,6 +1,6 @@
-import { colors, makeStyles } from "@material-ui/core";
+import { colors, makeStyles } from "@material-ui/core"
 
-export const useStyles = makeStyles(() => ({
+export const useStyles = makeStyles(theme => ({
   body: {
     padding: 40,
   },
@@ -30,10 +30,24 @@ export const useStyles = makeStyles(() => ({
     },
   },
 
+  acceptButton_short_break: {
+    background_color: theme.palette.short_break.main,
+    "&:hover": {
+      background_color: theme.palette.short_break.dark,
+    },
+  },
+
+  acceptButton_long_break: {
+    background_color: theme.palette.long_break.main,
+    "&:hover": {
+      background_color: theme.palette.long_break.dark,
+    },
+  },
+
   dismissButton: {
     backgroundColor: colors.grey[300],
     "&:hover": {
       backgroundColor: colors.grey[400],
     },
   },
-}));
+}))

@@ -27,21 +27,9 @@ function TimerButton({
     }
   }, [timerStatus, locked])
 
-  // Change elements color according to the current session
-  if (session === "short_break") {
-    appliedClasses.push(classes.startButton_short_break)
-  } else if (session === "long_break") {
-    appliedClasses.push(classes.startButton_long_break)
-  }
-
   // Set proper class for each button type
   if (type === "start") {
     appliedClasses.push(classes.startButton)
-    if (session === "short_break") {
-      appliedShadowClasses.push(classes.shadow_short_break)
-    } else if (session === "long_break") {
-      appliedShadowClasses.push(classes.shadow_long_break)
-    }
   } else if (type === "pause") {
     appliedClasses.push(classes.pauseButton)
     appliedShadowClasses.push(classes.shadow_pause)
@@ -52,11 +40,11 @@ function TimerButton({
 
   return (
     <div className={classes.body}>
-      <div className={appliedShadowClasses.join(" ")}></div>
+      <div className={`${appliedShadowClasses.join(" ")}`}></div>
       <Button
         disabled={btnLock}
         variant="contained"
-        className={appliedClasses.join(" ")}
+        className={`${appliedClasses.join(" ")}`}
         onClick={onClick}
       >
         {children}

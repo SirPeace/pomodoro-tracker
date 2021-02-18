@@ -1,4 +1,4 @@
-const { makeStyles } = require("@material-ui/core");
+const { makeStyles } = require("@material-ui/core")
 
 export const useStyles = makeStyles(theme => ({
   SettingsPopup: {
@@ -35,6 +35,6 @@ export const useStyles = makeStyles(theme => ({
 
   submitButton: {
     width: "100%",
-    padding: "10px 0",
+    padding: "12px 0",
   },
-}));
+}))

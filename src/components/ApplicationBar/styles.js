@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core"
 
 export const useStyles = makeStyles(theme => ({
   ApplicationBar: {
@@ -7,13 +7,13 @@ export const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.primary,
   },
 
-  short_break: {
-    backgroundColor: theme.palette.short_break.main,
-  },
+  // ApplicationBar_short_break: {
+  //   backgroundColor: theme.palette.short_break.main,
+  // },
 
-  long_break: {
-    backgroundColor: theme.palette.long_break.main,
-  },
+  // ApplicationBar_long_break: {
+  //   backgroundColor: theme.palette.long_break.main,
+  // },
 
   menuButton: {
     marginRight: 20,
@@ -39,4 +39,4 @@ export const useStyles = makeStyles(theme => ({
     fontSize: 32,
     fontWeight: 300,
   },
-}));
+}))

@@ -10,14 +10,6 @@ function TimerClock({ session, timePassed, duration, status, time }) {
 
   const [offset, setOffset] = React.useState(circumference)
 
-  // Change elements color according to the current session
-  let sessionProgressClass = ""
-  if (session === "short_break") {
-    sessionProgressClass = classes.circle__progress_short_break
-  } else if (session === "long_break") {
-    sessionProgressClass = classes.circle__progress_long_break
-  }
-
   React.useEffect(() => {
     if (status === "static") {
       setOffset(circumference)
@@ -50,12 +42,12 @@ function TimerClock({ session, timePassed, duration, status, time }) {
   }, [status, duration, timePassed, circumference])
 
   return (
-    <div className={classes.progress}>
+    <div className={classes.wrapper}>
       <span className={classes.counter}>{time}</span>
       <svg>
         <circle cx="50%" cy="50%" r={radius} />
         <circle
-          className={`${classes.circle__progress} ${sessionProgressClass}`}
+          className={`${classes.progress}`}
           cx="50%"
           cy="50%"
           r={radius}
