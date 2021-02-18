@@ -20,14 +20,6 @@ export const useStyles = makeStyles(theme => ({
     borderRadius: 4,
   },
 
-  shadow_short_break: {
-    background: theme.palette.short_break.dark,
-  },
-
-  shadow_long_break: {
-    background: theme.palette.long_break.dark,
-  },
-
   shadow_pause: {
     background: colors.grey[600],
   },
@@ -56,22 +48,6 @@ export const useStyles = makeStyles(theme => ({
 
     "&:hover": {
       backgroundColor: theme.palette.primary.dark,
-    },
-  },
-
-  startButton_short_break: {
-    background: theme.palette.short_break.main,
-
-    "&:hover": {
-      backgroundColor: theme.palette.short_break.dark,
-    },
-  },
-
-  startButton_long_break: {
-    background: theme.palette.long_break.main,
-
-    "&:hover": {
-      backgroundColor: theme.palette.long_break.dark,
     },
   },
 

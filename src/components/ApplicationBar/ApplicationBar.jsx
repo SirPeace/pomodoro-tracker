@@ -1,5 +1,12 @@
 import React from "react"
-import { AppBar, Toolbar, IconButton, Tooltip } from "@material-ui/core"
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Tooltip,
+  useTheme,
+  ThemeProvider,
+} from "@material-ui/core"
 import MenuIcon from "@material-ui/icons/Menu"
 import SettingsIcon from "@material-ui/icons/Settings"
 import CheckIcon from "@material-ui/icons/Check"
@@ -32,6 +39,11 @@ function ApplicationBar({
   const workID = ((sessionLoop - 1) * sessionsCount) / 2 + sessionOrder / 2 + 1
   const classes = useStyles()
 
+  // const sessionClass = useSessionClass(session, {
+  //   short_break: classes.ApplicationBar_short_break,
+  //   long_break: classes.ApplicationBar_long_break,
+  // })
+
   let sessionProgress = `Work session (#${workID})`
   if (session === "short_break") sessionProgress = "Short break"
   else if (session === "long_break") sessionProgress = "Long break"
@@ -46,64 +58,65 @@ function ApplicationBar({
     }
   }
 
+  const sessionTheme = useTheme()
+
   return (
-    <AppBar
-      position="static"
-      className={`${classes.ApplicationBar} ${classes[session] || ""}`}
-    >
-      <Toolbar>
-        <IconButton
-          edge="start"
-          className={classes.menuButton}
-          color="inherit"
-          aria-label="menu"
-          onClick={() => toggleDrawer("t", "root")}
-        >
-          <MenuIcon />
-        </IconButton>
-
-        <div className={classes.title}>
-          <h1 className={classes.appTitle}>Pomodoro Tracker</h1>
-          <span className={classes.separator}>&nbsp;|&nbsp;</span>
-          <span className={classes.sessionProgress}>{sessionProgress}</span>
-        </div>
-
-        <Tooltip title="Toggle theme" arrow>
+    <ThemeProvider theme={sessionTheme}>
+      <AppBar position="static" className={`${classes.ApplicationBar}`}>
+        <Toolbar>
           <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
-            onClick={() => setTheme(theme)}
+            onClick={() => toggleDrawer("t", "root")}
           >
-            {theme === "light" ? <Brightness7 /> : <Brightness3 />}
+            <MenuIcon />
           </IconButton>
-        </Tooltip>
 
-        <Tooltip title="Settings" arrow>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="settings"
-            onClick={() => setPopup("settings")}
-          >
-            <SettingsIcon />
-          </IconButton>
-        </Tooltip>
+          <div className={classes.title}>
+            <h1 className={classes.appTitle}>Pomodoro Tracker</h1>
+            <span className={classes.separator}>&nbsp;|&nbsp;</span>
+            <span className={classes.sessionProgress}>{sessionProgress}</span>
+          </div>
 
-        <Tooltip title="Tasks" arrow>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="to-do"
-            onClick={() => toggleDrawer("p", "tasks")}
-          >
-            <CheckIcon />
-          </IconButton>
-        </Tooltip>
-      </Toolbar>
-    </AppBar>
+          <Tooltip title="Toggle theme" arrow>
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="menu"
+              onClick={() => setTheme(theme)}
+            >
+              {theme === "light" ? <Brightness7 /> : <Brightness3 />}
+            </IconButton>
+          </Tooltip>
+
+          <Tooltip title="Settings" arrow>
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="settings"
+              onClick={() => setPopup("settings")}
+            >
+              <SettingsIcon />
+            </IconButton>
+          </Tooltip>
+
+          <Tooltip title="Tasks" arrow>
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="to-do"
+              onClick={() => toggleDrawer("p", "tasks")}
+            >
+              <CheckIcon />
+            </IconButton>
+          </Tooltip>
+        </Toolbar>
+      </AppBar>
+    </ThemeProvider>
   )
 }
 

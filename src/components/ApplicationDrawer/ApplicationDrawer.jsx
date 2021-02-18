@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 import { setTemporaryDrawer } from "../../store/actions/layout"
 import { useStyles } from "./styles"
 
-function ApplicationDrawer({ closeDrawer }) {
+function ApplicationDrawer({ session, closeDrawer }) {
   const classes = useStyles()
 
   const links = [
@@ -33,14 +33,14 @@ function ApplicationDrawer({ closeDrawer }) {
   return (
     <div className={classes.ApplicationDrawer}>
       <h2>
-        <Link to="/" className={classes.logo} onClick={closeDrawer}>
+        <Link to="/" className={`${classes.logo}`} onClick={closeDrawer}>
           Pomodoro Tracker
         </Link>
       </h2>
 
       {renderLinks()}
 
-      <hr className={classes.hr} />
+      <hr className={`${classes.hr}`} />
 
       <Button
         className={`${classes.install_button} ${classes.button}`}
@@ -52,8 +52,12 @@ function ApplicationDrawer({ closeDrawer }) {
   )
 }
 
+const mapStateToProps = state => ({
+  session: state.sessions.order[state.sessions.current],
+})
+
 const mapDispatchToProps = dispatch => ({
   closeDrawer: () => dispatch(setTemporaryDrawer(undefined)),
 })
 
-export default connect(null, mapDispatchToProps)(ApplicationDrawer)
+export default connect(mapStateToProps, mapDispatchToProps)(ApplicationDrawer)

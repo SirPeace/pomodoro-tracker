@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core"
 import { timerSize } from "../Timer"
 
 export const useStyles = makeStyles(theme => ({
-  progress: {
+  wrapper: {
     position: "relative",
   },
 
@@ -29,18 +29,10 @@ export const useStyles = makeStyles(theme => ({
     },
   },
 
-  circle__progress: {
+  progress: {
     transformOrigin: "center",
     transform: "rotate(-90deg) rotateX(180deg)",
     stroke: theme.palette.primary.main,
     transition: "stroke 0.5s",
-  },
-
-  circle__progress_short_break: {
-    stroke: theme.palette.short_break.main,
-  },
-
-  circle__progress_long_break: {
-    stroke: theme.palette.long_break.main,
   },
 }))

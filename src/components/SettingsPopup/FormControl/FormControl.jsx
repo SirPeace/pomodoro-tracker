@@ -46,6 +46,7 @@ export default function FormControl({
         ),
         className: classes.TextField__input,
       }}
+      // eslint-disable-next-line react/jsx-no-duplicate-props
       InputLabelProps={{
         className: classes.TextField__label,
       }}

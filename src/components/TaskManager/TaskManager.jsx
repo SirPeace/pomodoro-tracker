@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import TaskForm from "./TaskForm/TaskForm"
 import { addTask, deleteTask } from "../../store/actions/tasks"
 import Task from "./Task/Task"
-import { makeStyles } from "@material-ui/core"
+import { makeStyles, ThemeProvider, useTheme } from "@material-ui/core"
 
 const useStyles = makeStyles(theme => ({
   TaskManager: {
@@ -22,18 +22,22 @@ const useStyles = makeStyles(theme => ({
 function TaskManager({ tasks, addTask, deleteTask }) {
   const classes = useStyles()
 
+  const sessionTheme = useTheme()
+
   return (
-    <div className={classes.TaskManager}>
-      <h2 className={classes.h2}>Tasks</h2>
+    <ThemeProvider theme={sessionTheme}>
+      <div className={classes.TaskManager}>
+        <h2 className={classes.h2}>Tasks</h2>
 
-      <TaskForm addTask={addTask} />
+        <TaskForm addTask={addTask} />
 
-      <div className={classes.tasks}>
-        {tasks.map((task, i) => (
-          <Task key={i} task={task} deleteTask={deleteTask} />
-        ))}
+        <div className={classes.tasks}>
+          {tasks.map((task, i) => (
+            <Task key={i} task={task} deleteTask={deleteTask} />
+          ))}
+        </div>
       </div>
-    </div>
+    </ThemeProvider>
   )
 }
 
