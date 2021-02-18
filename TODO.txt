@@ -10,7 +10,7 @@
   - Add description and tags functionality for each task
   - Keep a list of completed tasks
 + Rewrite all styling in JSS
-~ Make the same color schema in all components
++ Make the same color schema in all components [#2]
 + Validate configuration input with react-hook-form library
 + Make a separate from the SettingsPopup FormControl component
 + Refactor Timer component
