@@ -4,6 +4,7 @@ import { timerSize } from "../Timer"
 export const useStyles = makeStyles(theme => ({
   wrapper: {
     position: "relative",
+    margin: "50px 0",
   },
 
   counter: {

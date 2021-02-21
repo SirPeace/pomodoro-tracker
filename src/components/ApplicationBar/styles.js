@@ -7,16 +7,12 @@ export const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.primary,
   },
 
-  // ApplicationBar_short_break: {
-  //   backgroundColor: theme.palette.short_break.main,
-  // },
+  barButton: {
+    margin: "0 1px",
+  },
 
-  // ApplicationBar_long_break: {
-  //   backgroundColor: theme.palette.long_break.main,
-  // },
-
-  menuButton: {
-    marginRight: 20,
+  appDrawerButton: {
+    marginRight: 10,
   },
 
   title: {
@@ -24,6 +20,7 @@ export const useStyles = makeStyles(theme => ({
     justifyContent: "flex-start",
     flexGrow: 1,
     alignItems: "center",
+    height: "100%",
   },
 
   appTitle: {
@@ -38,5 +35,9 @@ export const useStyles = makeStyles(theme => ({
   separator: {
     fontSize: 32,
     fontWeight: 300,
+    height: "50%",
+    width: 2,
+    backgroundColor: "#fff",
+    margin: "0 12px",
   },
 }))

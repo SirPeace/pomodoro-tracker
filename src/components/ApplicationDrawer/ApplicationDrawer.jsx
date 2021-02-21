@@ -9,8 +9,9 @@ function ApplicationDrawer({ session, closeDrawer }) {
   const classes = useStyles()
 
   const links = [
+    { to: "/progress", text: "Progress" },
     { to: "/about", text: "About" },
-    { to: "/how-to-use-it", text: "How to use it" },
+    { to: "/how-to-use", text: "How to use it" },
   ]
 
   const renderLinks = () =>
@@ -32,11 +33,11 @@ function ApplicationDrawer({ session, closeDrawer }) {
 
   return (
     <div className={classes.ApplicationDrawer}>
-      <h2>
-        <Link to="/" className={`${classes.logo}`} onClick={closeDrawer}>
+      <h3 className={classes.logo}>
+        <Link to="/" className={classes.logo__link} onClick={closeDrawer}>
           Pomodoro Tracker
         </Link>
-      </h2>
+      </h3>
 
       {renderLinks()}
 

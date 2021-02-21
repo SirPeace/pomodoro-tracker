@@ -21,6 +21,8 @@ import {
 } from "../../store/actions/layout"
 import { useStyles } from "./styles"
 
+const isAppPage = () => window.location.pathname === "/app"
+
 function ApplicationBar({
   sessionLoop,
   sessionsCount,
@@ -36,17 +38,50 @@ function ApplicationBar({
   setTempDrawer,
   setPersDrawer,
 }) {
-  const workID = ((sessionLoop - 1) * sessionsCount) / 2 + sessionOrder / 2 + 1
   const classes = useStyles()
+  const sessionTheme = useTheme()
 
-  // const sessionClass = useSessionClass(session, {
-  //   short_break: classes.ApplicationBar_short_break,
-  //   long_break: classes.ApplicationBar_long_break,
-  // })
+  const workID = ((sessionLoop - 1) * sessionsCount) / 2 + sessionOrder / 2 + 1
+  let sessionProgressMsg = `Work session #${workID}`
+  if (session === "short_break") sessionProgressMsg = "Short break"
+  else if (session === "long_break") sessionProgressMsg = "Long break"
 
-  let sessionProgress = `Work session (#${workID})`
-  if (session === "short_break") sessionProgress = "Short break"
-  else if (session === "long_break") sessionProgress = "Long break"
+  const SessionProgress = isAppPage() && (
+    <>
+      <span className={classes.separator}></span>
+      <span className={classes.sessionProgress}>{sessionProgressMsg}</span>
+    </>
+  )
+
+  const AppControls = isAppPage() && (
+    <>
+      <Tooltip title="Settings" arrow>
+        <IconButton
+          edge="start"
+          className={classes.barButton}
+          color="inherit"
+          aria-label="settings"
+          onClick={() => setPopup("settings")}
+        >
+          <SettingsIcon />
+        </IconButton>
+      </Tooltip>
+
+      <Tooltip title="Tasks" arrow>
+        <IconButton
+          edge="start"
+          className={classes.barButton}
+          color="inherit"
+          aria-label="to-do"
+          onClick={() => toggleDrawer("p", "tasks")}
+        >
+          <CheckIcon />
+        </IconButton>
+      </Tooltip>
+
+      <span className={classes.separator}></span>
+    </>
+  )
 
   const toggleDrawer = (type, name) => {
     if (type === "p") {
@@ -58,15 +93,13 @@ function ApplicationBar({
     }
   }
 
-  const sessionTheme = useTheme()
-
   return (
     <ThemeProvider theme={sessionTheme}>
       <AppBar position="static" className={`${classes.ApplicationBar}`}>
         <Toolbar>
           <IconButton
             edge="start"
-            className={classes.menuButton}
+            className={`${classes.barButton} ${classes.appDrawerButton}`}
             color="inherit"
             aria-label="menu"
             onClick={() => toggleDrawer("t", "root")}
@@ -76,42 +109,19 @@ function ApplicationBar({
 
           <div className={classes.title}>
             <h1 className={classes.appTitle}>Pomodoro Tracker</h1>
-            <span className={classes.separator}>&nbsp;|&nbsp;</span>
-            <span className={classes.sessionProgress}>{sessionProgress}</span>
+            {SessionProgress}
           </div>
 
+          {AppControls}
           <Tooltip title="Toggle theme" arrow>
             <IconButton
               edge="start"
-              className={classes.menuButton}
+              className={classes.barButton}
               color="inherit"
               aria-label="menu"
               onClick={() => setTheme(theme)}
             >
               {theme === "light" ? <Brightness7 /> : <Brightness3 />}
-            </IconButton>
-          </Tooltip>
-
-          <Tooltip title="Settings" arrow>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="settings"
-              onClick={() => setPopup("settings")}
-            >
-              <SettingsIcon />
-            </IconButton>
-          </Tooltip>
-
-          <Tooltip title="Tasks" arrow>
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="to-do"
-              onClick={() => toggleDrawer("p", "tasks")}
-            >
-              <CheckIcon />
             </IconButton>
           </Tooltip>
         </Toolbar>

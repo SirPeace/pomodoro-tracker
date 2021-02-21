@@ -9,11 +9,11 @@ import { makeStyles } from "@material-ui/core"
 
 const useStyles = makeStyles(() => ({
   controls: {
-    marginTop: 50,
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-around",
     alignItems: "center",
+    width: "100%",
   },
 }))
 

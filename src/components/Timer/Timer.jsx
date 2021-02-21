@@ -8,14 +8,22 @@ import TimerClock from "./TimerClock/TimerClock"
 export const timerSize = 320
 const useStyles = makeStyles(theme => ({
   Timer: {
+    marginTop: 100,
     width: timerSize,
-    marginTop: 20,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+
+  motto: {
+    //
   },
 }))
 
 function Timer({
   setTime,
   setDuration,
+  status,
 
   session,
   configuration,
@@ -34,8 +42,19 @@ function Timer({
     setDuration(configuration[duration], "m")
   }, [session, configuration, setTime, setDuration])
 
+  let motto = "Focus..."
+  if (status !== "running" || session.endsWith("break")) {
+    motto = "It's time to work!"
+    if (session === "short_break") {
+      motto = "Take a short break!"
+    } else if (session === "long_break") {
+      motto = "Have a proper rest!"
+    }
+  }
+
   return (
     <div className={classes.Timer}>
+      <h2 className={classes.motto}>{motto}</h2>
       <TimerClock />
       <TimerControls />
     </div>
@@ -43,6 +62,7 @@ function Timer({
 }
 
 const mapStateToProps = state => ({
+  status: state.timer.status,
   session: state.sessions.order[state.sessions.current],
 
   configuration: state.sessions.configuration,

@@ -7,6 +7,12 @@ export const useStyles = makeStyles(theme => ({
   },
 
   logo: {
+    marginTop: "25px 0",
+    fontSize: 22,
+    letterSpacing: 0,
+  },
+
+  logo__link: {
     fontFamily: "Open Sans",
     color: theme.palette.primary.main,
     textDecoration: "none",
