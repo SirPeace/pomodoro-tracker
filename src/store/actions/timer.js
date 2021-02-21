@@ -1,4 +1,4 @@
-import { getTimeString, toMs } from "../../libs/functions"
+import { getTimeString, throwNotification, toMs } from "../../libs/functions"
 import {
   SET_DURATION,
   SET_STATUS,
@@ -175,7 +175,7 @@ export const resumeTimer = () => (dispatch, getState) => {
   )
 }
 
-export const stopTimer = (forced = true) => dispatch => {
+export const stopTimer = (forced = true) => (dispatch, getState) => {
   dispatch(resetTimer())
 
   if (forced) {
@@ -184,5 +184,18 @@ export const stopTimer = (forced = true) => dispatch => {
     dispatch(pushSessionOrder())
 
     dispatch(setStatus("finished"))
+
+    const session = getState().sessions.session
+    if (session === "work_session") {
+      throwNotification(
+        "The break is over",
+        "Getting back to work. Let's get things done!"
+      )
+    } else if (session.includes("break")) {
+      throwNotification(
+        "The work session is over",
+        "Good job! Now take some time to refresh."
+      )
+    }
   }
 }

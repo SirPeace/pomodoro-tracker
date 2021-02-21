@@ -37,3 +37,19 @@ export function toMs(value, unit) {
   }
   return false
 }
+
+/**
+ * Throw native notification, using Web Notification API
+ * @param {string} title Notification title
+ * @param {string} body Notification body
+ */
+export function throwNotification(title, body) {
+  if (window.Notification.permission === "granted") {
+    navigator.serviceWorker.ready.then(function (registration) {
+      registration.showNotification(title, {
+        icon: "/icons/favicon-120.png",
+        body: body,
+      })
+    })
+  }
+}
