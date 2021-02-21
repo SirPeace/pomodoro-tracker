@@ -10,10 +10,11 @@ const useStyles = makeStyles(theme => ({
     padding: 20,
   },
 
-  h2: {
+  h3: {
     margin: 0,
     fontFamily: "Open Sans",
     color: "#444",
+    fontSize: 22,
   },
 
   tasks: {},
@@ -27,7 +28,7 @@ function TaskManager({ tasks, addTask, deleteTask }) {
   return (
     <ThemeProvider theme={sessionTheme}>
       <div className={classes.TaskManager}>
-        <h2 className={classes.h2}>Tasks</h2>
+        <h3 className={classes.h3}>Tasks</h3>
 
         <TaskForm addTask={addTask} />
 

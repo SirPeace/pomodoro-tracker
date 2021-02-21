@@ -24,23 +24,9 @@ export const useStyles = makeStyles(theme => ({
 
   acceptButton: {
     color: "#fff",
-    backgroundColor: colors.red[600],
+    backgroundColor: theme.palette.primary.main,
     "&:hover": {
-      backgroundColor: colors.red[800],
-    },
-  },
-
-  acceptButton_short_break: {
-    background_color: theme.palette.short_break.main,
-    "&:hover": {
-      background_color: theme.palette.short_break.dark,
-    },
-  },
-
-  acceptButton_long_break: {
-    background_color: theme.palette.long_break.main,
-    "&:hover": {
-      background_color: theme.palette.long_break.dark,
+      backgroundColor: theme.palette.primary.dark,
     },
   },
 
