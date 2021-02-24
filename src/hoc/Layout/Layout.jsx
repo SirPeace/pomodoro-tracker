@@ -26,13 +26,19 @@ const useStyles = makeStyles(theme => ({
   },
 
   backdrop: {
-    zIndex: theme.zIndex.drawer + 1,
+    zIndex: theme.zIndex.drawer + 2,
     color: "#fff",
   },
 
   persistantPaperDrawer: {
     minWidth: 280,
-    top: 65, // TODO: Make this value depend on AppBar height
+    top: 64,
+  },
+
+  "@media (max-width: 600px)": {
+    persistantPaperDrawer: {
+      top: 56,
+    },
   },
 }))
 

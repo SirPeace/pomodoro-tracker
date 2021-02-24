@@ -5,18 +5,36 @@ import TimerControls from "./TimerControls/TimerControls"
 import { makeStyles } from "@material-ui/core"
 import TimerClock from "./TimerClock/TimerClock"
 
-export const timerSize = 320
 const useStyles = makeStyles(theme => ({
   Timer: {
     marginTop: 100,
-    width: timerSize,
+    width: 320,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    userSelect: "none",
   },
 
   motto: {
     //
+  },
+
+  "@media (max-height: 830px)": {
+    Timer: {
+      marginTop: 50,
+    },
+  },
+
+  "@media (max-height: 650px)": {
+    Timer: {
+      marginTop: 30,
+    },
+  },
+
+  "@media (max-width: 400px)": {
+    Timer: {
+      width: 280,
+    },
   },
 }))
 

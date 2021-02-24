@@ -5,7 +5,24 @@ import { useStyles } from "./styles"
 function TimerClock({ session, timePassed, duration, status, time }) {
   const classes = useStyles()
 
-  const radius = 150
+  const mediaQuerySm = window.matchMedia("(max-width: 400px)")
+  const mediaQueryXsm = window.matchMedia("(max-height: 650px)")
+  mediaQuerySm.addListener(evt => {
+    if (evt.matches) setRadius(130)
+    else setRadius(150)
+  })
+  mediaQueryXsm.addListener(evt => {
+    if (evt.matches) setRadius(110)
+    else setRadius(130)
+  })
+
+  const radiusInit = mediaQuerySm.matches
+    ? mediaQueryXsm.matches
+      ? 120
+      : 130
+    : 150
+  const [radius, setRadius] = React.useState(radiusInit)
+
   const circumference = 2 * Math.PI * radius
 
   const [offset, setOffset] = React.useState(circumference)

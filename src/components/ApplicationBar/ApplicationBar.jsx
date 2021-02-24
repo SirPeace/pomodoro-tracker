@@ -8,10 +8,7 @@ import {
   ThemeProvider,
 } from "@material-ui/core"
 import MenuIcon from "@material-ui/icons/Menu"
-import SettingsIcon from "@material-ui/icons/Settings"
 import CheckIcon from "@material-ui/icons/Check"
-import Brightness7 from "@material-ui/icons/Brightness7"
-import Brightness3 from "@material-ui/icons/Brightness3"
 import { connect } from "react-redux"
 import {
   setPersistantDrawer,
@@ -48,25 +45,15 @@ function ApplicationBar({
 
   const SessionProgress = isAppPage() && (
     <>
-      <span className={classes.separator}></span>
-      <span className={classes.sessionProgress}>{sessionProgressMsg}</span>
+      <span
+        className={`${classes.separator} ${classes.sessionProgress__separator}`}
+      ></span>
+      <p className={classes.sessionProgress}>{sessionProgressMsg}</p>
     </>
   )
 
   const AppControls = isAppPage() && (
     <>
-      <Tooltip title="Settings" arrow>
-        <IconButton
-          edge="start"
-          className={classes.barButton}
-          color="inherit"
-          aria-label="settings"
-          onClick={() => setPopup("settings")}
-        >
-          <SettingsIcon />
-        </IconButton>
-      </Tooltip>
-
       <Tooltip title="Tasks" arrow>
         <IconButton
           edge="start"
@@ -78,8 +65,6 @@ function ApplicationBar({
           <CheckIcon />
         </IconButton>
       </Tooltip>
-
-      <span className={classes.separator}></span>
     </>
   )
 
@@ -113,7 +98,7 @@ function ApplicationBar({
           </div>
 
           {AppControls}
-          <Tooltip title="Toggle theme" arrow>
+          {/* <Tooltip title="Toggle theme" arrow>
             <IconButton
               edge="start"
               className={classes.barButton}
@@ -123,7 +108,7 @@ function ApplicationBar({
             >
               {theme === "light" ? <Brightness7 /> : <Brightness3 />}
             </IconButton>
-          </Tooltip>
+          </Tooltip> */}
         </Toolbar>
       </AppBar>
     </ThemeProvider>

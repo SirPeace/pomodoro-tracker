@@ -16,11 +16,11 @@ function ResetTimerPopup({ closePopup, resetProgress }) {
 
   return (
     <Paper elevation={1} className={classes.body} id="reset-timer-popup">
-      <h3 className={classes.message}>Do you want to reset the progress?</h3>
+      <h3 className={classes.message}>Do you want to reset the session?</h3>
 
       <p className={classes.text}>
         This will lead to loosing your current session streak. This won't,
-        however, affect your statistics, which is already saved.
+        however, affect your progress, which is already saved.
       </p>
 
       <Button

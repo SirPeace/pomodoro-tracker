@@ -37,4 +37,10 @@ export const useStyles = makeStyles(theme => ({
     width: "100%",
     padding: "12px 0",
   },
+
+  "@media (max-width: 780px)": {
+    SettingsPopup: {
+      width: "95%",
+    },
+  },
 }))

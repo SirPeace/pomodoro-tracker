@@ -15,6 +15,7 @@ const useStyles = makeStyles(theme => ({
     fontFamily: "Open Sans",
     color: "#444",
     fontSize: 22,
+    userSelect: "none",
   },
 
   tasks: {},
