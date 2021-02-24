@@ -38,6 +38,7 @@ const useStyles = makeStyles(theme => ({
   "@media (max-width: 600px)": {
     persistantPaperDrawer: {
       top: 56,
+      width: "100%",
     },
   },
 }))
