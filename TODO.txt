@@ -4,26 +4,33 @@
 + Create changing work/rest sessions
   + Make it loop
 + Create state progress functionality
-~ Add a To-Do list Drawer simillar to Google Tasks and Microsoft To-Do
-  + Create a TasksComponent and realize the basic functionality
-  - Make them look more appealing
-  - Add description and tags functionality for each task
-  - Keep a list of completed tasks
++ Create a TasksComponent and realize the basic functionality
 + Rewrite all styling in JSS
 + Make the same color schema in all components [#2]
 + Validate configuration input with react-hook-form library
 + Make a separate from the SettingsPopup FormControl component
 + Refactor Timer component
-~ Make PWA functionality:
-  ~ Sound notifications
-  + Work without internet (register service worker)
-  + Mobile downloadable version
++ Work without internet (register service worker)
++ Mobile downloadable version
 + Make timer button component with feel like in Pomofocus [#1] 
 + Implement popup confirmation for reset
-+ Add new pages & fix routing
++ Add new pages
+
+-------------------
+
+- Mobile ready, responsive layout [#3]
 - Strange stroke difference between animation, stopTimeout and clock when pause & resume timer
+- Fix ApplicationBar and routing
+- Sound notifications
 - Beautify 404 page and solve the AppBar problem with getting back from 404
-- Mobile ready
+- Enhance Tasks drawer simillar to Google Tasks and Microsoft To-Do
+  - Make them look more appealing
+  - Add description and tags functionality for each task
+  - Keep a list of completed tasks
+- Enable dark theme
+- ProgressPage with chart.js
+- Firebase backend with Auth and Firestore
+- Satisfy all PWA requirements
 
 -------------------
 

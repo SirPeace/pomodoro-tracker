@@ -5,9 +5,9 @@ import useSessionTheme from "./libs/hooks/useSessionTheme"
 import { connect } from "react-redux"
 import HowToUsePage from "./pages/HowToUsePage/HowToUsePage"
 import AboutPage from "./pages/AboutPage/AboutPage"
-import Layout from "./hoc/Layout/Layout"
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage"
 import ProgressPage from "./pages/ProgressPage/ProgressPage"
+import Layout from "./hoc/Layout/Layout"
 
 function App({ session }) {
   const theme = useSessionTheme(session)

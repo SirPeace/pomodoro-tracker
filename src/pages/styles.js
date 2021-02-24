@@ -10,6 +10,15 @@ export const useStyles = makeStyles(theme => ({
     position: "relative",
   },
 
+  body: {
+    marginTop: 20,
+    padding: "20px 40px",
+  },
+
+  body__text: {
+    fontSize: 18,
+  },
+
   "@global": {
     h2: {
       fontFamily: "Open Sans",
@@ -18,6 +27,10 @@ export const useStyles = makeStyles(theme => ({
       fontWeight: 600,
       letterSpacing: 1.5,
       margin: 0,
+    },
+
+    blockquote: {
+      fontStyle: "italic",
     },
   },
 }))
