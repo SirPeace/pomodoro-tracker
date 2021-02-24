@@ -50,6 +50,8 @@ export function throwNotification(title, body) {
         icon: "/icons/favicon-120.png",
         body: body,
       })
+
+      new Audio("/notification.mp3").play()
     })
   }
 }
