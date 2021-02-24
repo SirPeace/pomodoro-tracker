@@ -115,7 +115,7 @@ export const startTimer = () => (dispatch, getState) => {
   dispatch(setTimerStopTimeout(timeout))
 
   let updateTimeDelay = running.passed === 0 ? 1000 : running.passed % 1000
-  console.log(updateTimeDelay)
+
   setTimeout(() => {
     dispatch(updateTime(getState().timer.time))
 
@@ -162,14 +162,15 @@ export const resumeTimer = () => (dispatch, getState) => {
 
   setTimeout(
     () => {
-      dispatch(updateTime(getState().timer.time))
+      if (duration - running.passed > 1000) {
+        dispatch(updateTime(getState().timer.time))
 
-      // Setting interval for updating time
-      const interval = window.setInterval(() => {
-        dispatch(updateTime(getState().timer.time)) // New state time on each interval
-      }, 1000)
+        const interval = window.setInterval(() => {
+          dispatch(updateTime(getState().timer.time)) // New state time on each interval
+        }, 1000)
 
-      dispatch(setTimerUpdateInterval(interval))
+        dispatch(setTimerUpdateInterval(interval))
+      }
     },
     running.passed === 0 ? 1000 : running.passed % 1000
   )
