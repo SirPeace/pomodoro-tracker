@@ -137,7 +137,7 @@ function SettingsPopup({
             <Grid item xs={12}>
               <FormControl
                 name="work_sessions_before_long_break"
-                label="Work sessions before long break"
+                label="Work sessions"
                 type="number"
                 defaultValue={workSessionsCountBeforeLongBreak}
                 inputRef={register}

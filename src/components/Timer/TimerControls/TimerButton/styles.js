@@ -4,7 +4,7 @@ export const useStyles = makeStyles(theme => ({
   body: {
     position: "relative",
     marginBottom: 20,
-    width: "80%",
+    width: "90%",
     minWidth: 200,
     height: 60,
   },
@@ -39,6 +39,20 @@ export const useStyles = makeStyles(theme => ({
 
     "&:active": {
       transform: "translateY(3px)",
+    },
+  },
+
+  "@media (max-height: 650px)": {
+    button: {
+      height: 50,
+    },
+
+    shadow: {
+      height: 50,
+    },
+
+    body: {
+      marginBottom: 10,
     },
   },
 

@@ -1,5 +1,4 @@
 import { makeStyles } from "@material-ui/core"
-import { timerSize } from "../Timer"
 
 export const useStyles = makeStyles(theme => ({
   wrapper: {
@@ -19,8 +18,8 @@ export const useStyles = makeStyles(theme => ({
 
   "@global": {
     svg: {
-      width: timerSize,
-      height: timerSize,
+      width: 320,
+      height: 320,
     },
 
     circle: {
@@ -35,5 +34,45 @@ export const useStyles = makeStyles(theme => ({
     transform: "rotate(-90deg) rotateX(180deg)",
     stroke: theme.palette.primary.main,
     transition: "stroke 0.5s",
+  },
+
+  "@media (max-width: 400px)": {
+    "@global": {
+      svg: {
+        width: 300,
+        height: 300,
+      },
+
+      circle: {
+        strokeWidth: 18,
+      },
+    },
+
+    counter: {
+      fontSize: "4em",
+    },
+  },
+
+  "@media (max-height: 700px)": {
+    wrapper: {
+      margin: "20px 0",
+    },
+  },
+
+  "@media (max-height: 650px)": {
+    "@global": {
+      svg: {
+        width: 270,
+        height: 270,
+      },
+
+      circle: {
+        strokeWidth: 15,
+      },
+    },
+
+    wrapper: {
+      margin: "10px 0",
+    },
   },
 }))

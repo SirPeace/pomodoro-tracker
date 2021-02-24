@@ -33,4 +33,12 @@ export const useStyles = makeStyles(theme => ({
       fontStyle: "italic",
     },
   },
+
+  "@media (max-width: 400px)": {
+    "@global": {
+      h2: {
+        fontSize: 27,
+      },
+    },
+  },
 }))
