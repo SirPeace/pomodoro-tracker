@@ -19,12 +19,16 @@ function TimerButton({
 
   // Set lock on "START" and "PAUSE" buttons after click to prevent state abuse
   React.useEffect(() => {
+    let timeout
+
     if (locked !== undefined) {
       if (timerStatus === "running" || timerStatus === "paused") {
         setBtnLock(true)
-        setTimeout(setBtnLock.bind(null, false), 1000)
+        timeout = setTimeout(setBtnLock.bind(null, false), 1000)
       }
     }
+
+    return () => clearTimeout(timeout)
   }, [timerStatus, locked])
 
   // Set proper class for each button type

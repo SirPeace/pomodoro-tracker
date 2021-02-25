@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-function TimerControls({ startTimer, timerStatus, sessionID }) {
+function TimerControls({ startTimer, timerStatus, sessionID, loop }) {
   const classes = useStyles()
 
   return (
@@ -26,7 +26,7 @@ function TimerControls({ startTimer, timerStatus, sessionID }) {
         <RunningControls />
       ) : timerStatus === "paused" ? (
         <PausedControls />
-      ) : sessionID > 0 ? (
+      ) : sessionID + loop > 1 ? (
         <ControlsWithReset />
       ) : (
         <TimerButton onClick={startTimer} type="start">
@@ -40,6 +40,7 @@ function TimerControls({ startTimer, timerStatus, sessionID }) {
 const mapStateToProps = state => ({
   timerStatus: state.timer.status,
   sessionID: state.sessions.current,
+  loop: state.sessions.loop,
 })
 
 const mapDispatchToProps = dispatch => ({
