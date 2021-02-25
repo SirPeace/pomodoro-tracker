@@ -44,17 +44,17 @@ if ("serviceWorker" in navigator) {
   navigator.serviceWorker
     .register("/service-worker.js")
     .catch(err => console.error("SW has an error: ", err.message))
-}
 
-// Request notifications permission and show one after accept
-if ("Notification" in window) {
-  const permission = window.Notification.permission
-  window.Notification.requestPermission(() => {
-    if (permission !== "granted") {
-      throwNotification(
-        "Notifications are active",
-        "Congratulations! Notifications are successfully set up."
-      )
-    }
-  })
+  // Request notifications permission and show one after accept
+  if ("Notification" in window) {
+    const permission = Notification.permission
+    Notification.requestPermission(() => {
+      if (permission !== "granted") {
+        throwNotification(
+          "Notifications are active",
+          "Yay! Notifications are successfuly set up"
+        )
+      }
+    })
+  }
 }
