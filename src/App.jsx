@@ -7,25 +7,23 @@ import HowToUsePage from "./pages/HowToUsePage/HowToUsePage"
 import AboutPage from "./pages/AboutPage/AboutPage"
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage"
 import ProgressPage from "./pages/ProgressPage/ProgressPage"
-import Layout from "./hoc/Layout/Layout"
+import AppShell from "./hoc/AppShell/AppShell"
 
 function App({ session }) {
   const theme = useSessionTheme(session)
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="App">
-        <Layout>
-          <Switch>
-            <Route path="/app" component={AppPage} />
-            <Route path="/progress" component={ProgressPage} />
-            <Route path="/how-to-use" component={HowToUsePage} />
-            <Route path="/about" component={AboutPage} />
-            <Redirect exact from="/" to="/app" />
-            <Route component={NotFoundPage} />
-          </Switch>
-        </Layout>
-      </div>
+      <AppShell>
+        <Switch>
+          <Route path="/app" component={AppPage} />
+          <Route path="/progress" component={ProgressPage} />
+          <Route path="/how-to-use" component={HowToUsePage} />
+          <Route path="/about" component={AboutPage} />
+          <Redirect exact from="/" to="/app" />
+          <Route component={NotFoundPage} />
+        </Switch>
+      </AppShell>
     </ThemeProvider>
   )
 }

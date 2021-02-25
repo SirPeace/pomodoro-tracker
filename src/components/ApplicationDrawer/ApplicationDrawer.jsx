@@ -2,10 +2,13 @@ import { Button } from "@material-ui/core"
 import React from "react"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
-import { setTemporaryDrawer } from "../../store/actions/layout"
+import {
+  setPersistantDrawer,
+  setTemporaryDrawer,
+} from "../../store/actions/layout"
 import { useStyles } from "./styles"
 
-function ApplicationDrawer({ session, closeDrawer }) {
+function ApplicationDrawer({ closeAllDrawers, closeTempDrawer }) {
   const classes = useStyles()
 
   const links = [
@@ -17,7 +20,7 @@ function ApplicationDrawer({ session, closeDrawer }) {
   const renderLinks = () =>
     links.map((link, i) => (
       <Button
-        onClick={closeDrawer}
+        onClick={closeAllDrawers}
         className={classes.button}
         component={Link}
         to={link.to}
@@ -34,7 +37,7 @@ function ApplicationDrawer({ session, closeDrawer }) {
   return (
     <div className={classes.ApplicationDrawer}>
       <h3 className={classes.logo}>
-        <Link to="/" className={classes.logo__link} onClick={closeDrawer}>
+        <Link to="/" className={classes.logo__link} onClick={closeTempDrawer}>
           Pomodoro Tracker
         </Link>
       </h3>
@@ -53,12 +56,12 @@ function ApplicationDrawer({ session, closeDrawer }) {
   )
 }
 
-const mapStateToProps = state => ({
-  session: state.sessions.order[state.sessions.current],
-})
-
 const mapDispatchToProps = dispatch => ({
-  closeDrawer: () => dispatch(setTemporaryDrawer(undefined)),
+  closeAllDrawers: () => {
+    dispatch(setTemporaryDrawer(undefined))
+    dispatch(setPersistantDrawer(undefined))
+  },
+  closeTempDrawer: () => dispatch(setTemporaryDrawer(undefined)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(ApplicationDrawer)
+export default connect(null, mapDispatchToProps)(ApplicationDrawer)
