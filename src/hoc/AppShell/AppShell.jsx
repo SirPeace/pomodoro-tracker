@@ -1,49 +1,14 @@
 import React from "react"
 import { Backdrop, Drawer } from "@material-ui/core"
-import { makeStyles } from "@material-ui/core/styles"
 import { connect } from "react-redux"
 import { setPopup, setTemporaryDrawer } from "../../store/actions/layout"
 import SettingsPopup from "../../components/SettingsPopup/SettingsPopup"
-import ApplicationBar from "../../components/ApplicationBar/ApplicationBar"
 import TaskManager from "../../components/TaskManager/TaskManager"
 import ResetTimerPopup from "../../components/ResetTimerPopup/ResetTimerPopup"
 import ApplicationDrawer from "../../components/ApplicationDrawer/ApplicationDrawer"
+import { useStyles } from "./styles"
 
-const useStyles = makeStyles(theme => ({
-  Layout: {
-    backgroundColor: "#fdfdfd",
-    display: "flex",
-    flexDirection: "column",
-    height: "100vh",
-  },
-
-  body: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "flex-start",
-    flexGrow: 1,
-    height: "100%",
-  },
-
-  backdrop: {
-    zIndex: theme.zIndex.drawer + 2,
-    color: "#fff",
-  },
-
-  persistantPaperDrawer: {
-    minWidth: 280,
-    top: 64,
-  },
-
-  "@media (max-width: 600px)": {
-    persistantPaperDrawer: {
-      top: 56,
-      width: "100%",
-    },
-  },
-}))
-
-function Layout({
+function AppShell({
   pers_drawer,
   temp_drawer,
   popup,
@@ -68,9 +33,7 @@ function Layout({
   }
 
   return (
-    <div className={classes.Layout}>
-      <ApplicationBar />
-
+    <div className={classes.shell}>
       <Backdrop
         open={!!popup}
         className={classes.backdrop}
@@ -114,4 +77,4 @@ const mapDispatchToProps = dispatch => ({
   setTempDrawer: name => dispatch(setTemporaryDrawer(name)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Layout)
+export default connect(mapStateToProps, mapDispatchToProps)(AppShell)

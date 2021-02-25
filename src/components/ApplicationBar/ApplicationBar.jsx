@@ -14,11 +14,9 @@ import {
   setPersistantDrawer,
   setPopup,
   setTemporaryDrawer,
-  setTheme,
 } from "../../store/actions/layout"
 import { useStyles } from "./styles"
-
-const isAppPage = () => window.location.pathname === "/app"
+import { PathContext } from "../../pages/AppPage/AppPage"
 
 function ApplicationBar({
   sessionLoop,
@@ -26,17 +24,17 @@ function ApplicationBar({
   sessionOrder,
   session,
 
-  theme,
   pers_drawer,
   temp_drawer,
 
-  setTheme,
-  setPopup,
   setTempDrawer,
   setPersDrawer,
 }) {
   const classes = useStyles()
   const sessionTheme = useTheme()
+
+  const { path } = React.useContext(PathContext) || {}
+  const isAppPage = () => path === "/app"
 
   const workID = ((sessionLoop - 1) * sessionsCount) / 2 + sessionOrder / 2 + 1
   let sessionProgressMsg = `Work session #${workID}`
@@ -98,17 +96,6 @@ function ApplicationBar({
           </div>
 
           {AppControls}
-          {/* <Tooltip title="Toggle theme" arrow>
-            <IconButton
-              edge="start"
-              className={classes.barButton}
-              color="inherit"
-              aria-label="menu"
-              onClick={() => setTheme(theme)}
-            >
-              {theme === "light" ? <Brightness7 /> : <Brightness3 />}
-            </IconButton>
-          </Tooltip> */}
         </Toolbar>
       </AppBar>
     </ThemeProvider>
@@ -117,7 +104,6 @@ function ApplicationBar({
 
 const mapStateToProps = state => ({
   // layout
-  theme: state.layout.theme,
   pers_drawer: state.layout.persistant_drawer,
   temp_drawer: state.layout.temporary_drawer,
 
@@ -129,7 +115,6 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  setTheme: theme => dispatch(setTheme(theme)),
   setPopup: name => dispatch(setPopup(name)),
   setPersDrawer: name => dispatch(setPersistantDrawer(name)),
   setTempDrawer: name => dispatch(setTemporaryDrawer(name)),

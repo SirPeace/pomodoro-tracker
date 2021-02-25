@@ -1,12 +1,13 @@
 import { Container, Paper } from "@material-ui/core"
 import React from "react"
+import Page from "../Page"
 import { useStyles } from "../styles"
 
 export default function AboutPage() {
   const classes = useStyles()
 
   return (
-    <div className={classes.page}>
+    <Page>
       <Container maxWidth="md">
         <Paper className={classes.body}>
           <h2>About</h2>
@@ -30,6 +31,6 @@ export default function AboutPage() {
           </ul>
         </Paper>
       </Container>
-    </div>
+    </Page>
   )
 }

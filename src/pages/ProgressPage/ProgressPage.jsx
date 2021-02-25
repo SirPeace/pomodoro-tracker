@@ -1,12 +1,13 @@
 import React from "react"
+import Page from "../Page"
 import { useStyles } from "../styles"
 
 export default function ProgressPage() {
   const classes = useStyles()
 
   return (
-    <div className={classes.page}>
+    <Page>
       <h2 className={classes.h2}>Progress</h2>
-    </div>
+    </Page>
   )
 }
