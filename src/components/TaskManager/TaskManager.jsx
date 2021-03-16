@@ -1,13 +1,17 @@
 import React from "react"
 import { connect } from "react-redux"
-import TaskForm from "./TaskForm/TaskForm"
+import { makeStyles, ThemeProvider, useTheme } from "@material-ui/core"
+
 import { addTask, deleteTask } from "../../store/actions/tasks"
 import Task from "./Task/Task"
-import { makeStyles, ThemeProvider, useTheme } from "@material-ui/core"
+import TaskForm from "./TaskForm/TaskForm"
+import TaskPopper from "./TaskPopper/TaskPopper"
 
 const useStyles = makeStyles(theme => ({
   TaskManager: {
     padding: 20,
+    position: "relative",
+    zIndex: 1700,
   },
 
   h3: {
@@ -21,24 +25,35 @@ const useStyles = makeStyles(theme => ({
   tasks: {},
 }))
 
+export const PopperContext = React.createContext()
+
 function TaskManager({ tasks, addTask, deleteTask }) {
   const classes = useStyles()
 
   const sessionTheme = useTheme()
 
+  const [anchorEl, setAnchorEl] = React.useState(null)
+  const popperId = !!anchorEl ? `Task-Popper-${Date.now()}` : undefined
+
   return (
     <ThemeProvider theme={sessionTheme}>
-      <div className={classes.TaskManager}>
-        <h3 className={classes.h3}>Tasks</h3>
+      <PopperContext.Provider value={{ anchorEl, setAnchorEl }}>
+        <div className={classes.TaskManager}>
+          <h3 className={classes.h3}>Tasks</h3>
 
-        <TaskForm addTask={addTask} />
+          <TaskForm addTask={addTask} />
 
-        <div className={classes.tasks}>
-          {tasks.map((task, i) => (
-            <Task key={i} task={task} deleteTask={deleteTask} />
-          ))}
+          <div className={classes.tasks} aria-describedby={popperId}>
+            {tasks.length > 0
+              ? tasks.map((task, i) => (
+                  <Task key={i} task={task} deleteTask={deleteTask} />
+                ))
+              : "No tasks yet"}
+
+            <TaskPopper id={popperId} />
+          </div>
         </div>
-      </div>
+      </PopperContext.Provider>
     </ThemeProvider>
   )
 }
