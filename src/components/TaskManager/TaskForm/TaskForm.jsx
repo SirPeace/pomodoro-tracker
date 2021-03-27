@@ -16,8 +16,10 @@ export default function TaskForm({ addTask }) {
 
   const handleSubmit = event => {
     event.preventDefault()
-    addTask({ name: task })
-    setTask("")
+    if (task.trim().length > 0) {
+      addTask({ name: task })
+      setTask("")
+    }
   }
 
   return (

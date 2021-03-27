@@ -1,16 +1,18 @@
 import React from "react"
 import { Backdrop, Drawer } from "@material-ui/core"
 import { connect } from "react-redux"
+
+import ApplicationDrawer from "../../components/ApplicationDrawer/ApplicationDrawer"
+import ResetTimerPopup from "../../components/ResetTimerPopup/ResetTimerPopup"
 import { setPopup, setTemporaryDrawer } from "../../store/actions/layout"
 import SettingsPopup from "../../components/SettingsPopup/SettingsPopup"
 import TaskManager from "../../components/TaskManager/TaskManager"
-import ResetTimerPopup from "../../components/ResetTimerPopup/ResetTimerPopup"
-import ApplicationDrawer from "../../components/ApplicationDrawer/ApplicationDrawer"
 import { useStyles } from "./styles"
+import PersistentDrawer from "./PersistentDrawer/PersistentDrawer"
 
 function AppShell({
-  pers_drawer,
-  temp_drawer,
+  persDrawer,
+  tempDrawer,
   popup,
   setPopup,
   children,
@@ -44,21 +46,16 @@ function AppShell({
 
       <div className={classes.body}>
         <Drawer
-          open={!!temp_drawer}
+          open={!!tempDrawer}
           anchor="left"
           onClose={() => setTempDrawer(undefined)}
         >
           <ApplicationDrawer />
         </Drawer>
 
-        <Drawer
-          open={!!pers_drawer}
-          anchor="right"
-          variant="persistent"
-          classes={{ paper: classes.persistantPaperDrawer }}
-        >
+        <PersistentDrawer open={persDrawer === "tasks"}>
           <TaskManager />
-        </Drawer>
+        </PersistentDrawer>
 
         {children}
       </div>
@@ -68,8 +65,8 @@ function AppShell({
 
 const mapStateToProps = state => ({
   popup: state.layout.popup,
-  pers_drawer: state.layout.persistant_drawer,
-  temp_drawer: state.layout.temporary_drawer,
+  persDrawer: state.layout.persistant_drawer,
+  tempDrawer: state.layout.temporary_drawer,
 })
 
 const mapDispatchToProps = dispatch => ({

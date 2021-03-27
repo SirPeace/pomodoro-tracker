@@ -4,7 +4,7 @@ export const useStyles = makeStyles(theme => ({
   ApplicationBar: {
     boxShadow: "0px 1px 4px 0 rgba(0, 0, 0, 0.4)",
     transition: "background-color 0.5s",
-    backgroundColor: theme.palette.primary,
+    backgroundColor: theme.palette.primary.main,
     zIndex: theme.zIndex.drawer + 1,
     userSelect: "none",
   },
@@ -35,7 +35,7 @@ export const useStyles = makeStyles(theme => ({
     fontSize: 19,
     margin: 0,
     padding: 0,
-    textDecoration: "underline",
+    fontStyle: "italic",
   },
 
   separator: {
@@ -58,10 +58,7 @@ export const useStyles = makeStyles(theme => ({
       padding: 8,
       margin: 0,
       "&:first-child": {
-        padding: "8px 16px 8px 0",
-      },
-      "&:last-child": {
-        padding: "8px 5px 8px 0",
+        marginRight: 8,
       },
     },
 
@@ -82,7 +79,6 @@ export const useStyles = makeStyles(theme => ({
     },
 
     appTitle: {
-      // marginTop: 9,
       marginBottom: 0,
     },
 
@@ -92,7 +88,6 @@ export const useStyles = makeStyles(theme => ({
 
     sessionProgress: {
       display: "block",
-      // marginBottom: 5,
       fontSize: 14,
     },
   },

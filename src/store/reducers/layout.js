@@ -6,10 +6,9 @@ import {
 } from "../actions/actionTypes"
 
 /**
- *
  * @property {string} theme - Active theme ["light"|"dark"]
  * @property {?string} popup - Displayed popup name
- * @property {?string} persistant_drawer - Displayed persistant drawer name
+ * @property {string | string[] | undefined} persistant_drawer - Displayed persistant drawer name
  * @property {?string} temp_drawer - Displayed temporary drawer name
  */
 const initialState = {
