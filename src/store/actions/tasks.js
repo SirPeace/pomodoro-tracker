@@ -10,7 +10,7 @@ const defaultTask = {
   name: "",
   status: "active",
   note: "",
-  tagId: 0,
+  tagIndex: 0,
   dueTo: null,
 }
 
@@ -26,13 +26,16 @@ export const addTask = task => ({
     ...task,
     id: `Task-${Date.now()}`,
     createdAt: new Date(),
-    editedAt: new Date(),
+    updatedAt: new Date(),
   },
 })
 
 export const editTask = task => ({
   type: EDIT_TASK,
-  payload: task,
+  payload: {
+    ...task,
+    updatedAt: new Date(),
+  },
 })
 
 export const deleteTask = task => ({

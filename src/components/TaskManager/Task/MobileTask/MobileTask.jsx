@@ -2,13 +2,9 @@ import React from "react"
 import { connect } from "react-redux"
 import { CSSTransition } from "react-transition-group"
 import CheckIcon from "@material-ui/icons/Check"
-import { IconButton } from "@material-ui/core"
-import MoreVertIcon from "@material-ui/icons/MoreVert"
-import { useMediaQuery } from "react-responsive"
 
-import { useStyles } from "./styles"
-import { editTask, selectTask } from "../../../store/actions/tasks"
-import MobileTask from "./MobileTask/MobileTask"
+import { useStyles } from "../styles"
+import { editTask, selectTask } from "../../../../store/actions/tasks"
 
 function Task({ task, tasks, tags, changeTaskName, selectTask, checkTask }) {
   const classes = useStyles()
@@ -30,16 +26,18 @@ function Task({ task, tasks, tags, changeTaskName, selectTask, checkTask }) {
     }
   }
 
+  const handleClick = evt => {
+    if (!evt.target.matches("label")) {
+      selectTask(task)
+    }
+  }
+
   // Unmount task if it's not present in the tasks list
   React.useEffect(() => {
     if (!tasks.find(t => t.id === task.id)) {
       setMount(false)
     }
   }, [tasks, task, setMount])
-
-  const isMobile = useMediaQuery({ query: "(max-width: 600px)" })
-
-  if (isMobile) return <MobileTask task={task} />
 
   return (
     <CSSTransition
@@ -53,7 +51,7 @@ function Task({ task, tasks, tags, changeTaskName, selectTask, checkTask }) {
       mountOnEnter
       unmountOnExit
     >
-      <li className={classes.Task} data-task="task">
+      <li className={classes.Task} data-task="task" onMouseUp={handleClick}>
         <i
           className={classes.tagLabel}
           style={{ backgroundColor: tags[task.tagIndex].color }}
@@ -87,27 +85,9 @@ function Task({ task, tasks, tags, changeTaskName, selectTask, checkTask }) {
           </CSSTransition>
         </div>
 
-        <input
-          type="text"
-          autoComplete="off"
-          className={classes.Task__name}
-          value={task.name}
-          onChange={evt => changeTaskName(task, evt.target.value)}
-          onFocus={evt => {
-            evt.target.parentElement.classList.add(classes.Task_focus)
-          }}
-          onBlur={evt =>
-            evt.target.parentElement.classList.remove(classes.Task_focus)
-          }
-        />
-        <IconButton
-          edge="start"
-          className={classes.Task__detailsBtn}
-          color="inherit"
-          onClick={() => selectTask(task)}
-        >
-          <MoreVertIcon />
-        </IconButton>
+        <span type="text" name="task-text" className={classes.Task__name}>
+          {task.name}
+        </span>
       </li>
     </CSSTransition>
   )

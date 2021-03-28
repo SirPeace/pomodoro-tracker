@@ -58,6 +58,7 @@ function TaskManager({ tasks, addTask, selectedTask }) {
       <PersistentDrawer
         open={!!selectedTask}
         classes={{ paper: taskDetailsClasses.TaskDetails__paper }}
+        nested
       >
         <TaskDetails />
       </PersistentDrawer>
@@ -73,10 +74,9 @@ function TaskManager({ tasks, addTask, selectedTask }) {
           )}
 
           <TransitionGroup>
-            {tasks.map(task => {
-              console.log(task)
-              return <Task key={task.id} task={task} />
-            })}
+            {tasks.map(task => (
+              <Task key={task.id} task={task} />
+            ))}
           </TransitionGroup>
         </ul>
       </div>

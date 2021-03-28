@@ -19,17 +19,18 @@ import { editTask, selectTask } from "../../../store/actions/tasks"
 import { setPopup } from "../../../store/actions/layout"
 
 const TaskDetails = ({
-  selectedTask,
+  selectedTask: task,
+  tags,
   hideTask,
   openDeletePopup,
-  handleNameChange,
-  handleNoteChange,
-  handleTagChange,
-  handleDateChange,
+  setName,
+  setNote,
+  setTag,
+  setDate,
 }) => {
   const classes = useStyles()
 
-  if (!selectedTask) return null
+  if (!task) return null
 
   return (
     <div className={classes.TaskDetails}>
@@ -62,11 +63,11 @@ const TaskDetails = ({
           name="name"
           type="text"
           className={classes.TaskDetails__name}
-          value={selectedTask.name}
+          value={task.name}
           inputProps={{
             style: { fontWeight: 500, fontSize: 20 },
           }}
-          onChange={e => handleNameChange(selectedTask, e.target.value)}
+          onChange={e => setName(task, e.target.value)}
         />
 
         <TextField
@@ -74,30 +75,39 @@ const TaskDetails = ({
           variant="outlined"
           type="text"
           className={classes.TaskDetails__note}
-          value={selectedTask.note}
+          value={task.note}
           placeholder="Note"
           multiline
           rows={5}
           inputProps={{
             className: classes.TaskDetails__noteInput,
           }}
-          onChange={e => handleNoteChange(selectedTask, e.target.value)}
+          onChange={e => setNote(task, e.target.value)}
         />
 
         <FormControl className={classes.TaskDetails__tag} variant="outlined">
-          <InputLabel id={`Select-Label-${selectedTask.id}`}>Tag</InputLabel>
+          <InputLabel id={`Select-Label-${task.id}`}>Tag</InputLabel>
           <Select
             name="tagId"
-            labelId={`Select-Label-${selectedTask.id}`}
-            id={`Select-${selectedTask.id}`}
-            value={selectedTask.tagId}
-            onChange={e => handleTagChange(selectedTask, e.target.value)}
+            labelId={`Select-Label-${task.id}`}
+            id={`Select-${task.id}`}
+            value={task.tagIndex}
+            onChange={e => setTag(task, e.target.value)}
             label="Tag"
           >
-            <MenuItem value={0}>No tag</MenuItem>
-            <MenuItem value={1}>Homework</MenuItem>
-            <MenuItem value={2}>Web Development</MenuItem>
-            <MenuItem value={3}>Workout</MenuItem>
+            {tags.map((tag, index) => (
+              <MenuItem
+                value={index}
+                className={classes.listItem}
+                key={tag.name}
+              >
+                {tag.name}
+                <i
+                  className={classes.color}
+                  style={{ backgroundColor: tag.color }}
+                ></i>
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
 
@@ -106,27 +116,37 @@ const TaskDetails = ({
             inputVariant="outlined"
             name="dueTo"
             label="Due to"
-            value={selectedTask.dueTo}
+            value={task.dueTo}
             format="MMMM dd, yyyy — HH:mm"
             ampm={false}
-            onChange={date => handleDateChange(selectedTask, date)}
+            onChange={date => setDate(task, date)}
           />
         </MuiPickersUtilsProvider>
       </form>
 
-      <div className={classes.TaskDetails__footer}></div>
+      <div className={classes.TaskDetails__footer}>
+        <p>
+          <i>Created at:</i>&nbsp;
+          {task.createdAt.toLocaleString("ru")}
+        </p>
+        <p>
+          <i>Last update:</i>&nbsp;
+          {task.updatedAt.toLocaleString("ru")}
+        </p>
+      </div>
     </div>
   )
 }
 
 const mapStateToProps = state => ({
   selectedTask: state.tasks.selectedTask,
+  tags: state.tasks.tags,
 })
 
 const mapDispatchToProps = dispatch => ({
   hideTask: () => dispatch(selectTask(null)),
   openDeletePopup: () => dispatch(setPopup("delete-task")),
-  handleNameChange: (task, name) => {
+  setName: (task, name) => {
     dispatch(
       editTask({
         ...task,
@@ -134,7 +154,7 @@ const mapDispatchToProps = dispatch => ({
       })
     )
   },
-  handleNoteChange: (task, note) => {
+  setNote: (task, note) => {
     dispatch(
       editTask({
         ...task,
@@ -142,15 +162,15 @@ const mapDispatchToProps = dispatch => ({
       })
     )
   },
-  handleTagChange: (task, tagId) => {
+  setTag: (task, tagIndex) => {
     dispatch(
       editTask({
         ...task,
-        tagId,
+        tagIndex,
       })
     )
   },
-  handleDateChange: (task, dueTo) => {
+  setDate: (task, dueTo) => {
     dispatch(
       editTask({
         ...task,

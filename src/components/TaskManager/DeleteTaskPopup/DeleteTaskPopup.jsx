@@ -14,8 +14,6 @@ function DeleteTaskPopup({ selectedTask, hideTask, deleteTask, closePopup }) {
     closePopup()
   }
 
-  // console.log(selectedTask)
-
   return (
     <Paper elevation={1} className={classes.body} id="delete-task-popup">
       <h3 className={classes.message}>

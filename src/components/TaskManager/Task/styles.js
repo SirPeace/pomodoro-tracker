@@ -18,17 +18,33 @@ export const useStyles = makeStyles(theme => ({
       background: "#fdfdfd",
       borderColor: "rgba(0, 0, 0, 0.16)",
     },
+  },
 
-    "&::before": {
-      content: '""',
-      position: "absolute",
-      top: -1,
-      left: -1,
-      bottom: -1,
-      width: 5,
-      borderRadius: "4px 0 0 4px",
-      borderRight: "1px solid rgba(0, 0, 0, 0.12)",
+  "@media (max-width: 600px)": {
+    Task: {
+      cursor: "pointer",
+      padding: 12,
     },
+
+    Task__name: {
+      fontSize: 16,
+    },
+
+    Task__checkbox: {
+      width: 26,
+      height: 26,
+    },
+  },
+
+  tagLabel: {
+    content: '""',
+    position: "absolute",
+    top: -1,
+    left: -1,
+    bottom: -1,
+    width: 5,
+    borderRadius: "4px 0 0 4px",
+    borderRight: "1px solid rgba(0, 0, 0, 0.12)",
   },
 
   Task_enter: {

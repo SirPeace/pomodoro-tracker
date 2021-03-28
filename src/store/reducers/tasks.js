@@ -1,3 +1,4 @@
+import { colors } from "@material-ui/core"
 import {
   ADD_TASK,
   DELETE_TASK,
@@ -8,7 +9,10 @@ import {
 
 /**
  * @property {selectedTask[]} tasks
- * @property {number[]} order
+ * @property {{
+ *  name: string,
+ *  color: string
+ * }[]} tags
  * @property {{
  *  id: number,
  *  name: string,
@@ -16,13 +20,18 @@ import {
  *  note: string,
  *  tagId: number,
  *  createdAt: Date,
- *  editedAt: Date,
+ *  updatedAt: Date,
  *  dueTo: Date,
  * }} selectedTask
  */
 const initialState = {
   tasks: [],
-  order: [],
+  tags: [
+    { color: "transparent", name: "" },
+    { color: "#e57373", name: "Meeting" },
+    { color: colors.blue[400], name: "Long-term goal" },
+    { color: colors.green[400], name: "Habit" },
+  ],
   selectedTask: null,
 }
 

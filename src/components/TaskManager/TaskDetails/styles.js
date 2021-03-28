@@ -3,6 +3,8 @@ import { makeStyles } from "@material-ui/core"
 export const useStyles = makeStyles(theme => ({
   TaskDetails: {
     padding: 20,
+    display: "flex",
+    flexDirection: "column",
   },
 
   TaskDetails__paper: {
@@ -54,7 +56,17 @@ export const useStyles = makeStyles(theme => ({
     marginBottom: 20,
   },
 
-  TaskDetails__dueTo: {},
+  TaskDetails__footer: {
+    marginTop: 40,
+  },
 
-  TaskDetails__footer: {},
+  listItem: {
+    justifyContent: "space-between",
+  },
+
+  color: {
+    width: 20,
+    height: 20,
+    borderRadius: "50%",
+  },
 }))
