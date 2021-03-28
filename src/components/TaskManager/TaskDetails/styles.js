@@ -18,13 +18,16 @@ export const useStyles = makeStyles(theme => ({
     },
   },
 
-  TaskDetails__head: {
+  TaskDetails__header: {
     marginBottom: 10,
+    display: "flex",
+    justifyContent: "space-between",
   },
 
-  TaskDetails__backBtn: {
+  TaskDetails__btn: {
     marginLeft: -5,
     padding: 5,
+    color: "#777",
   },
 
   TaskDetails__form: {
@@ -52,4 +55,6 @@ export const useStyles = makeStyles(theme => ({
   },
 
   TaskDetails__dueTo: {},
+
+  TaskDetails__footer: {},
 }))

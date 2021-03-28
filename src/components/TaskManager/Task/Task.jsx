@@ -8,12 +8,14 @@ import MoreVertIcon from "@material-ui/icons/MoreVert"
 import { useStyles } from "./styles"
 import { editTask, selectTask } from "../../../store/actions/tasks"
 
-function Task({ task, changeTaskName, selectTask, checkTask }) {
+function Task({ task, tasks, changeTaskName, selectTask, checkTask }) {
   const classes = useStyles()
 
   const labelClasses = [classes.Task__checkboxLabel]
   const tickClasses = [classes.Task__checkboxTick]
-  const [unmount, setUnmount] = React.useState(false)
+  const [mount, setMount] = React.useState(
+    task.status === "active" || task.status === "expired"
+  )
 
   if (task.status === "completed") {
     labelClasses.push(classes.Task__checkboxLabel_checked)
@@ -21,13 +23,21 @@ function Task({ task, changeTaskName, selectTask, checkTask }) {
   }
 
   const handleTaskCheck = () => {
-    if (task.status === "completed") return
-    checkTask(task)
+    if (task.status !== "completed") {
+      checkTask(task)
+    }
   }
+
+  // Unmount task if it's not present in the tasks list
+  React.useEffect(() => {
+    if (!tasks.find(t => t.id === task.id)) {
+      setMount(false)
+    }
+  }, [tasks, task, setMount])
 
   return (
     <CSSTransition
-      in={task.status !== "completed" || !unmount}
+      in={mount}
       timeout={300}
       classNames={{
         enter: classes.Task_enter,
@@ -52,7 +62,7 @@ function Task({ task, changeTaskName, selectTask, checkTask }) {
             htmlFor={`${task.id}-check`}
             className={labelClasses.join(" ")}
             onClick={() => {
-              setTimeout(() => setUnmount(true), 400)
+              setTimeout(() => setMount(false), 400)
             }}
           ></label>
 
@@ -107,4 +117,7 @@ const mapDispatchToProps = dispatch => ({
   selectTask: task => dispatch(selectTask(task)),
 })
 
-export default connect(null, mapDispatchToProps)(Task)
+export default connect(
+  state => ({ tasks: state.tasks.tasks }),
+  mapDispatchToProps
+)(Task)

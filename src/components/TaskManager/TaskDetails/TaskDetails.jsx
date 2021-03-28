@@ -9,15 +9,19 @@ import {
   MenuItem,
   TextField,
   IconButton,
+  Tooltip,
 } from "@material-ui/core"
 import ArrowBackIcon from "@material-ui/icons/ArrowBack"
+import DeleteIcon from "@material-ui/icons/Delete"
 
 import { useStyles } from "./styles"
 import { editTask, selectTask } from "../../../store/actions/tasks"
+import { setPopup } from "../../../store/actions/layout"
 
 const TaskDetails = ({
   selectedTask,
   hideTask,
+  openDeletePopup,
   handleNameChange,
   handleNoteChange,
   handleTagChange,
@@ -29,15 +33,28 @@ const TaskDetails = ({
 
   return (
     <div className={classes.TaskDetails}>
-      <div className={classes.TaskDetails__head}>
-        <IconButton
-          edge="start"
-          className={classes.TaskDetails__backBtn}
-          color="inherit"
-          onClick={() => hideTask()}
-        >
-          <ArrowBackIcon />
-        </IconButton>
+      <div className={classes.TaskDetails__header}>
+        <Tooltip title="Back to tasks" placement="right">
+          <IconButton
+            edge="start"
+            className={classes.TaskDetails__btn}
+            color="inherit"
+            onClick={() => hideTask()}
+          >
+            <ArrowBackIcon />
+          </IconButton>
+        </Tooltip>
+
+        <Tooltip title="Delete task" placement="left">
+          <IconButton
+            edge="start"
+            className={classes.TaskDetails__btn}
+            color="inherit"
+            onClick={openDeletePopup}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
       </div>
 
       <form className={classes.TaskDetails__form}>
@@ -96,6 +113,8 @@ const TaskDetails = ({
           />
         </MuiPickersUtilsProvider>
       </form>
+
+      <div className={classes.TaskDetails__footer}></div>
     </div>
   )
 }
@@ -106,6 +125,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   hideTask: () => dispatch(selectTask(null)),
+  openDeletePopup: () => dispatch(setPopup("delete-task")),
   handleNameChange: (task, name) => {
     dispatch(
       editTask({

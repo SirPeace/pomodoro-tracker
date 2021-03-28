@@ -17,6 +17,7 @@ import {
 } from "../../store/actions/layout"
 import { useStyles } from "./styles"
 import { PathContext } from "../../pages/AppPage/AppPage"
+import { selectTask } from "../../store/actions/tasks"
 
 function ApplicationBar({
   sessionLoop,
@@ -29,6 +30,8 @@ function ApplicationBar({
 
   setTempDrawer,
   setPersDrawer,
+
+  hideTask,
 }) {
   const classes = useStyles()
   const sessionTheme = useTheme()
@@ -68,8 +71,12 @@ function ApplicationBar({
 
   const toggleDrawer = (type, name) => {
     if (type === "p") {
-      if (pers_drawer === name) setPersDrawer(undefined)
-      else setPersDrawer(name)
+      if (pers_drawer === name) {
+        if (name === "tasks") hideTask()
+        setPersDrawer(undefined)
+      } else {
+        setPersDrawer(name)
+      }
     } else if (type === "t") {
       if (temp_drawer === name) setTempDrawer(undefined)
       else setTempDrawer(name)
@@ -118,6 +125,7 @@ const mapDispatchToProps = dispatch => ({
   setPopup: name => dispatch(setPopup(name)),
   setPersDrawer: name => dispatch(setPersistantDrawer(name)),
   setTempDrawer: name => dispatch(setTemporaryDrawer(name)),
+  hideTask: () => dispatch(selectTask(null)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ApplicationBar)

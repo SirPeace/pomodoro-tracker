@@ -9,6 +9,7 @@ import SettingsPopup from "../../components/SettingsPopup/SettingsPopup"
 import TaskManager from "../../components/TaskManager/TaskManager"
 import { useStyles } from "./styles"
 import PersistentDrawer from "./PersistentDrawer/PersistentDrawer"
+import DeleteTaskPopup from "../../components/TaskManager/DeleteTaskPopup/DeleteTaskPopup"
 
 function AppShell({
   persDrawer,
@@ -30,6 +31,8 @@ function AppShell({
     popup = <SettingsPopup />
   } else if (popup === "reset-timer") {
     popup = <ResetTimerPopup />
+  } else if (popup === "delete-task") {
+    popup = <DeleteTaskPopup />
   } else {
     popup = null
   }

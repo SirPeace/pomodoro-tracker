@@ -31,8 +31,6 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export const TasksContext = React.createContext()
-
 function TaskManager({ tasks, addTask, selectedTask }) {
   const classes = useStyles()
   const taskDetailsClasses = useTaskDetailsStyles()
@@ -75,9 +73,10 @@ function TaskManager({ tasks, addTask, selectedTask }) {
           )}
 
           <TransitionGroup>
-            {tasks.map(task => (
-              <Task key={task.id} task={task} />
-            ))}
+            {tasks.map(task => {
+              console.log(task)
+              return <Task key={task.id} task={task} />
+            })}
           </TransitionGroup>
         </ul>
       </div>
@@ -92,7 +91,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   addTask: task => dispatch(addTask(task)),
-  // deleteTask: task => dispatch(deleteTask(task)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TaskManager)
