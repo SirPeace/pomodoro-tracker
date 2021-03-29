@@ -23,7 +23,7 @@
 + Fix ApplicationBar and routing [#6]
 + Sound notifications [#4]
 - Beautify 404 page and solve the AppBar problem with getting back from 404
-- Enhance Tasks drawer simillar to Google Tasks and Microsoft To-Do
+- Enhance Tasks drawer simillar to Google Tasks and Microsoft To-Do [#7]
   - Make them look more appealing
   - Add description and tags functionality for each task
   - Keep a list of completed tasks

@@ -1,9 +1,11 @@
-import { Fab, makeStyles } from "@material-ui/core"
 import React from "react"
 import { connect } from "react-redux"
+import { Fab, makeStyles } from "@material-ui/core"
+import SettingsIcon from "@material-ui/icons/Settings"
+import { useMediaQuery } from "react-responsive"
+
 import Timer from "../../components/Timer/Timer"
 import { setPopup } from "../../store/actions/layout"
-import SettingsIcon from "@material-ui/icons/Settings"
 import Page from "../Page"
 
 const useStyles = makeStyles(theme => ({
@@ -20,18 +22,22 @@ export const PathContext = React.createContext()
 function AppPage({ setPopup, match }) {
   const classes = useStyles()
 
+  const isMobile = useMediaQuery({ query: "(max-width: 600px)" })
+
   return (
     <PathContext.Provider value={{ path: match.path }}>
       <Page>
         <Timer />
-        <Fab
-          color="primary"
-          aria-label="add"
-          onClick={() => setPopup("settings")}
-          className={classes.floatingBtn}
-        >
-          <SettingsIcon />
-        </Fab>
+        {isMobile && (
+          <Fab
+            color="primary"
+            aria-label="add"
+            onClick={() => setPopup("settings")}
+            className={classes.floatingBtn}
+          >
+            <SettingsIcon />
+          </Fab>
+        )}
       </Page>
     </PathContext.Provider>
   )

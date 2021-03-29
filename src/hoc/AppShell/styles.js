@@ -21,16 +21,4 @@ export const useStyles = makeStyles(theme => ({
     zIndex: theme.zIndex.drawer + 2,
     color: "#fff",
   },
-
-  persistantPaperDrawer: {
-    minWidth: 280,
-    top: 64,
-  },
-
-  "@media (max-width: 600px)": {
-    persistantPaperDrawer: {
-      top: 56,
-      width: "100%",
-    },
-  },
 }))

@@ -1,4 +1,5 @@
 import React from "react"
+import { connect } from "react-redux"
 import {
   AppBar,
   Toolbar,
@@ -7,9 +8,11 @@ import {
   useTheme,
   ThemeProvider,
 } from "@material-ui/core"
-import MenuIcon from "@material-ui/icons/Menu"
 import CheckIcon from "@material-ui/icons/Check"
-import { connect } from "react-redux"
+import MenuIcon from "@material-ui/icons/Menu"
+import SettingsIcon from "@material-ui/icons/Settings"
+import { useMediaQuery } from "react-responsive"
+
 import {
   setPersistantDrawer,
   setPopup,
@@ -17,6 +20,7 @@ import {
 } from "../../store/actions/layout"
 import { useStyles } from "./styles"
 import { PathContext } from "../../pages/AppPage/AppPage"
+import { selectTask } from "../../store/actions/tasks"
 
 function ApplicationBar({
   sessionLoop,
@@ -29,6 +33,9 @@ function ApplicationBar({
 
   setTempDrawer,
   setPersDrawer,
+  openSettingsPopup,
+
+  hideTask,
 }) {
   const classes = useStyles()
   const sessionTheme = useTheme()
@@ -41,6 +48,22 @@ function ApplicationBar({
   if (session === "short_break") sessionProgressMsg = "Short break"
   else if (session === "long_break") sessionProgressMsg = "Long break"
 
+  const isMobile = useMediaQuery({ query: "(max-width: 600px)" })
+
+  const toggleDrawer = (type, name) => {
+    if (type === "p") {
+      if (pers_drawer === name) {
+        if (name === "tasks") hideTask()
+        setPersDrawer(undefined)
+      } else {
+        setPersDrawer(name)
+      }
+    } else if (type === "t") {
+      if (temp_drawer === name) setTempDrawer(undefined)
+      else setTempDrawer(name)
+    }
+  }
+
   const SessionProgress = isAppPage() && (
     <>
       <span
@@ -52,6 +75,19 @@ function ApplicationBar({
 
   const AppControls = isAppPage() && (
     <>
+      {!isMobile && (
+        <Tooltip title="Settings" arrow style={{ marginRight: 10 }}>
+          <IconButton
+            edge="start"
+            className={classes.barButton}
+            color="inherit"
+            aria-label="to-do"
+            onClick={openSettingsPopup}
+          >
+            <SettingsIcon />
+          </IconButton>
+        </Tooltip>
+      )}
       <Tooltip title="Tasks" arrow>
         <IconButton
           edge="start"
@@ -65,16 +101,6 @@ function ApplicationBar({
       </Tooltip>
     </>
   )
-
-  const toggleDrawer = (type, name) => {
-    if (type === "p") {
-      if (pers_drawer === name) setPersDrawer(undefined)
-      else setPersDrawer(name)
-    } else if (type === "t") {
-      if (temp_drawer === name) setTempDrawer(undefined)
-      else setTempDrawer(name)
-    }
-  }
 
   return (
     <ThemeProvider theme={sessionTheme}>
@@ -115,9 +141,10 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  setPopup: name => dispatch(setPopup(name)),
+  openSettingsPopup: () => dispatch(setPopup("settings")),
   setPersDrawer: name => dispatch(setPersistantDrawer(name)),
   setTempDrawer: name => dispatch(setTemporaryDrawer(name)),
+  hideTask: () => dispatch(selectTask(null)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ApplicationBar)
