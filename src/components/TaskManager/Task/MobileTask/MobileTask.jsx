@@ -6,7 +6,7 @@ import CheckIcon from "@material-ui/icons/Check"
 import { useStyles } from "../styles"
 import { editTask, selectTask } from "../../../../store/actions/tasks"
 
-function Task({ task, tasks, tags, changeTaskName, selectTask, checkTask }) {
+function MobileTask({ task, tasks, tags, selectTask, checkTask }) {
   const classes = useStyles()
 
   const labelClasses = [classes.Task__checkboxLabel]
@@ -99,15 +99,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  changeTaskName: (task, name) =>
-    dispatch(
-      editTask({
-        ...task,
-        name,
-      })
-    ),
   checkTask: task => dispatch(editTask({ ...task, status: "completed" })),
   selectTask: task => dispatch(selectTask(task)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Task)
+export default connect(mapStateToProps, mapDispatchToProps)(MobileTask)
