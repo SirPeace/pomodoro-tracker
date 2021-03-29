@@ -8,7 +8,6 @@ import { useMediaQuery } from "react-responsive"
 
 import { useStyles } from "./styles"
 import { editTask, selectTask } from "../../../store/actions/tasks"
-import MobileTask from "./MobileTask/MobileTask"
 
 function Task({ task, tasks, tags, changeTaskName, selectTask, checkTask }) {
   const classes = useStyles()
@@ -39,7 +38,16 @@ function Task({ task, tasks, tags, changeTaskName, selectTask, checkTask }) {
 
   const isMobile = useMediaQuery({ query: "(max-width: 600px)" })
 
-  if (isMobile) return <MobileTask task={task} />
+  const listItemProps = {}
+  if (isMobile) {
+    const handleClick = evt => {
+      if (!evt.target.matches("label")) {
+        selectTask(task)
+      }
+    }
+
+    listItemProps.onMouseUp = handleClick
+  }
 
   return (
     <CSSTransition
@@ -53,7 +61,7 @@ function Task({ task, tasks, tags, changeTaskName, selectTask, checkTask }) {
       mountOnEnter
       unmountOnExit
     >
-      <li className={classes.Task} data-task="task">
+      <li className={classes.Task} data-task="task" {...listItemProps}>
         <i
           className={classes.tagLabel}
           style={{ backgroundColor: tags[task.tagIndex].color }}
@@ -87,27 +95,33 @@ function Task({ task, tasks, tags, changeTaskName, selectTask, checkTask }) {
           </CSSTransition>
         </div>
 
-        <input
-          type="text"
-          autoComplete="off"
-          className={classes.Task__name}
-          value={task.name}
-          onChange={evt => changeTaskName(task, evt.target.value)}
-          onFocus={evt => {
-            evt.target.parentElement.classList.add(classes.Task_focus)
-          }}
-          onBlur={evt =>
-            evt.target.parentElement.classList.remove(classes.Task_focus)
-          }
-        />
-        <IconButton
-          edge="start"
-          className={classes.Task__detailsBtn}
-          color="inherit"
-          onClick={() => selectTask(task)}
-        >
-          <MoreVertIcon />
-        </IconButton>
+        {isMobile ? (
+          <span className={classes.Task__name}>{task.name}</span>
+        ) : (
+          <>
+            <input
+              type="text"
+              autoComplete="off"
+              className={classes.Task__name}
+              value={task.name}
+              onChange={evt => changeTaskName(task, evt.target.value)}
+              onFocus={evt => {
+                evt.target.parentElement.classList.add(classes.Task_focus)
+              }}
+              onBlur={evt =>
+                evt.target.parentElement.classList.remove(classes.Task_focus)
+              }
+            />
+            <IconButton
+              edge="start"
+              className={classes.Task__detailsBtn}
+              color="inherit"
+              onClick={() => selectTask(task)}
+            >
+              <MoreVertIcon />
+            </IconButton>
+          </>
+        )}
       </li>
     </CSSTransition>
   )
