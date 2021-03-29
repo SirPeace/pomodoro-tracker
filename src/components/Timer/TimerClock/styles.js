@@ -12,7 +12,7 @@ export const useStyles = makeStyles(theme => ({
     top: "50%",
     left: "50%",
     fontSize: "5em",
-    color: "rgb(85, 85, 85)",
+    color: "#444",
     transform: "translate(-50%, -50%)",
   },
 

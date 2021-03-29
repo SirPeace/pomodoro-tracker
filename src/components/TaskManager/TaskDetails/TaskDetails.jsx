@@ -92,7 +92,7 @@ const TaskDetails = ({
             labelId={`Select-Label-${task.id}`}
             id={`Select-${task.id}`}
             value={task.tagIndex}
-            onChange={e => setTag(task, e.target.value)}
+            onChange={evt => setTag(task, evt.target.value)}
             label="Tag"
           >
             {tags.map((tag, index) => (
@@ -119,9 +119,15 @@ const TaskDetails = ({
             value={task.dueTo}
             format="MMMM dd, yyyy — HH:mm"
             ampm={false}
+            disablePast
             onChange={date => setDate(task, date)}
           />
         </MuiPickersUtilsProvider>
+        {task.status === "expired" ? (
+          <span className={classes.TaskDetails__expirationText}>
+            Task expired
+          </span>
+        ) : null}
       </form>
 
       <div className={classes.TaskDetails__footer}>
@@ -175,6 +181,7 @@ const mapDispatchToProps = dispatch => ({
       editTask({
         ...task,
         dueTo,
+        status: "active",
       })
     )
   },

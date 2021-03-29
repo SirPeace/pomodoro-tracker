@@ -76,7 +76,7 @@ function ApplicationBar({
   const AppControls = isAppPage() && (
     <>
       {!isMobile && (
-        <Tooltip title="Settings" arrow style={{ marginRight: 10 }}>
+        <Tooltip title="Settings" arrow>
           <IconButton
             edge="start"
             className={classes.barButton}

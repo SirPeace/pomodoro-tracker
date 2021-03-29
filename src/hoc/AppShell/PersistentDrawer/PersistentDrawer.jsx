@@ -3,7 +3,7 @@ import React from "react"
 
 export const useStyles = makeStyles(() => ({
   persistantPaperDrawer: {
-    minWidth: 304,
+    minWidth: 328,
     top: 64,
   },
 

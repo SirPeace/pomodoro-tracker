@@ -16,7 +16,9 @@ const useStyles = makeStyles(theme => ({
   },
 
   motto: {
-    //
+    fontSize: 36,
+    color: "#444",
+    fontWeight: 500,
   },
 
   "@media (max-height: 830px)": {

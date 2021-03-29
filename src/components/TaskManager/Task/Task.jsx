@@ -2,14 +2,23 @@ import React from "react"
 import { connect } from "react-redux"
 import { CSSTransition } from "react-transition-group"
 import CheckIcon from "@material-ui/icons/Check"
-import { IconButton } from "@material-ui/core"
+import { colors, IconButton } from "@material-ui/core"
 import MoreVertIcon from "@material-ui/icons/MoreVert"
+import ScheduleIcon from "@material-ui/icons/Schedule"
 import { useMediaQuery } from "react-responsive"
 
 import { useStyles } from "./styles"
 import { editTask, selectTask } from "../../../store/actions/tasks"
 
-function Task({ task, tasks, tags, changeTaskName, selectTask, checkTask }) {
+function Task({
+  task,
+  tasks,
+  tags,
+  changeTaskName,
+  selectTask,
+  checkTask,
+  expireTask,
+}) {
   const classes = useStyles()
 
   const labelClasses = [classes.Task__checkboxLabel]
@@ -20,7 +29,6 @@ function Task({ task, tasks, tags, changeTaskName, selectTask, checkTask }) {
 
   if (task.status === "completed") {
     labelClasses.push(classes.Task__checkboxLabel_checked)
-    tickClasses.push(classes.Task__checkboxTick_checked)
   }
 
   const handleTaskCheck = () => {
@@ -29,7 +37,7 @@ function Task({ task, tasks, tags, changeTaskName, selectTask, checkTask }) {
     }
   }
 
-  // Unmount task if it's not present in the tasks list
+  // Unmount deleted tasks
   React.useEffect(() => {
     if (!tasks.find(t => t.id === task.id)) {
       setMount(false)
@@ -48,6 +56,30 @@ function Task({ task, tasks, tags, changeTaskName, selectTask, checkTask }) {
 
     listItemProps.onMouseUp = handleClick
   }
+
+  // Check if the current task is expired once a minute
+  React.useEffect(() => {
+    const checkTaskExpiration = () => {
+      if (task?.dueTo instanceof Date) {
+        if (task.dueTo.getTime() <= new Date().getTime()) {
+          expireTask(task)
+        }
+      }
+    }
+
+    let interval
+    if (task.status !== "expired" && task.status !== "completed") {
+      checkTaskExpiration()
+
+      interval = setInterval(() => {
+        checkTaskExpiration()
+      }, 1000 * 10)
+    }
+
+    return () => clearInterval(interval)
+  }, [task, expireTask])
+
+  console.log(task.name, task.status)
 
   return (
     <CSSTransition
@@ -122,6 +154,9 @@ function Task({ task, tasks, tags, changeTaskName, selectTask, checkTask }) {
             </IconButton>
           </>
         )}
+        {task.status === "expired" ? (
+          <ScheduleIcon style={{ color: colors.red[400] }} />
+        ) : null}
       </li>
     </CSSTransition>
   )
@@ -142,6 +177,7 @@ const mapDispatchToProps = dispatch => ({
     ),
   checkTask: task => dispatch(editTask({ ...task, status: "completed" })),
   selectTask: task => dispatch(selectTask(task)),
+  expireTask: task => dispatch(editTask({ ...task, status: "expired" }, true)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Task)

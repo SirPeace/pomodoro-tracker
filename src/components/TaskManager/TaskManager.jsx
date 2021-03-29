@@ -40,7 +40,10 @@ function TaskManager({ tasks, addTask, selectedTask }) {
   const [renderMessage, setRenderMessage] = React.useState(true)
 
   const haveActiveTasks = React.useMemo(
-    () => tasks.filter(task => task.status === "active").length > 0,
+    () =>
+      tasks.filter(
+        task => task.status === "active" || task.status === "expired"
+      ).length > 0,
     [tasks]
   )
 

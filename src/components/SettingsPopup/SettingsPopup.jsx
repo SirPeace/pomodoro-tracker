@@ -105,7 +105,7 @@ function SettingsPopup({
                 type="number"
                 defaultValue={workSessionDuration}
                 inputRef={register}
-                error={errors.work_session}
+                error={!!errors.work_session}
                 helperText={errors.work_session?.message}
                 units="Minutes"
               />
@@ -117,7 +117,7 @@ function SettingsPopup({
                 type="number"
                 defaultValue={shortBreakDuration}
                 inputRef={register}
-                error={errors.short_break}
+                error={!!errors.short_break}
                 helperText={errors.short_break?.message}
                 units="Minutes"
               />
@@ -129,7 +129,7 @@ function SettingsPopup({
                 type="number"
                 defaultValue={longBreakDuration}
                 inputRef={register}
-                error={errors.long_break}
+                error={!!errors.long_break}
                 helperText={errors.long_break?.message}
                 units="Minutes"
               />
@@ -141,7 +141,7 @@ function SettingsPopup({
                 type="number"
                 defaultValue={workSessionsCountBeforeLongBreak}
                 inputRef={register}
-                error={errors.work_sessions_before_long_break}
+                error={!!errors.work_sessions_before_long_break}
                 helperText={errors.work_sessions_before_long_break?.message}
                 units="Count"
               />

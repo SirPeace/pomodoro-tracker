@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core"
+import { colors, makeStyles } from "@material-ui/core"
 
 export const useStyles = makeStyles(theme => ({
   TaskDetails: {
@@ -8,7 +8,7 @@ export const useStyles = makeStyles(theme => ({
   },
 
   TaskDetails__paper: {
-    minWidth: 304,
+    minWidth: 328,
     top: 64,
     zIndex: theme.zIndex.drawer * 2,
   },
@@ -68,5 +68,12 @@ export const useStyles = makeStyles(theme => ({
     width: 20,
     height: 20,
     borderRadius: "50%",
+  },
+
+  TaskDetails__expirationText: {
+    fontSize: 13,
+    color: colors.red[700],
+    marginLeft: 4,
+    marginTop: 4,
   },
 }))

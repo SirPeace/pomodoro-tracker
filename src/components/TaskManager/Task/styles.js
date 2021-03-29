@@ -128,20 +128,4 @@ export const useStyles = makeStyles(theme => ({
       transform: "scale(0.5)",
     },
   },
-
-  Task_urgent: {
-    "&:before": {
-      backgroundColor: "#cc6363",
-    },
-  },
-
-  deleteIcon: {
-    fontSize: 20,
-    transition: "color 0.2s",
-
-    "&:hover": {
-      color: "crimson",
-      cursor: "pointer",
-    },
-  },
 }))

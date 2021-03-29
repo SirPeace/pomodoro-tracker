@@ -19,19 +19,13 @@ export const useStyles = makeStyles(theme => ({
     fontSize: 18,
   },
 
-  "@global": {
-    h2: {
-      fontFamily: "Open Sans",
-      color: "#444",
-      fontSize: 32,
-      fontWeight: 600,
-      letterSpacing: 1.5,
-      margin: 0,
-    },
-
-    blockquote: {
-      fontStyle: "italic",
-    },
+  h2: {
+    fontFamily: "Open Sans",
+    color: "#444",
+    fontSize: 26,
+    fontWeight: 600,
+    letterSpacing: 1.5,
+    margin: 0,
   },
 
   "@media (max-width: 400px)": {

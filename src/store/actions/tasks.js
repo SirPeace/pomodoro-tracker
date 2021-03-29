@@ -30,11 +30,11 @@ export const addTask = task => ({
   },
 })
 
-export const editTask = task => ({
+export const editTask = (task, hidden = false) => ({
   type: EDIT_TASK,
   payload: {
     ...task,
-    updatedAt: new Date(),
+    updatedAt: hidden ? task.updatedAt : new Date(),
   },
 })
 
