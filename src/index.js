@@ -1,12 +1,14 @@
 import React from "react"
 import ReactDOM from "react-dom"
+import { BrowserRouter } from "react-router-dom"
+import { createStore, applyMiddleware, compose } from "redux"
+import thunk from "redux-thunk"
+import { Provider } from "react-redux"
+import firebase from "firebase/app"
+
 import "./index.css"
 import App from "./App.jsx"
 import reportWebVitals from "./reportWebVitals"
-import { BrowserRouter } from "react-router-dom"
-import { Provider } from "react-redux"
-import { createStore, applyMiddleware, compose } from "redux"
-import thunk from "redux-thunk"
 import rootReducer from "./store/reducers/rootReducer"
 import { throwNotification } from "./libs/functions"
 
@@ -17,11 +19,16 @@ const composeEnhancers =
     : compose
 
 const middleware = [thunk]
-
 const store = createStore(
   rootReducer,
   composeEnhancers(applyMiddleware(...middleware))
 )
+
+firebase.initializeApp({
+  apiKey: "API_KEY",
+  projectId: "pomodoro-tracker-922c7",
+  authDomain: "pomodoro-tracker-922c7.firebaseapp.com",
+})
 
 ReactDOM.render(
   <Provider store={store}>

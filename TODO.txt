@@ -23,7 +23,7 @@
 + Fix ApplicationBar and routing [#6]
 + Sound notifications [#4]
 - Beautify 404 page and solve the AppBar problem with getting back from 404
-+ Enhance Tasks drawer simillar to Google Tasks and Microsoft To-Do [#7]
++ Enhance Tasks drawer similar to Google Tasks and Microsoft To-Do [#7]
   + Make them look more appealing
   + Add description and tags functionality for each task
   - Keep a list of completed tasks
@@ -31,7 +31,7 @@
 ~ ProgressPage with chart.js [#8]
   + Static page
   - Dynamic data from the Firestore
-- Firebase backend with Auth and Firestore
+~ Firebase backend with Auth and Firestore [#9]
 - Satisfy all PWA requirements
 
 -------------------

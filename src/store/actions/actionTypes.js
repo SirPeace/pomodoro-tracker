@@ -32,3 +32,7 @@ export const DELETE_TASK = "DELETE_TASK"
 export const EDIT_TASK = "EDIT_TASK"
 export const SET_TASKS = "SET_TASKS"
 export const SELECT_TASK = "SELECT_TASK"
+
+// auth
+export const SET_USER = "SET_USER"
+export const SET_TOKEN = "SET_TOKEN"

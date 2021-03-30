@@ -12,7 +12,7 @@ export const useStyles = makeStyles(theme => ({
   barButton: {
     margin: "0 1px",
     "&:last-child": {
-      marginRight: -12,
+      marginRight: 0,
     },
   },
 
