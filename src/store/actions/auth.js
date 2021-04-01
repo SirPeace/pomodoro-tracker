@@ -4,7 +4,12 @@ import "firebase/firestore"
 
 import { SET_TOKEN, SET_USER } from "./actionTypes"
 import { fetchUserState, uploadUserState } from "../db"
-import { setProgress } from "./progress"
+import {
+  refreshCharts,
+  refreshStreak,
+  setProgress,
+  refreshTodayProgress,
+} from "./progress"
 import { setTasks } from "./tasks"
 import { setConfiguration } from "./sessions"
 
@@ -54,7 +59,7 @@ export const logout = () => async dispatch => {
   dispatch(setToken(null))
 }
 
-export const attemptAutoLogin = () => async dispatch => {
+export const attemptAutoLogin = () => async (dispatch, getState) => {
   const user = JSON.parse(localStorage.getItem("auth.user"))
   const token = localStorage.getItem("auth.token")
 
@@ -67,7 +72,20 @@ export const attemptAutoLogin = () => async dispatch => {
     if (remoteState) {
       dispatch(setTasks(remoteState.tasks))
       dispatch(setConfiguration(remoteState.configuration))
-      dispatch(setProgress(remoteState.progress))
+      dispatch(
+        setProgress({
+          ...remoteState.progress,
+          todayChart: JSON.parse(remoteState.progress.todayChart),
+          weekChart: JSON.parse(remoteState.progress.weekChart),
+          yearChart: JSON.parse(remoteState.progress.yearChart),
+        })
+      )
+
+      if (getState().progress.lastUpdate) {
+        dispatch(refreshStreak())
+        dispatch(refreshCharts())
+        dispatch(refreshTodayProgress())
+      }
     } else {
       console.log("Remote state not found for " + user.uid)
       dispatch(logout())

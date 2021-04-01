@@ -1,4 +1,9 @@
-import { getTimeString, throwNotification, toMs } from "../../libs/functions"
+import {
+  getTimeString,
+  isNewDay,
+  throwNotification,
+  toMs,
+} from "../../libs/functions"
 import {
   SET_DURATION,
   SET_STATUS,
@@ -7,6 +12,7 @@ import {
   UPDATE_RUNNING_DATA,
   SET_TIME,
 } from "./actionTypes"
+import { incrementMinutes, incrementStreak, updateCharts } from "./progress"
 import { pushSessionOrder } from "./sessions"
 
 export const setTime = (value, unit = "time") => ({
@@ -187,6 +193,8 @@ export const stopTimer = (forced = true) => (dispatch, getState) => {
     dispatch(setStatus("finished"))
 
     const session = getState().sessions.session
+    const lastUpdate = getState().progress.lastUpdate
+
     if (session === "work_session") {
       throwNotification(
         "The break is over",
@@ -197,6 +205,12 @@ export const stopTimer = (forced = true) => (dispatch, getState) => {
         "The work session is over",
         "Good job! Now take some time to refresh."
       )
+
+      dispatch(updateCharts())
+      dispatch(incrementMinutes())
+      if (!lastUpdate || isNewDay(lastUpdate)) {
+        dispatch(incrementStreak())
+      }
     }
   }
 }

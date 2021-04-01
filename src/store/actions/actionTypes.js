@@ -36,3 +36,16 @@ export const SELECT_TASK = "SELECT_TASK"
 // auth
 export const SET_USER = "SET_USER"
 export const SET_TOKEN = "SET_TOKEN"
+
+// progress
+export const SET_PROGRESS = "SET_PROGRESS"
+export const SET_MINUTES_TODAY = "SET_MINUTES_TODAY"
+export const SET_STREAK = "SET_STREAK"
+export const SET_TASKS_TODAY = "SET_TASKS_TODAY"
+export const SET_BEST_STREAK = "SET_BEST_STREAK"
+export const SET_OVERALL_MINUTES = "SET_OVERALL_MINUTES"
+export const SET_OVERALL_TASKS = "SET_OVERALL_TASKS"
+export const SET_TODAY_CHART = "SET_TODAY_CHART"
+export const SET_WEEK_CHART = "SET_WEEK_CHART"
+export const SET_YEAR_CHART = "SET_YEAR_CHART"
+export const SET_GOAL = "SET_GOAL"

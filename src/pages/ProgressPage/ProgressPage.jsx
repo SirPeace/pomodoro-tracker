@@ -1,4 +1,5 @@
 import React from "react"
+import { connect } from "react-redux"
 import { Container, MenuItem, Select, Tab, Tabs } from "@material-ui/core"
 import CheckIcon from "@material-ui/icons/Check"
 import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted"
@@ -11,8 +12,9 @@ import Page from "../Page"
 import ProgressChart from "../../components/ProgressChart/ProgressChart"
 import { useStyles as usePageStyles } from "../styles"
 import { useStyles } from "./styles"
+import { setGoal } from "../../store/actions/progress"
 
-export default function ProgressPage() {
+function ProgressPage({ progress, setGoal }) {
   const pageClasses = usePageStyles()
   const classes = useStyles()
 
@@ -30,8 +32,9 @@ export default function ProgressPage() {
           <Select
             className={classes.goalSelect}
             variant="outlined"
-            defaultValue={60}
+            value={progress.goal}
             SelectDisplayProps={{ className: classes.goalSelectElement }}
+            onChange={evt => setGoal(evt.target.value)}
           >
             <MenuItem value={60}>60 minutes</MenuItem>
             <MenuItem value={90}>90 minutes</MenuItem>
@@ -56,39 +59,57 @@ export default function ProgressPage() {
           <ul className={classes.metricsList}>
             <li className={classes.metric}>
               <WhatshotIcon className={classes.icon} />
-              Days streak: <b className={classes.metricValue}>8</b>
+              Days streak:{" "}
+              <b className={classes.metricValue}>{progress.streak}</b>
             </li>
             <hr />
             <li className={classes.metric}>
               <ScheduleIcon className={classes.icon} />
-              Focused minutes today: <b className={classes.metricValue}>120</b>
+              Focused minutes today:{" "}
+              <b className={classes.metricValue}>{progress.today.minutes}</b>
             </li>
             <li className={classes.metric}>
               <CheckIcon className={classes.icon} />
-              Completed tasks today: <b className={classes.metricValue}>2</b>
+              Completed tasks today:{" "}
+              <b className={classes.metricValue}>{progress.today.tasks}</b>
             </li>
             <hr />
             <li className={classes.metric}>
               <WhatshotIcon className={classes.icon} />
-              The best days streak: <b className={classes.metricValue}>12</b>
+              The best days streak:{" "}
+              <b className={classes.metricValue}>{progress.bestStreak}</b>
             </li>
             <li className={classes.metric}>
               <ScheduleIcon className={classes.icon} />
               Overall focused minutes:{" "}
-              <b className={classes.metricValue}>2560</b>
+              <b className={classes.metricValue}>{progress.overallMinutes}</b>
             </li>
             <li className={classes.metric}>
               <CheckIcon className={classes.icon} />
               Overall tasks completed:{" "}
-              <b className={classes.metricValue}>1317</b>
+              <b className={classes.metricValue}>{progress.overallTasks}</b>
             </li>
           </ul>
         </TabPanel>
 
         <TabPanel value={tab} index={1}>
-          <ProgressChart />
+          <ProgressChart
+            today={progress.todayChart}
+            week={progress.weekChart}
+            year={progress.yearChart}
+          />
         </TabPanel>
       </Container>
     </Page>
   )
 }
+
+const mapStateToProps = state => ({
+  progress: state.progress,
+})
+
+const mapDispatchToProps = dispatch => ({
+  setGoal: goal => dispatch(setGoal(goal)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProgressPage)

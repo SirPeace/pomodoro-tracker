@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-function ProgressChart() {
+function ProgressChart({ today, week, year }) {
   const classes = useStyles()
 
   const [chart, setChart] = React.useState("today")
@@ -40,11 +40,11 @@ function ProgressChart() {
           <Line
             {...mobileProps}
             data={{
-              labels: ["13:00", "14:00", "16:00", "19:00", "20:00"],
+              labels: Object.keys(today),
               datasets: [
                 {
                   label: "Minutes of focus",
-                  data: [70, 60, 90, 25, 40],
+                  data: Object.values(today),
                   fill: "origin",
                   backgroundColor: "rgba(229, 115, 115, 0.3)",
                   borderColor: "rgb(229, 115, 115)",
@@ -58,11 +58,11 @@ function ProgressChart() {
           <Line
             {...mobileProps}
             data={{
-              labels: ["21", "22", "23", "24", "25", "26", "27"],
+              labels: Object.keys(week),
               datasets: [
                 {
                   label: "Minutes of focus",
-                  data: [150, 60, 90, 250, 300, 190, 110],
+                  data: Object.values(week),
                   fill: "origin",
                   backgroundColor: "rgba(229, 115, 115, 0.3)",
                   borderColor: "rgb(229, 115, 115)",
@@ -76,37 +76,11 @@ function ProgressChart() {
           <Line
             {...mobileProps}
             data={{
-              labels: [
-                "Oct",
-                "Nov",
-                "Dec",
-                "Jan",
-                "Feb",
-                "Mar",
-                "Apr",
-                "May",
-                "Jun",
-                "Jul",
-                "Aug",
-                "Sep",
-              ],
+              labels: Object.keys(year),
               datasets: [
                 {
                   label: "Minutes of focus",
-                  data: [
-                    7000,
-                    6000,
-                    9000,
-                    2500,
-                    4000,
-                    3000,
-                    5000,
-                    7000,
-                    6000,
-                    9000,
-                    2500,
-                    4000,
-                  ],
+                  data: Object.values(year),
                   fill: "origin",
                   backgroundColor: "rgba(229, 115, 115, 0.3)",
                   borderColor: "rgb(229, 115, 115)",

@@ -30,6 +30,11 @@ export const uploadUserState = user => async (_, getState) => {
         dueTo: task.dueTo ? new Date(task.dueTo).getTime() : null,
       })),
       configuration,
-      progress,
+      progress: {
+        ...progress,
+        todayChart: JSON.stringify(progress.todayChart),
+        weekChart: JSON.stringify(progress.weekChart),
+        yearChart: JSON.stringify(progress.yearChart),
+      },
     })
 }

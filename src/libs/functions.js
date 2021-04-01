@@ -1,3 +1,5 @@
+const getDaysDiff = require("date-fns/differenceInCalendarDays")
+
 /**
  * Get time string from given milliseconds
  * @param {number} value Value to convert into time string
@@ -54,4 +56,22 @@ export function throwNotification(title, body) {
       new Audio("/notification.mp3").play()
     })
   }
+}
+
+/**
+ * Check if today is a new day compared to the timestamp
+ * @param {number} timestamp Timestamp of the day to compare with
+ * @return {boolean}
+ */
+export function isNewDay(timestamp) {
+  return getDaysDiff(new Date(), new Date(timestamp)) >= 1
+}
+
+/**
+ * Check if today is a new day compared to the timestamp
+ * @param {number} timestamp Timestamp of the day to compare with
+ * @return {boolean}
+ */
+export function twoDaysPassed(timestamp) {
+  return getDaysDiff(new Date(), new Date(timestamp)) >= 2
 }
