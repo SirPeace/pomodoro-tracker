@@ -2,6 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import DateFnsUtils from "@date-io/date-fns"
 import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers"
+import { format } from "date-fns"
 import {
   FormControl,
   InputLabel,
@@ -133,11 +134,11 @@ const TaskDetails = ({
       <div className={classes.TaskDetails__footer}>
         <p>
           <i>Created at:</i>&nbsp;
-          {new Date(task.createdAt).toLocaleString("ru")}
+          {format(new Date(task.createdAt), "MMMM dd, yyyy (HH:mm)")}
         </p>
         <p>
           <i>Last update:</i>&nbsp;
-          {new Date(task.updatedAt).toLocaleString("ru")}
+          {format(new Date(task.updatedAt), "MMMM dd, yyyy (HH:mm)")}
         </p>
       </div>
     </div>
