@@ -28,9 +28,12 @@
   + Add description and tags functionality for each task
   - Keep a list of completed tasks
 - Enable dark theme
-~ ProgressPage with chart.js [#8]
+~ ProgressPage with chart.js [#8|#9]
   + Static page
-  - Dynamic data from the Firestore
+  + Goal & streak system
+  + Stateful data
+  + Track user progress locally
+  - Sync data with Firestore
 ~ Firebase backend with Auth and Firestore [#9]
 - Satisfy all PWA requirements
 
@@ -39,7 +42,6 @@
 Cover your application with Jest tests
 Rewrite code on TypeScript
 Remove circle progress on reset and finish(with some animation)
-Goal & streak system like in Duolingo
 Make configuration component in the right Drawer
 Add a loading screen and smooth fade-in for slow internet
 Motivational phrases and quotes in the screen corner
