@@ -79,8 +79,6 @@ function Task({
     return () => clearInterval(interval)
   }, [task, expireTask])
 
-  console.log(task.name, task.status)
-
   return (
     <CSSTransition
       in={mount}

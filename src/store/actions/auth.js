@@ -1,7 +1,12 @@
 import firebase from "firebase/app"
 import "firebase/auth"
+import "firebase/firestore"
 
 import { SET_TOKEN, SET_USER } from "./actionTypes"
+import { fetchUserState, uploadUserState } from "../db"
+import { setProgress } from "./progress"
+import { setTasks } from "./tasks"
+import { setConfiguration } from "./sessions"
 
 const setUser = user => ({
   type: SET_USER,
@@ -13,52 +18,59 @@ const setToken = token => ({
   payload: token,
 })
 
-export const login = () => dispatch => {
+export const login = () => async dispatch => {
   const authProvider = new firebase.auth.GoogleAuthProvider()
+  let response
 
-  firebase
-    .auth()
-    .signInWithPopup(authProvider)
-    .then(result => {
-      /** @type {firebase.auth.OAuthCredential} */
-      const credential = result.credential
+  try {
+    response = await firebase.auth().signInWithPopup(authProvider)
+  } catch (err) {
+    console.log("Auth error: " + err.message)
+  }
 
-      const token = credential.accessToken
-      const user = result.user
+  if (response) {
+    const credential = response.credential
 
-      localStorage.setItem("auth.token", token)
-      localStorage.setItem("auth.user", JSON.stringify(user))
+    const token = credential.accessToken
+    const user = response.user
 
-      dispatch(setUser(user))
-      dispatch(setToken(token))
-    })
-    .catch(error => {
-      console.error(error.message)
-    })
+    localStorage.setItem("auth.token", token)
+    localStorage.setItem("auth.user", JSON.stringify(user))
+
+    dispatch(setUser(user))
+    dispatch(setToken(token))
+
+    dispatch(uploadUserState(user))
+  }
 }
 
-export const logout = () => dispatch => {
-  firebase
-    .auth()
-    .signOut()
-    .then(() => {
-      localStorage.removeItem("auth.user")
-      localStorage.removeItem("auth.token")
+export const logout = () => async dispatch => {
+  await firebase.auth().signOut()
 
-      dispatch(setUser(null))
-      dispatch(setToken(null))
-    })
-    .catch(error => {
-      console.error(error.message)
-    })
+  localStorage.removeItem("auth.user")
+  localStorage.removeItem("auth.token")
+
+  dispatch(setUser(null))
+  dispatch(setToken(null))
 }
 
-export const attemptAutoLogin = () => dispatch => {
+export const attemptAutoLogin = () => async dispatch => {
   const user = JSON.parse(localStorage.getItem("auth.user"))
   const token = localStorage.getItem("auth.token")
 
   if (user && token) {
     dispatch(setUser(user))
     dispatch(setToken(token))
+
+    const remoteState = await fetchUserState(user)
+
+    if (remoteState) {
+      dispatch(setTasks(remoteState.tasks))
+      dispatch(setConfiguration(remoteState.configuration))
+      dispatch(setProgress(remoteState.progress))
+    } else {
+      console.log("Remote state not found for " + user.uid)
+      dispatch(logout())
+    }
   }
 }

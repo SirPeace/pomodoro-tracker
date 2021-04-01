@@ -16,7 +16,11 @@ import { attemptAutoLogin } from "./store/actions/auth"
 function App({ session, loggedIn, attemptAutoLogin }) {
   const theme = useSessionTheme(session)
 
-  attemptAutoLogin()
+  if (!loggedIn && !window.mounted) {
+    attemptAutoLogin()
+
+    window.mounted = true
+  }
 
   const protectedRoutes = [{ path: "/progress", component: ProgressPage }]
 
