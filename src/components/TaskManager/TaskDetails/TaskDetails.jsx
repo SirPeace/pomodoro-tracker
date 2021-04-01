@@ -133,11 +133,11 @@ const TaskDetails = ({
       <div className={classes.TaskDetails__footer}>
         <p>
           <i>Created at:</i>&nbsp;
-          {task.createdAt.toLocaleString("ru")}
+          {new Date(task.createdAt).toLocaleString("ru")}
         </p>
         <p>
           <i>Last update:</i>&nbsp;
-          {task.updatedAt.toLocaleString("ru")}
+          {new Date(task.updatedAt).toLocaleString("ru")}
         </p>
       </div>
     </div>
