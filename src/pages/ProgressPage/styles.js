@@ -33,11 +33,16 @@ export const useStyles = makeStyles(theme => ({
   },
 
   metric: {
-    padding: "10px 0",
+    padding: "20px 0",
     fontWeight: 300,
     color: "#777",
     display: "flex",
     alignItems: "center",
+    transition: "background-color 0.1s",
+
+    "&:hover": {
+      backgroundColor: "#EFEFEF",
+    },
   },
 
   metricValue: {
