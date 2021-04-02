@@ -16,9 +16,8 @@ const useStyles = makeStyles(theme => ({
   },
 
   motto: {
+    marginTop: 20,
     fontSize: 36,
-    color: "#444",
-    fontWeight: 500,
   },
 
   "@media (max-height: 830px)": {
@@ -36,6 +35,11 @@ const useStyles = makeStyles(theme => ({
   "@media (max-width: 400px)": {
     Timer: {
       width: 280,
+    },
+
+    motto: {
+      marginTop: 20,
+      fontSize: 30,
     },
   },
 }))
