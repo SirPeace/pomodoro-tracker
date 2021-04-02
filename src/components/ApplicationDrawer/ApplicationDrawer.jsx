@@ -74,11 +74,11 @@ function ApplicationDrawer({
       <hr className={`${classes.hr}`} />
       {loggedIn ? (
         <Button className={classes.button} onClick={() => logout()}>
-          Logout
+          Sign out
         </Button>
       ) : (
         <Button className={classes.button} onClick={() => login()}>
-          Login with Google
+          Sign in with Google
         </Button>
       )}
 
