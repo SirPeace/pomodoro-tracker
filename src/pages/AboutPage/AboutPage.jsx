@@ -20,14 +20,18 @@ export default function AboutPage() {
             keep myself somehow engaged with the work. What I found out, is that
             there was no automated tool, that could provide me with exactly what
             I needed. The most efficient set of instruments to enhance work
-            quality without burning me out ended up as:
+            quality without burning me out ended up being:
           </p>
 
           <ul className={classes.body__text}>
-            <li>Pomodoro timer</li>
-            <li>TODO list</li>
-            <li>Reward directed work</li>
-            <li>Bullet journal with [day | week | year] planning</li>
+            <li>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci,
+              maiores! Assumenda autem velit commodi.
+            </li>
+            <li>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci,
+              maiores! Assumenda autem velit commodi.
+            </li>
           </ul>
         </Paper>
       </Container>
