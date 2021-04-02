@@ -16,13 +16,6 @@ if (localStorage.getItem("sessions.configuration")) {
   configuration = JSON.parse(localStorage.getItem("sessions.configuration"))
 }
 
-// configuration = {
-//   workSessionDuration: 0.1,
-//   shortBreakDuration: 0.05,
-//   longBreakDuration: 0.1,
-//   workSessionsCountBeforeLongBreak: 2,
-// }
-
 function orderSessions(config) {
   const length = config.workSessionsCountBeforeLongBreak
   const order = []
