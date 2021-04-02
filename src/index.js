@@ -27,7 +27,7 @@ const store = createStore(
 )
 
 firebase.initializeApp({
-  apiKey: "API_KEY",
+  apiKey: "AIzaSyDaXpQee9Zw0VmQVPS5UWlpr62srx6cROI",
   projectId: "pomodoro-tracker-922c7",
   authDomain: "pomodoro-tracker-922c7.firebaseapp.com",
 })
