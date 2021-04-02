@@ -5,24 +5,24 @@ import {
 } from "./actionTypes"
 
 export const setConfiguration = config => {
-  const payload = {}
+  const newConfig = {}
 
   if (+config.longBreakDuration) {
-    payload.longBreakDuration = +config.longBreakDuration
+    newConfig.longBreakDuration = +config.longBreakDuration
   }
   if (+config.shortBreakDuration) {
-    payload.shortBreakDuration = +config.shortBreakDuration
+    newConfig.shortBreakDuration = +config.shortBreakDuration
   }
   if (+config.workSessionsCountBeforeLongBreak) {
-    payload.workSessionsCountBeforeLongBreak = +config.workSessionsCountBeforeLongBreak
+    newConfig.workSessionsCountBeforeLongBreak = +config.workSessionsCountBeforeLongBreak
   }
   if (+config.workSessionDuration) {
-    payload.workSessionDuration = +config.workSessionDuration
+    newConfig.workSessionDuration = +config.workSessionDuration
   }
 
   return {
     type: SET_CONFIGURATION,
-    payload,
+    payload: newConfig,
   }
 }
 
