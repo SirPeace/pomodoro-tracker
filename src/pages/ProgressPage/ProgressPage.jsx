@@ -13,6 +13,7 @@ import ProgressChart from "../../components/ProgressChart/ProgressChart"
 import { useStyles as usePageStyles } from "../styles"
 import { useStyles } from "./styles"
 import { setGoal } from "../../store/actions/progress"
+import { uploadUserState } from "../../store/db"
 
 function ProgressPage({ progress, setGoal }) {
   const pageClasses = usePageStyles()
@@ -109,7 +110,10 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  setGoal: goal => dispatch(setGoal(goal)),
+  setGoal: goal => {
+    dispatch(setGoal(goal))
+    dispatch(uploadUserState())
+  },
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProgressPage)
