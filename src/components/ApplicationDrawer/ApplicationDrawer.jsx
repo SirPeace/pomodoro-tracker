@@ -85,11 +85,26 @@ function ApplicationDrawer({
       <hr className={`${classes.hr}`} />
 
       <Button
-        className={`${classes.install_button} ${classes.button}`}
+        className={`${classes.installButton} ${classes.button}`}
         onClick={triggerAppInstallation}
       >
         Install Web App
       </Button>
+
+      {user && (
+        <div className={classes.userInfo}>
+          <img
+            src={user.photoURL}
+            alt="Avatar"
+            className={classes.userInfo__avatar}
+          />
+          <p className={classes.userInfo__text}>
+            Logged in as:
+            <br />
+            <span className={classes.userInfo__name}>{user.displayName}</span>
+          </p>
+        </div>
+      )}
     </div>
   )
 }
