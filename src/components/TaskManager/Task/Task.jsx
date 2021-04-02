@@ -9,6 +9,7 @@ import { useMediaQuery } from "react-responsive"
 
 import { useStyles } from "./styles"
 import { editTask, selectTask } from "../../../store/actions/tasks"
+import { uploadUserState } from "../../../store/db"
 
 function Task({
   task,
@@ -166,16 +167,24 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  changeTaskName: (task, name) =>
+  changeTaskName: (task, name) => {
     dispatch(
       editTask({
         ...task,
         name,
       })
-    ),
-  checkTask: task => dispatch(editTask({ ...task, status: "completed" })),
+    )
+    dispatch(uploadUserState())
+  },
+  checkTask: task => {
+    dispatch(editTask({ ...task, status: "completed" }))
+    dispatch(uploadUserState())
+  },
   selectTask: task => dispatch(selectTask(task)),
-  expireTask: task => dispatch(editTask({ ...task, status: "expired" }, true)),
+  expireTask: task => {
+    dispatch(editTask({ ...task, status: "expired" }, true))
+    dispatch(uploadUserState())
+  },
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Task)

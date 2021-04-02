@@ -1,9 +1,5 @@
-import {
-  getTimeString,
-  isNewDay,
-  throwNotification,
-  toMs,
-} from "../../libs/functions"
+import { getTimeString, throwNotification, toMs } from "../../libs/functions"
+import { uploadUserState } from "../db"
 import {
   SET_DURATION,
   SET_STATUS,
@@ -12,7 +8,7 @@ import {
   UPDATE_RUNNING_DATA,
   SET_TIME,
 } from "./actionTypes"
-import { incrementMinutes, incrementStreak, updateCharts } from "./progress"
+import { incrementMinutes, updateCharts } from "./progress"
 import { pushSessionOrder } from "./sessions"
 
 export const setTime = (value, unit = "time") => ({
@@ -193,7 +189,6 @@ export const stopTimer = (forced = true) => (dispatch, getState) => {
     dispatch(setStatus("finished"))
 
     const session = getState().sessions.session
-    const lastUpdate = getState().progress.lastUpdate
 
     if (session === "work_session") {
       throwNotification(
@@ -208,9 +203,8 @@ export const stopTimer = (forced = true) => (dispatch, getState) => {
 
       dispatch(updateCharts())
       dispatch(incrementMinutes())
-      if (!lastUpdate || isNewDay(lastUpdate)) {
-        dispatch(incrementStreak())
-      }
+
+      setTimeout(() => dispatch(uploadUserState()))
     }
   }
 }

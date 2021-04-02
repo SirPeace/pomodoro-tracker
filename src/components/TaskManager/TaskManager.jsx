@@ -9,6 +9,7 @@ import TaskForm from "./TaskForm/TaskForm"
 import PersistentDrawer from "../../hoc/AppShell/PersistentDrawer/PersistentDrawer"
 import TaskDetails from "./TaskDetails/TaskDetails"
 import { useStyles as useTaskDetailsStyles } from "./TaskDetails/styles"
+import { uploadUserState } from "../../store/db"
 
 const useStyles = makeStyles(theme => ({
   TaskManager: {
@@ -93,7 +94,10 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  addTask: task => dispatch(addTask(task)),
+  addTask: task => {
+    dispatch(addTask(task))
+    dispatch(uploadUserState())
+  },
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TaskManager)

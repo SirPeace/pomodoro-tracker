@@ -18,6 +18,7 @@ import DeleteIcon from "@material-ui/icons/Delete"
 import { useStyles } from "./styles"
 import { editTask, selectTask } from "../../../store/actions/tasks"
 import { setPopup } from "../../../store/actions/layout"
+import { uploadUserState } from "../../../store/db"
 
 const TaskDetails = ({
   selectedTask: task,
@@ -150,24 +151,39 @@ const mapStateToProps = state => ({
   tags: state.tasks.tags,
 })
 
+let taskNameTimeout
+let taskNoteTimeout
+
 const mapDispatchToProps = dispatch => ({
   hideTask: () => dispatch(selectTask(null)),
   openDeletePopup: () => dispatch(setPopup("delete-task")),
   setName: (task, name) => {
+    clearTimeout(taskNameTimeout)
+
     dispatch(
       editTask({
         ...task,
         name,
       })
     )
+
+    taskNameTimeout = setTimeout(() => {
+      dispatch(uploadUserState())
+    }, 400)
   },
   setNote: (task, note) => {
+    clearTimeout(taskNoteTimeout)
+
     dispatch(
       editTask({
         ...task,
         note,
       })
     )
+
+    taskNoteTimeout = setTimeout(() => {
+      dispatch(uploadUserState())
+    }, 400)
   },
   setTag: (task, tagIndex) => {
     dispatch(
@@ -176,6 +192,7 @@ const mapDispatchToProps = dispatch => ({
         tagIndex,
       })
     )
+    dispatch(uploadUserState())
   },
   setDate: (task, dueTo) => {
     dispatch(
@@ -185,6 +202,7 @@ const mapDispatchToProps = dispatch => ({
         status: "active",
       })
     )
+    dispatch(uploadUserState())
   },
 })
 

@@ -27,14 +27,14 @@
   + Make them look more appealing
   + Add description and tags functionality for each task
   - Keep a list of completed tasks
-- Enable dark theme
-~ ProgressPage with chart.js [#8|#9]
++ ProgressPage with chart.js [#8|#9]
   + Static page
   + Goal & streak system
   + Stateful data
   + Track user progress locally
-  - Sync data with Firestore
-~ Firebase backend with Auth and Firestore [#9]
+  + Sync data with Firestore
++ Firebase backend with Auth and Firestore [#9]
+- Enable dark theme
 - Satisfy all PWA requirements
 
 -------------------

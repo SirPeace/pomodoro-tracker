@@ -9,6 +9,7 @@ import {
   refreshStreak,
   setProgress,
   refreshTodayProgress,
+  parseServerData,
 } from "./progress"
 import { setTasks } from "./tasks"
 import { setConfiguration } from "./sessions"
@@ -45,7 +46,19 @@ export const login = () => async dispatch => {
     dispatch(setUser(user))
     dispatch(setToken(token))
 
-    dispatch(uploadUserState(user))
+    const remoteState = await fetchUserState(user)
+
+    if (remoteState) {
+      dispatch(setTasks(remoteState.tasks))
+      dispatch(setConfiguration(remoteState.configuration))
+      dispatch(setProgress(parseServerData(remoteState.progress)))
+
+      dispatch(refreshStreak())
+      dispatch(refreshCharts())
+      dispatch(refreshTodayProgress())
+    } else {
+      dispatch(uploadUserState())
+    }
   }
 }
 
@@ -72,20 +85,11 @@ export const attemptAutoLogin = () => async (dispatch, getState) => {
     if (remoteState) {
       dispatch(setTasks(remoteState.tasks))
       dispatch(setConfiguration(remoteState.configuration))
-      dispatch(
-        setProgress({
-          ...remoteState.progress,
-          todayChart: JSON.parse(remoteState.progress.todayChart),
-          weekChart: JSON.parse(remoteState.progress.weekChart),
-          yearChart: JSON.parse(remoteState.progress.yearChart),
-        })
-      )
+      dispatch(setProgress(parseServerData(remoteState.progress)))
 
-      if (getState().progress.lastUpdate) {
-        dispatch(refreshStreak())
-        dispatch(refreshCharts())
-        dispatch(refreshTodayProgress())
-      }
+      dispatch(refreshStreak())
+      dispatch(refreshCharts())
+      dispatch(refreshTodayProgress())
     } else {
       console.log("Remote state not found for " + user.uid)
       dispatch(logout())

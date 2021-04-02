@@ -9,13 +9,15 @@ import { useForm } from "react-hook-form"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import FormControl from "./FormControl/FormControl"
+import { uploadUserState } from "../../store/db"
 
 function SettingsPopup({
-  session,
   shortBreakDuration,
   longBreakDuration,
   workSessionDuration,
   workSessionsCountBeforeLongBreak,
+
+  uploadUserState,
 
   closePopup,
   setConfiguration,
@@ -67,14 +69,23 @@ function SettingsPopup({
   const handleFormSubmit = (data, event) => {
     event.preventDefault()
 
-    setConfiguration({
-      workSessionDuration: data.work_session,
-      shortBreakDuration: data.short_break,
-      longBreakDuration: data.long_break,
-      workSessionsCountBeforeLongBreak: data.work_sessions_before_long_break,
-    })
+    if (
+      workSessionDuration !== data.work_session ||
+      shortBreakDuration !== data.short_break ||
+      longBreakDuration !== data.long_break ||
+      workSessionsCountBeforeLongBreak !== data.work_sessions_before_long_break
+    ) {
+      setConfiguration({
+        workSessionDuration: data.work_session,
+        shortBreakDuration: data.short_break,
+        longBreakDuration: data.long_break,
+        workSessionsCountBeforeLongBreak: data.work_sessions_before_long_break,
+      })
 
-    closePopup()
+      uploadUserState()
+
+      closePopup()
+    }
   }
 
   const sessionTheme = useTheme()
@@ -164,7 +175,7 @@ function SettingsPopup({
 }
 
 const mapStateToProps = state => ({
-  session: state.sessions.order[state.sessions.current],
+  user: state.auth.user,
   shortBreakDuration: state.sessions.configuration.shortBreakDuration,
   longBreakDuration: state.sessions.configuration.longBreakDuration,
   workSessionDuration: state.sessions.configuration.workSessionDuration,
@@ -175,6 +186,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   closePopup: () => dispatch(setPopup(false)),
   setConfiguration: configuration => dispatch(setConfiguration(configuration)),
+  uploadUserState: () => dispatch(uploadUserState()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SettingsPopup)

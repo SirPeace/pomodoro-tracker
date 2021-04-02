@@ -167,8 +167,9 @@ export const refreshYearChart = () => (dispatch, getState) => {
 
 export const incrementMinutes = () => (dispatch, getState) => {
   const {
+    goal,
     overallMinutes,
-    today: { minutes },
+    today: { minutes, streakChecked },
   } = getState().progress
   const {
     configuration: { workSessionDuration },
@@ -176,6 +177,10 @@ export const incrementMinutes = () => (dispatch, getState) => {
 
   dispatch(setOverallMinutes(overallMinutes + workSessionDuration))
   dispatch(setMinutesToday(minutes + workSessionDuration))
+
+  if (minutes + workSessionDuration >= goal && !streakChecked) {
+    dispatch(incrementStreak())
+  }
 }
 
 export const incrementTasksToday = () => (dispatch, getState) => {
@@ -264,3 +269,10 @@ const updateYearChart = () => (dispatch, getState) => {
 
   dispatch(setYearChart(updatedChart))
 }
+
+export const parseServerData = data => ({
+  ...data,
+  todayChart: JSON.parse(data.todayChart),
+  weekChart: JSON.parse(data.weekChart),
+  yearChart: JSON.parse(data.yearChart),
+})

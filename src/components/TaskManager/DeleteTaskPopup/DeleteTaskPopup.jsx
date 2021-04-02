@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 import { setPopup } from "../../../store/actions/layout"
 import { useStyles } from "./styles"
 import { deleteTask, selectTask } from "../../../store/actions/tasks"
+import { uploadUserState } from "../../../store/db"
 
 function DeleteTaskPopup({ selectedTask, hideTask, deleteTask, closePopup }) {
   const classes = useStyles()
@@ -46,7 +47,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   closePopup: () => dispatch(setPopup(false)),
   hideTask: () => dispatch(selectTask(null)),
-  deleteTask: task => dispatch(deleteTask(task)),
+  deleteTask: task => {
+    dispatch(deleteTask(task))
+    dispatch(uploadUserState())
+  },
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeleteTaskPopup)

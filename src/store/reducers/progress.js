@@ -99,6 +99,7 @@ const initialState = {
   today: {
     minutes: 0,
     tasks: 0,
+    streakChecked: false,
   },
   bestStreak: 0,
   overallMinutes: 0,
@@ -133,6 +134,10 @@ const handlers = {
   [SET_STREAK]: (state, { payload: streak }) => ({
     ...state,
     streak,
+    today: {
+      ...state.today,
+      streakChecked: true,
+    },
   }),
   [SET_BEST_STREAK]: (state, { payload: bestStreak }) => ({
     ...state,
