@@ -76,7 +76,7 @@ function ProgressPage({ progress, setGoal }) {
             <hr />
             <li className={classes.metric}>
               <WhatshotIcon className={classes.icon} />
-              The best days streak:{" "}
+              The best streak:{" "}
               <b className={classes.metricValue}>{progress.bestStreak}</b>
             </li>
             <li className={classes.metric}>
