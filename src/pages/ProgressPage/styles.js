@@ -15,6 +15,7 @@ export const useStyles = makeStyles(theme => ({
     alignItems: "center",
     fontSize: 20,
     color: "#777",
+    marginBottom: 20,
   },
 
   goalSelect: {

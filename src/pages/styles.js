@@ -8,6 +8,7 @@ export const useStyles = makeStyles(theme => ({
     flexDirection: "column",
     alignItems: "center",
     position: "relative",
+    marginTop: 64,
   },
 
   body: {
@@ -19,20 +20,19 @@ export const useStyles = makeStyles(theme => ({
     fontSize: 18,
   },
 
-  h2: {
-    fontFamily: "Open Sans",
-    color: "#444",
-    fontSize: 26,
-    fontWeight: 600,
-    letterSpacing: 1.5,
-    margin: 0,
+  "@global": {
+    h2: {
+      fontFamily: "Open Sans",
+      color: "#444",
+      fontSize: 27,
+      fontWeight: 700,
+      margin: 0,
+    },
   },
 
-  "@media (max-width: 400px)": {
-    "@global": {
-      h2: {
-        fontSize: 27,
-      },
+  "@media (max-width: 600px)": {
+    body: {
+      padding: "10px 20px",
     },
   },
 }))

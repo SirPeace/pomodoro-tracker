@@ -3,7 +3,7 @@ const { makeStyles } = require("@material-ui/core")
 export const useStyles = makeStyles(theme => ({
   SettingsPopup: {
     padding: 20,
-    width: "50vw",
+    width: "95%",
     maxWidth: 700,
   },
 
@@ -36,11 +36,5 @@ export const useStyles = makeStyles(theme => ({
   submitButton: {
     width: "100%",
     padding: "12px 0",
-  },
-
-  "@media (max-width: 780px)": {
-    SettingsPopup: {
-      width: "95%",
-    },
   },
 }))

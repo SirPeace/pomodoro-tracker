@@ -7,6 +7,8 @@ export const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.primary.main,
     zIndex: theme.zIndex.drawer + 1,
     userSelect: "none",
+    position: "absolute",
+    top: 0,
   },
 
   barButton: {
