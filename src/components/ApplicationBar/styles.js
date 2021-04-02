@@ -45,7 +45,7 @@ export const useStyles = makeStyles(theme => ({
   },
 
   separator: {
-    height: "50%",
+    height: 32,
     width: 2,
     backgroundColor: "#fff",
     margin: "0 12px",
@@ -70,6 +70,7 @@ export const useStyles = makeStyles(theme => ({
 
     separator: {
       margin: "0 6px",
+      height: 28,
     },
   },
 
