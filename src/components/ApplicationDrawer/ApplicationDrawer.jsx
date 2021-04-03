@@ -57,10 +57,6 @@ function ApplicationDrawer({
       )
     })
 
-  const triggerAppInstallation = () => {
-    // TODO: Application install logic
-  }
-
   return (
     <div className={classes.ApplicationDrawer}>
       <h3 className={classes.logo}>
@@ -83,13 +79,6 @@ function ApplicationDrawer({
       )}
 
       <hr className={`${classes.hr}`} />
-
-      <Button
-        className={`${classes.installButton} ${classes.button}`}
-        onClick={triggerAppInstallation}
-      >
-        Install Web App
-      </Button>
 
       {user && (
         <div className={classes.userInfo}>
