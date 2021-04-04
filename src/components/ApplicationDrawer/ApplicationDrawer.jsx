@@ -78,8 +78,6 @@ function ApplicationDrawer({
         </Button>
       )}
 
-      <hr className={`${classes.hr}`} />
-
       {user && (
         <div className={classes.userInfo}>
           <img
