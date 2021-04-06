@@ -73,6 +73,7 @@ export const useStyles = makeStyles(theme => ({
     outline: "none",
     background: "transparent",
     marginLeft: 7,
+    fontFamily: "Roboto",
   },
 
   Task__detailsBtn: {
