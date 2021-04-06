@@ -13,6 +13,7 @@ export const useStyles = makeStyles(theme => ({
     opacity: 1,
     transition: "opacity 0.3s, background-color 0.2s",
     width: "100%",
+    fontFamily: "Roboto",
 
     "&:hover": {
       background: "#fdfdfd",
