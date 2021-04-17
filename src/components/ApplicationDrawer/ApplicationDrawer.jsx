@@ -86,7 +86,7 @@ function ApplicationDrawer({
             className={classes.userInfo__avatar}
           />
           <p className={classes.userInfo__text}>
-            Logged in as:
+            Signed in as:
             <br />
             <span className={classes.userInfo__name}>{user.displayName}</span>
           </p>

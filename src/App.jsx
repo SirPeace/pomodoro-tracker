@@ -5,7 +5,7 @@ import { ThemeProvider } from "@material-ui/core/styles"
 
 import AboutPage from "./pages/AboutPage/AboutPage"
 import AppPage from "./pages/AppPage/AppPage"
-import AppShell from "./hoc/AppShell/AppShell"
+import AppShell from "./components/AppShell/AppShell"
 import HowToUsePage from "./pages/HowToUsePage/HowToUsePage"
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage"
 import NotAuthenticatedPage from "./pages/NotAuthenticatedPage/NotAuthenticatedPage"
